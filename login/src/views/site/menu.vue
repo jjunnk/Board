@@ -1,15 +1,19 @@
 <template>
 <div>
     <v-list>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to">
-            <v-list-item-icon>
-                <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
+        <v-list-group v-for="(item,i) in items" :key="i" v-model="item.active" :prepend-icon="item.icon" no-action>
+            <template v-slot:activator>
+                <v-list-item-content>
+                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                </v-list-item-content>
+            </template>
 
-            <v-list-item-content>
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
+            <v-list-item v-for="subItem in item.subItems" :key="subItem.title" :to="subitem.to">
+                <v-list-item-content>
+                    <v-list-item-title v-text="subItem.title"></v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list-group>
     </v-list>
 </div>
 </template>
@@ -22,22 +26,39 @@ export default {
         return {
             items: [{
                     title: 'home',
-                    to: '/',
 
+                    icon: 'mdi-home',
+                    subitems: [
+
+                        {
+                            title: 'Dashboard',
+                            to: '/'
+                        },
+                        {
+                            title: 'about',
+                            to: '/about',
+                        }
+
+                    ],
                 },
                 {
                     title: 'about',
-                    to: '/about',
-                },
-                {
-                    title: 'xxx',
-                    to: '/xxx'
+                    active: true,
+                    icon: 'mdi-account ',
+
+                    subitems: [
+
+                        {
+                            title: 'xxx',
+                            to: '/xxx'
+                        }
+                    ]
 
                 },
 
             ]
 
         }
-    },
+    }
 }
 </script>
