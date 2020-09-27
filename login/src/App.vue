@@ -4,6 +4,9 @@
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <SiteTitle :title="title"></SiteTitle>
         <v-spacer />
+        <v-btn icon @click="save">
+            <v-icon>mdi-check</v-icon>
+        </v-btn>
         <v-btn icon to="/about">
             <v-icon>mdi-magnify</v-icon>
         </v-btn>
@@ -59,18 +62,16 @@ export default {
         }
     },
     mounted() {
-        console.log("시작")
-        const home = {
-
-            title: 'home',
-            to: '/'
+        console.log(this.$firebase)
+    },
+    methods: {
+        save() {
+            console.log("save222")
+            this.$firebase.database().ref().child('abcd').set({
+                title: 'abcd',
+                text: "ddddd"
+            })
         }
-        this.items.push(home)
-        this.items.push({
-            title: 'about',
-            to: '/about'
-
-        })
     }
 
 };
