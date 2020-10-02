@@ -30,7 +30,7 @@ export default {
     data() {
         return {
             dialog: false,
-            text: this.title
+            text: this.title,
         }
     },
     methods: {
