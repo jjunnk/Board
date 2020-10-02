@@ -1,9 +1,10 @@
 <template>
-<v-footer absolute :footer="footer" class="blue darken-4">
-    <div style="color:#fff;">&copy; {{ new Date().getFullYear() + "&nbsp;" + footer}}</div>
-    <v-btn icon @click="openDialog">
-        <v-icon>mdi-pencil</v-icon>
-    </v-btn>
+<v-footer absolute :footer="footer" class="blue darken-4 text-center">
+    <v-col cols="12" style=" color:#fff;">&copy; {{ new Date().getFullYear() + "&nbsp;" + footer}}
+        <v-btn icon @click="openDialog">
+            <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+    </v-col>
     <v-dialog v-model="dialog" max-width="400">
         <v-card>
             <v-card-title>푸터 수정
@@ -14,11 +15,9 @@
                 <v-btn icon @click="dialog=false">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-
             </v-card-title>
             <v-card-text>
-                <v-text-field v-model="text" outlined label="Footer 내용 입력" @keypress.enter="save" hide-details />
-
+                <v-text-field v-model="text" outlined label="Footer 내용 입력" @keypress.enter="save" hide-details placeholder="푸터 내용을 입력하세요" />
             </v-card-text>
         </v-card>
     </v-dialog>
@@ -37,6 +36,7 @@ export default {
     methods: {
         openDialog() {
             this.dialog = true
+            this.text = ""
         },
         async save() {
             try {
