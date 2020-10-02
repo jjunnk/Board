@@ -11,12 +11,19 @@
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
+<<<<<<< HEAD
     "firebase": "^7.22.0",
+=======
+>>>>>>> 076f3b43180ae228af9c809080ef79118d68b036
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",
     "vuetify": "^2.2.11",
+<<<<<<< HEAD
     "vuetify-toast-snackbar-ng": "^0.7.3"
+=======
+    "vuetify-toast-snackbar": "^0.6.1"
+>>>>>>> 076f3b43180ae228af9c809080ef79118d68b036
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -49,7 +56,5 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "main": "index.js",
-  "license": "MIT"
+  ]
 }

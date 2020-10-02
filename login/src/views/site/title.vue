@@ -1,13 +1,13 @@
 <template>
-<v-toolbar-title>
-    {{ title }}
-    <v-btn icon @click="openDialog">
-        <v-icon>mdi-grease-pencil</v-icon>
-    </v-btn>
-    <v-dialog v-model="dialog" max-width="400">
+<div>
+    <v-toolbar-title>{{ title }}
+        <v-btn icon @click="openDialog">
+            <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+    </v-toolbar-title>
+    <v-dialog v-model="dialog">
         <v-card>
-            <v-card-title>
-                제목 수정
+            <v-card-title>제목 수정
                 <v-spacer />
                 <v-btn icon @click="save">
                     <v-icon>mdi-content-save</v-icon>
@@ -17,11 +17,11 @@
                 </v-btn>
             </v-card-title>
             <v-card-text>
-                <v-text-field v-model="text" outlined label="제목" @keypress.enter="save" hide-details />
+                <v-text-field v-model="text" @keypress.enter="save" outlined label="제목" hide-details />
             </v-card-text>
         </v-card>
     </v-dialog>
-</v-toolbar-title>
+</div>
 </template>
 
 <script>
@@ -30,7 +30,7 @@ export default {
     data() {
         return {
             dialog: false,
-            text: this.title
+            text: this.title,
         }
     },
     methods: {
@@ -43,6 +43,7 @@ export default {
                     title: this.text
                 })
             } finally {
+
                 this.dialog = false
             }
         }

@@ -1,25 +1,25 @@
 <template>
 <v-app>
     <v-app-bar app color="primary" dark>
-        <v-app-bar-nav-icon @click="drawer = !drawer" />
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
         <site-title :title="site.title"></site-title>
         <v-spacer />
         <v-btn icon @click="save">
             <v-icon>mdi-check</v-icon>
         </v-btn>
         <v-btn icon @click="read">
-            <v-icon>mdi-numeric</v-icon>
+            <v-icon>mdi-apple</v-icon>
         </v-btn>
         <v-btn icon @click="readOne">
-            <v-icon>mdi-account-badge-alert</v-icon>
+            <v-icon>mdi-home</v-icon>
         </v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer">
         <site-menu :items="site.menu"></site-menu>
     </v-navigation-drawer>
-    <v-content>
+    <v-main>
         <router-view />
-    </v-content>
+    </v-main>
     <site-footer :footer="site.footer"></site-footer>
 </v-app>
 </template>
@@ -30,20 +30,24 @@ import SiteFooter from '@/views/site/footer'
 import SiteMenu from '@/views/site/menu'
 
 export default {
+    name: 'App',
+    items: [],
     components: {
         SiteTitle,
         SiteFooter,
         SiteMenu
     },
-    name: 'App',
+
     data() {
         return {
             drawer: false,
             site: {
+
                 menu: [],
-                title: '나의 타이틀입니다',
-                footer: '푸터입니다'
-            }
+                title: "Junk's Site",
+                footer: 'by sujin',
+
+            },
         }
     },
     created() {
@@ -62,10 +66,10 @@ export default {
             })
         },
         save() {
-            console.log('save@@@')
-            this.$firebase.database().ref().child('abcd').child('abcd').child('abcd').set({
+            console.log("save222")
+            this.$firebase.database().ref().child('abcd').set({
                 title: 'abcd',
-                text: 'tttttt'
+                text: "ddddd"
             })
         },
         read() {
@@ -79,5 +83,6 @@ export default {
             console.log(sn.val())
         }
     }
-}
+
+};
 </script>
