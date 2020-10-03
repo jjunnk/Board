@@ -1,4 +1,4 @@
-# board-site
+# vue-board
 
 ## Project setup
 ```
