@@ -1,8 +1,32 @@
 <template>
 <div>
-    <v-list-item v-for="item in items" :key="item.title" :to="item.to">
-        <v-list-item-title>{{item.title}}</v-list-item-title>
+    <v-list-item>
+        <v-list-item-content>
+            <v-list-item-title class="title">
+                Application
+            </v-list-item-title>
+            <v-list-item-subtitle>
+                subtext
+            </v-list-item-subtitle>
+        </v-list-item-content>
     </v-list-item>
+
+    <v-divider></v-divider>
+    <v-list>
+        <v-list-group v-for="(item, i) in items" :key="i" v-model="item.active" :prepend-icon="item.icon" no-action>
+            <template v-slot:activator>
+                <v-list-item-content>
+                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                </v-list-item-content>
+            </template>
+
+            <v-list-item v-for="subItem in item.subItems" :key="subItem.title" :to="subItem.to">
+                <v-list-item-content>
+                    <v-list-item-title v-text="subItem.title"></v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list-group>
+    </v-list>
 
 </div>
 </template>
@@ -13,12 +37,39 @@ export default {
     data() {
         return {
             items: [{
-                    title: 'home',
-                    to: '/'
+                    title: 'Home',
+                    icon: 'mdi-home',
+                    subItems: [{
+                            title: 'about',
+                            to: '/ about'
+                        },
+                        {
+                            title: 'sub-menu',
+                            to: '/'
+                        },
+                        {
+                            title: 'sub-menu',
+                            to: '/'
+                        }
+                    ]
                 },
                 {
                     title: 'about',
-                    to: '/about'
+                    icon: 'mdi-face',
+                    active: true,
+                    subItems: [{
+                            title: 'Breakfast & brunch',
+                            to: '/about'
+                        },
+                        {
+                            title: 'New American',
+                            to: '/about'
+                        },
+                        {
+                            title: 'Sushi',
+                            to: '/about'
+                        }
+                    ]
                 }
             ]
         }

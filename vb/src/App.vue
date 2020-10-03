@@ -13,25 +13,7 @@
             </v-btn>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" app>
-            <v-list nav>
-                <v-list-item-group v-model="group">
-                    <v-list-item class="title">
-                        <v-list-item-icon>
-                            <v-icon>mdi-home</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Home</v-list-item-title>
-                    </v-list-item>
-
-                    <v-list-item>
-                        <v-list-item-icon>
-                            <v-icon>mdi-account</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Account</v-list-item-title>
-                    </v-list-item>
-                    <v-divider></v-divider>
-                    <site-menu></site-menu>
-                </v-list-item-group>
-            </v-list>
+            <site-menu></site-menu>
         </v-navigation-drawer>
         <v-main>
             <router-view />
