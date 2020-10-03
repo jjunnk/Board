@@ -1,4 +1,4 @@
-# vue-board
+# vb
 
 ## Project setup
 ```
