@@ -5,15 +5,7 @@
             <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
             <site-title v-bind:propstitle="title"></site-title>
             <v-spacer />
-            <v-btn icon @click="save">
-                <v-icon>mdi-check</v-icon>
-            </v-btn>
-            <v-btn icon @click="read">
-                <v-icon>mdi-circle</v-icon>
-            </v-btn>
-            <v-btn icon @click="readOne">
-                <v-icon>mdi-heart</v-icon>
-            </v-btn>
+            <site-sign></site-sign>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" app>
             <site-menu></site-menu>
@@ -30,6 +22,7 @@
 import SiteTitle from '@/views/site/title'
 import SiteFooter from '@/views/site/footer'
 import SiteMenu from '@/views/site/menu'
+import SiteSign from '@/views/site/sign'
 
 export default {
     name: 'App',
@@ -37,7 +30,8 @@ export default {
     components: {
         SiteTitle,
         SiteFooter,
-        SiteMenu
+        SiteMenu,
+        SiteSign
     },
 
     data() {
