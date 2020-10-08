@@ -33,46 +33,9 @@
 
 <script>
 export default {
-    props: ['propsfooter'],
+    props: ['items'],
     data() {
-        return {
-            items: [{
-                    title: 'Home',
-                    icon: 'mdi-home',
-                    subItems: [{
-                            title: 'about',
-                            to: '/ about'
-                        },
-                        {
-                            title: 'sub-menu',
-                            to: '/'
-                        },
-                        {
-                            title: 'sub-menu',
-                            to: '/'
-                        }
-                    ]
-                },
-                {
-                    title: 'about',
-                    icon: 'mdi-face',
-                    active: true,
-                    subItems: [{
-                            title: 'Breakfast & brunch',
-                            to: '/about'
-                        },
-                        {
-                            title: 'New American',
-                            to: '/about'
-                        },
-                        {
-                            title: 'Sushi',
-                            to: '/about'
-                        }
-                    ]
-                }
-            ]
-        }
+        return {}
     }
 }
 </script>

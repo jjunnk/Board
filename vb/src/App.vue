@@ -3,17 +3,17 @@
     <v-card class="overflow-hidden">
         <v-app-bar absolute app color="white">
             <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
-            <site-title v-bind:propstitle="title"></site-title>
+            <site-title v-bind:propstitle="site.title"></site-title>
             <v-spacer />
             <site-sign></site-sign>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" app>
-            <site-menu></site-menu>
+            <site-menu :items="site.menu"></site-menu>
         </v-navigation-drawer>
         <v-main>
             <router-view />
         </v-main>
-        <site-footer :propsfooter="footer"></site-footer>
+        <site-footer :propsfooter="site.footer"></site-footer>
     </v-card>
 </v-app>
 </template>
@@ -37,32 +37,50 @@ export default {
     data() {
         return {
             drawer: false,
-            items: [],
-            group: null,
-            title: '사이트 제목',
-            footer: 'sujin'
+            site: {
+                menu: [{
+                        title: 'home',
+                        icon: 'mdi-home',
+                        subItems: [{
+                                title: 'Dashboard',
+                                to: '/'
+                            },
+                            {
+                                title: 'About',
+                                to: '/about'
+                            }
+                        ]
+                    },
+                    {
+                        title: 'about',
+                        active: true,
+                        icon: 'mdi-account',
+                        subItems: [{
+                            title: 'xxx',
+                            to: '/xxx'
+                        }]
+                    }
+                ],
+                title: '사이트 제목',
+                footer: 'sujin'
+            }
         }
     },
-    mounted() {
-        console.log(this.$firebase)
+    created() {
+        this.subscribe()
     },
     methods: {
-        save() {
-            console.log('save click')
-            this.$firebase.database().ref().child('abcd').set({
-                title: 'abcd',
-                text: 'tttttexttttt'
+        subscribe() {
+            this.$firebase.database().ref().child('site').on('value', (sn) => {
+                const v = sn.val()
+                if (!v) {
+                    this.$firebase.database().ref().child('site').set(this.site)
+                    return
+                }
+                this.site = v
+            }, (e) => {
+                console.log(e.message)
             })
-        },
-        read() {
-            this.$firebase.database().ref().child('abcd').on('value', (sn) => {
-                console.log(sn)
-                console.log(sn.val())
-            })
-        },
-        async readOne() {
-            const sn = await this.$firebase.database().ref().child('abcd').once('value')
-            console.log(sn.val())
         }
     }
 }
