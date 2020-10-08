@@ -48,6 +48,7 @@ export default {
         async signInWidthGoogle() {
             const provider = new this.$firebase.auth.GoogleAuthProvider()
             this.$firebase.auth().languageCode = 'ko'
+            this.loading = true
             try {
                 const result1 = await this.$firebase.auth().signInWithPopup(provider)
                 this.$store.commit('setFireUser', result1.user)

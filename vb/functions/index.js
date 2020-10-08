@@ -1,12 +1,10 @@
 const functions = require('firebase-functions')
-
 var admin = require('firebase-admin')
-
 var serviceAccount = require('./key.json')
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://x-sujin.firebaseio.com'
+  databaseURL: functions.config().admin.db_url // 'https://x-sujin.firebaseio.com'
 })
 
 const db = admin.database()
@@ -18,7 +16,8 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
     email,
     displayName,
     photoURL,
-    createdAt: new Date()
+    createdAt: new Date().getMilliseconds(),
+    level: email === functions.functions.config().admin.email ? 0 : 5 // admin.email 이면 0, 아니면 5
   }
   db.ref('users').child(uid).set(u) // uid 키값 , u 데이터
 })
