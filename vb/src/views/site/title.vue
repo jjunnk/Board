@@ -1,5 +1,5 @@
 <template>
-<v-toolbar-title>{{propstitle}}
+<v-toolbar-title>{{propsTitle}}
     <v-btn icon @click="openDialog">
         <v-icon>mdi-grease-pencil</v-icon>
     </v-btn>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-    props: ['propstitle'],
+    props: ['propsTitle'],
     data() {
         return {
             dialog: false,

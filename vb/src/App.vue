@@ -3,7 +3,7 @@
     <v-card class="overflow-hidden">
         <v-app-bar absolute app color="white">
             <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
-            <site-title v-bind:propstitle="site.title"></site-title>
+            <site-title v-bind:propsTitle="site.title"></site-title>
             <v-spacer />
             <site-sign></site-sign>
         </v-app-bar>
@@ -13,7 +13,7 @@
         <v-main>
             <router-view />
         </v-main>
-        <site-footer :propsfooter="site.footer"></site-footer>
+        <site-footer :propsFooter="site.footer"></site-footer>
     </v-card>
 </v-app>
 </template>

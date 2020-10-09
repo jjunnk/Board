@@ -1,6 +1,6 @@
 <template>
 <v-footer app absolute dark class="text-center" color=" primary" v-bind:propsfooter="footer">
-    <v-col cols="12">&copy; {{ new Date().getFullYear() + "&nbsp;" + propsfooter}}</v-col>
+    <v-col cols="12">&copy; {{ new Date().getFullYear() + "&nbsp;" + propsFooter}}</v-col>
     <v-btn icon @click="openDialog">
         <v-icon>mdi-pencil</v-icon>
     </v-btn>
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    props: ['propsfooter'],
+    props: ['propsFooter'],
     data() {
         return {
             dialog: false,
