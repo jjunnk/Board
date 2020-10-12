@@ -1,9 +1,10 @@
 <template>
 <v-footer app absolute dark class="text-center" color=" primary" v-bind:propsfooter="footer">
-    <v-col cols="12">&copy; {{ new Date().getFullYear() + "&nbsp;" + propsFooter}}</v-col>
-    <v-btn icon @click="openDialog">
-        <v-icon>mdi-pencil</v-icon>
-    </v-btn>
+    <v-col cols="12">&copy; {{ new Date().getFullYear() + "&nbsp;" + propsFooter}}
+        <v-btn icon @click="openDialog">
+            <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+    </v-col>
     <v-dialog v-model="dialog" max-width="400">
         <v-card>
             <v-card-title>

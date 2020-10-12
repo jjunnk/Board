@@ -23,6 +23,9 @@
                     <v-btn @click="openDialogItem(i)" icon>
                         <v-icon>mdi-pencil</v-icon>
                     </v-btn>
+                    <v-btn @click="removeItem(items,i)" icon>
+                        <v-icon>mdi-delete</v-icon>
+                    </v-btn>
                 </v-list-item-action>
             </template>
 
@@ -30,6 +33,10 @@
                 <v-list-item-content>
                     <v-list-item-title v-text="subItem.title"></v-list-item-title>
                 </v-list-item-content>
+                <v-btn @click="removeItem(item.subItems,j)" icon>
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+
             </v-list-item>
             <v-list-item>
                 <v-list-item-icon>
@@ -107,6 +114,10 @@ export default {
             } finally {
                 this.dialogItem = false
             }
+        },
+        removeItem(items, i) {
+            items.splice(i, 1)
+            this.save()
         }
 
     }

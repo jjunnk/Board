@@ -20,6 +20,14 @@ npm run build
 npm run lint
 ```
 
+## after menu data save work
+
+1. stop run npm serve and close the browser tab
+
+2. in the firebase realtime database, delete the data of site ref
+
+3. then start again npm run serve and check realtime database 
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
@@ -28,4 +36,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 Admin SDK 구성 스니펫은 복사해서 functions 폴더 안에 index.js 에 붙여넣고,
 serviceAccountKey.json => kdy.json 으로 수정한다.
+
+
 
