@@ -29,7 +29,6 @@ exports.deleteUser = functions.auth.user().onDelete(async (user) => {
     uid
   } = user
   db.ref('users').child(uid).remove() // uid 키값 , u 데이터
-
 })
 
 exports.incrementBoardCount = functions.firestore.document('boards/{bid}').onCreate(async(snap, context) => {
