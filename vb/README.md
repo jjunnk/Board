@@ -41,3 +41,4 @@ serviceAccountKey.json => kdy.json 으로 수정한다.
 ## firestore 시작하기
 1. firebase.js 에 import 'firebase/firebase-firestore'  삽입
 
+2. functions / indes.js 파일에 event trigger 작성
