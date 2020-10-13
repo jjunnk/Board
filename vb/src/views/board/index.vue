@@ -1,11 +1,21 @@
 <template>
 <v-card>
     <v-card-title>Board Test</v-card-title>
+    <v-data-table :headers="headers" :items="items" width="1000px">
+        <template v-slot:item.id="{ item }">
+            <v-btn icon @click="openDialog(item)">
+                <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn icon @click="remove(item)">
+                <v-icon>mdi-delete</v-icon>
+            </v-btn>
+        </template>
+    </v-data-table>
     <v-card-actions>
         <v-btn @click="read" icon>
             <v-icon left>mdi-page-next</v-icon>
         </v-btn>
-        <v-btn @click="openDialog" icon>
+        <v-btn @click="openDialog(null)" icon>
             <v-icon left>mdi-pencil</v-icon>
         </v-btn>
     </v-card-actions>
@@ -19,7 +29,8 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer />
-                <v-btn @click="save">save</v-btn>
+                <v-btn @click="update" v-if="selectedItem">save</v-btn>
+                <v-btn @click="add" v-else>save</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -30,20 +41,48 @@
 export default {
     data() {
         return {
+            headers: [{
+                    value: 'title',
+                    text: '제목'
+                },
+                {
+                    value: 'content',
+                    text: '내용'
+                }, {
+                    value: 'id',
+                    text: 'ID'
+                }
+            ],
             items: [],
             dialog: false,
             form: {
                 title: '',
                 content: ''
-            }
+            },
+            selectedItem: null
         }
     },
+    created() {
+        this.read()
+    },
     methods: {
-        openDialog() {
+        openDialog(item) {
+            this.selectedItem = item
             this.dialog = true
+            if (!item) {
+                this.form.title = ''
+                this.form.content = ''
+            } else {
+                this.form.title = item.title
+                this.form.content = item.content
+            }
         },
-        save() { // create of CRUD
+        add() { // create of CRUD
             this.$firebase.firestore().collection('boards').add(this.form)
+            this.dialog = false
+        },
+        update() { // create of CRUD
+            this.$firebase.firestore().collection('boards').doc(this.selectedItem.id).update(this.form) // selectedItem.id를 this.form에 하겠다
             this.dialog = false
         },
         async read() { // Read of CRUD
@@ -62,6 +101,9 @@ export default {
                 }
             })
             console.log(this.items)
+        },
+        remove(item) {
+            this.$firebase.firestore().collection('boards').doc(item.id).delete()
         }
     }
 }
