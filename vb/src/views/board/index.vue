@@ -1,7 +1,7 @@
 <template>
 <v-card>
-    <v-card-title>Board Test</v-card-title>
-    <v-data-table :headers="headers" :items="items">
+    <h1 class="text-center mb-6">Board Test</h1>
+    <v-data-table :headers="headers" :items="items" class="mx-auto ma-xs-4">
         <template v-slot:item.id="{ item }">
             <v-btn icon @click="openDialog(item)">
                 <v-icon>mdi-pencil</v-icon>
@@ -60,13 +60,34 @@ export default {
                 content: ''
             },
             dialog: false,
-            selectedItem: null
+            selectedItem: null,
+            unsubscribe: null
         }
     },
     created() {
-        this.read()
+        // this.read()
+        this.subscribe()
+    },
+    destroyed() {
+        if (this.unsubscribe) this.unsubscribe() // if 문 실행코드가 한 줄이면 중괄호 생략
     },
     methods: {
+        subscribe() {
+            this.unsubscribe = this.$firebase.firestore().collection('boards').onSnapshot((snap) => {
+                if (snap.empty) {
+                    this.items = []
+                    return
+                }
+                this.items = snap.docs.map(v => {
+                    const item = v.data()
+                    return {
+                        id: v.id,
+                        title: item.title,
+                        content: item.content
+                    }
+                })
+            })
+        },
         openDialog(item) {
             this.selectedItem = item
             this.dialog = true
@@ -104,3 +125,7 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+</style>
