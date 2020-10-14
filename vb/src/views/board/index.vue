@@ -1,7 +1,7 @@
 <template>
-<v-card>
-    <h1 class="text-center mb-6">Board Test</h1>
-    <v-data-table :headers="headers" :items="items" class="mx-auto ma-xs-4">
+<v-card class="my-6 text-center">
+    <h1 class="text-center py-6">Board Test</h1>
+    <v-data-table :headers="headers" :items="items" :options.sync="options" :items-per-page="5" :server-items-length="serverItemsLength" class="mx-auto ma-xs-4">
         <template v-slot:item.id="{ item }">
             <v-btn icon @click="openDialog(item)">
                 <v-icon>mdi-pencil</v-icon>
@@ -11,10 +11,7 @@
             </v-btn>
         </template>
     </v-data-table>
-    <v-card-actions class="float-right ma-3">
-        <v-btn @click="read" outlined>
-            <v-icon left>mdi-page-next</v-icon>다음 페이지
-        </v-btn>
+    <v-card-actions class="ma-3 mx-auto">
         <v-btn @click="openDialog(null)">
             <v-icon left>mdi-pencil</v-icon>글쓰기
         </v-btn>
@@ -61,20 +58,38 @@ export default {
             },
             dialog: false,
             selectedItem: null,
-            unsubscribe: null
+            unsubscribe: null,
+            unsubscribeCount: null,
+            serverItemsLength: 0,
+            options: {}
+        }
+    },
+    watch: {
+        options: {
+            handler(n, o) {
+                console.log(n) // new 변경전
+                console.log(o) // old 변경후
+                this.subscribe()
+            },
+            deep: true
         }
     },
     created() {
         // this.read()
-        this.subscribe()
+
     },
     destroyed() {
         if (this.unsubscribe) this.unsubscribe() // if 문 실행코드가 한 줄이면 중괄호 생략
+        if (this.unsubscribeCount) this.unsubscribeCount()
     },
     methods: {
         subscribe() {
-            this.unsubscribe = this.$firebase.firestore().collection('boards').onSnapshot((snap) => {
-                if (snap.empty) {
+            this.unsubscribeCount = this.$firebase.firestore().collection('meta').doc('boards').onSnapshot((doc) => {
+                if (!doc.exists) return // 존재하지 않으면
+                this.serverItemsLength = doc.data().count
+            })
+            this.unsubscribe = this.$firebase.firestore().collection('boards').limit(this.options.itemsPerPage).onSnapshot((snap) => {
+                if (snap.empty) { // 비어있으면
                     this.items = []
                     return
                 }
@@ -127,5 +142,18 @@ export default {
 </script>
 
 <style scoped>
+.v-data-table {
+    max-width: 800px;
+    border: 1px solid #ddd;
+    box-shadow: none;
+}
 
+.v-card.v-sheet {
+    box-shadow: none;
+}
+
+.v-card__actions {
+    max-width: 800px;
+    display: block !important;
+}
 </style>

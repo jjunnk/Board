@@ -9,17 +9,6 @@
                 subtext
             </v-list-item-subtitle>
         </v-list-item-content>
-
-        =======
-        <v-list-item-content>
-            <v-list-item-title class="title">
-                Application
-            </v-list-item-title>
-            <v-list-item-subtitle>
-                subtext
-            </v-list-item-subtitle>
-        </v-list-item-content>
-        >>>>>>> 9fd574b3781e37776dcaa9d349f5b4524f838dc1
     </v-list-item>
     <v-divider></v-divider>
     <v-list>
