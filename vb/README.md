@@ -40,5 +40,10 @@ serviceAccountKey.json => kdy.json 으로 수정한다.
 
 ## firestore 시작하기
 1. firebase.js 에 import 'firebase/firebase-firestore'  삽입
-
 2. functions / indes.js 파일에 event trigger 작성
+
+## google cloud sdk 설치
+
+## toast ui editor 설치
+npm install tui-editor
+https://github.com/nhn/tui.editor/tree/master/apps/vue-editor
