@@ -41,6 +41,22 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/editor.vue')
+  },
+  {
+    path: '*',
+    name: 'error',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/error.vue')
+  },
+  {
+    path: '/:collection/:document',
+    name: 'collection-document',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('../views/renderer.vue')
   }
 ]
 
