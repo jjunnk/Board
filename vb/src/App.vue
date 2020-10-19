@@ -1,6 +1,6 @@
 <template>
 <v-app>
-  <v-card class="overflow-hidden">
+  <v-card class="overflow-hidden" height="100%">
     <v-app-bar absolute app color="white">
       <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
       <site-title v-bind:propsTitle="site.title"></site-title>
