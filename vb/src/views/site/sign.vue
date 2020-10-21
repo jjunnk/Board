@@ -1,7 +1,6 @@
 <template>
 <div>
-    <v-progress-circular inderterminate v-if="loading">
-    </v-progress-circular>
+    <v-progress-circular inderterminate v-if="loading"></v-progress-circular>
     <v-menu offset-y v-else-if="!$store.state.fireUser">
         <template v-slot:activator="{on}">
             <v-btn v-on="on" outlined class="text-center">로그인</v-btn>
@@ -25,7 +24,7 @@
         <v-card min-width="340">
             <v-card-title class="text-center">내 계정</v-card-title>
             <v-card-actions>
-                <v-btn color="red" dark block @click="signOut">
+                <v-btn color="black" dark block @click="signOut">
                     로그아웃
                 </v-btn>
             </v-card-actions>
@@ -50,8 +49,9 @@ export default {
             this.$firebase.auth().languageCode = 'ko'
             this.loading = true
             try {
-                const result1 = await this.$firebase.auth().signInWithPopup(provider)
-                this.$store.commit('setFireUser', result1.user)
+                const sn = await this.$firebase.auth().signInWithPopup(provider)
+                console.log(sn.user)
+                this.$store.commit('setFireUser', sn.user)
             } finally {
                 this.loading = false
             }

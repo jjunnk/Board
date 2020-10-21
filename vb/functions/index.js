@@ -8,9 +8,9 @@ admin.initializeApp({
 })
 
 const db = admin.database() // realtime base
-const fdb = admin.firestore() // realtime base
+// const fdb = admin.firestore() // realtime base
 
-// 계정이 들어올때  / exports.createUser 라는 function 생성
+// 계정이 들어올때 exports.createUser 라는 function 생성
 exports.createUser = functions.auth.user().onCreate(async (user) => {
   const { uid, email, displayName, photoURL } = user
   const u = {
@@ -31,6 +31,7 @@ exports.deleteUser = functions.auth.user().onDelete(async (user) => {
   db.ref('users').child(uid).remove() // uid 키값 , u 데이터
 })
 
+/*
 exports.incrementBoardCount = functions.firestore.document('boards/{bid}').onCreate(async(snap, context) => {
 try {
 await fdb.collection('meta').doc('boards').update('count', admin.firestore.FieldValue.increment(1))
@@ -42,3 +43,4 @@ await fdb.collection('meta').doc('boards').update('count', admin.firestore.Field
 exports.decrementBoardCount = functions.firestore.document('boards/{bid}').onDelete(async(snap, context) => {
       await fdb.collection('meta').doc('boards').update('count', admin.firestore.FieldValue.increment(-1))
 })
+*/

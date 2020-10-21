@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     async write() {
-      const sn = await this.$firebase.storage().ref().child('xxx.text').putString('ABCD')
+      const sn = await this.$firebase.storage().ref().child('xx2.text').putString('ABCD')
       const url = await sn.ref.getDownloadURL()
       console.log(url)
       this.url = url

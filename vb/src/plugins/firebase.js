@@ -10,6 +10,6 @@ import store from '../store/'
 firebase.initializeApp(firebaseConfig)
 
 // 파이어베이스 구글로그인 사용자
-firebase.auth().onAuthStateChanged((fuser) => store.commit('setFireUser', fuser))
+firebase.auth().onAuthStateChanged((fu) => store.commit('setFireUser', fu))
 
 Vue.prototype.$firebase = firebase

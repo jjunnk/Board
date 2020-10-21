@@ -12,8 +12,8 @@ export default new Vuex.Store({
     selfEdit(state, edit) {
       state.editable = edit
     },
-    setFireUser (state, fuser) {
-      state.fireUser = fuser
+    setFireUser (state, fu) { // 사용자 인증부분 저장
+      state.fireUser = fu
     }
   },
   actions: {
