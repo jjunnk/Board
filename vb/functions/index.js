@@ -4,7 +4,7 @@ var serviceAccount = require('./key.json')
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: functions.config().admin.db_url // 'https://x-sujin.firebaseio.com'
+  databaseURL: 'https://sujin-pf.appspot.com'
 })
 
 const db = admin.database() // realtime base

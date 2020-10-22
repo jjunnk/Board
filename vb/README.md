@@ -46,7 +46,6 @@ firebase init
 
 firebase deploy
 
-
 ## firebase key download
 프로젝트 설정 > 서비스 계정 > 새 비공개 키 생성 클릭 > 다운로드된 파일을 functions 폴더에 key.json으로 저장
 
