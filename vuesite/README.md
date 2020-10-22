@@ -28,7 +28,7 @@ npm install vue-router
 router 폴더 생성하고 index.js 파일 생성
 
 ## vuetify  설치
-npm i vuetify
+vue add vuetify
 plugins 폴더 생성 > vuetify.js 파일 생성
 
 
