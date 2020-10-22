@@ -1,20 +1,23 @@
 <template>
 <v-app>
-  <v-card class="overflow-hidden" height="100%">
-    <v-app-bar absolute app color="white">
-      <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
-      <site-title v-bind:propsTitle="site.title"></site-title>
-      <v-spacer />
-      <site-sign></site-sign>
-    </v-app-bar>
-    <v-navigation-drawer app v-model="drawer" :width="380">
-      <site-menu :items="site.menu"></site-menu>
-    </v-navigation-drawer>
-    <v-main>
-      <router-view />
-    </v-main>
-    <site-footer :propsFooter="site.footer"></site-footer>
-  </v-card>
+    <v-card class="overflow-hidden" height="100%">
+        <v-app-bar absolute app color="white">
+            <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
+            <site-title v-bind:propsTitle="site.title"></site-title>
+            <v-spacer />
+            <v-btn icon @click="save">
+                <v-icon>mdi-circle</v-icon>
+            </v-btn>
+            <site-sign></site-sign>
+        </v-app-bar>
+        <v-navigation-drawer app v-model="drawer" :width="380">
+            <site-menu :items="site.menu"></site-menu>
+        </v-navigation-drawer>
+        <v-main>
+            <router-view />
+        </v-main>
+        <site-footer :propsFooter="site.footer"></site-footer>
+    </v-card>
 </v-app>
 </template>
 
@@ -25,63 +28,70 @@ import SiteMenu from '@/views/site/menu'
 import SiteSign from '@/views/site/sign'
 
 export default {
-  name: 'App',
+    name: 'App',
 
-  components: {
-    SiteTitle,
-    SiteFooter,
-    SiteMenu,
-    SiteSign
-  },
+    components: {
+        SiteTitle,
+        SiteFooter,
+        SiteMenu,
+        SiteSign
+    },
 
-  data() {
-    return {
-      drawer: false,
-      site: {
-        menu: [{
-            title: 'home',
-            icon: 'mdi-home',
-            subItems: [{
-                title: 'Dashboard',
-                to: '/'
-              },
-              {
-                title: 'About',
-                to: '/about'
-              }
-            ]
-          },
-          {
-            title: 'about',
-            active: true,
-            icon: 'mdi-account',
-            subItems: [{
-              title: 'xxx',
-              to: '/xxx'
-            }]
-          }
-        ],
-        title: '사이트 제목',
-        footer: 'sujin'
-      }
-    }
-  },
-  created() {
-    this.subscribe()
-  },
-  methods: {
-    subscribe() {
-      this.$firebase.database().ref().child('site').on('value', (sn) => {
-        const v = sn.val()
-        if (!v) {
-          this.$firebase.database().ref().child('site').set(this.site)
-          return
+    data() {
+        return {
+            drawer: false,
+            site: {
+                menu: [{
+                        title: 'home',
+                        icon: 'mdi-home',
+                        subItems: [{
+                                title: 'Dashboard',
+                                to: '/'
+                            },
+                            {
+                                title: 'About',
+                                to: '/about'
+                            }
+                        ]
+                    },
+                    {
+                        title: 'about',
+                        active: true,
+                        icon: 'mdi-account',
+                        subItems: [{
+                            title: 'xxx',
+                            to: '/xxx'
+                        }]
+                    }
+                ],
+                title: '사이트 제목',
+                footer: 'sujin'
+            }
         }
-        this.site = v
-      }, (e) => {
-        console.log(e.message)
-      })
+    },
+    created() {
+        this.subscribe()
+    },
+    methods: {
+        save() {
+            console.log('saveee')
+            this.$firebase.database().ref().child('abcd').child('abcd').set({
+                title: '123',
+                text: 'dddd'
+            })
+        },
+        subscribe() {
+            this.$firebase.database().ref().child('site').on('value', (sn) => {
+                const v = sn.val()
+                if (!v) {
+                    this.$firebase.database().ref().child('site').set(this.site)
+                    return
+                }
+                this.site = v
+            }, (e) => {
+                console.log(e.message)
+            })
+        }
     }
-  }
 }
 </script>
