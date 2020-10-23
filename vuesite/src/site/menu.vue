@@ -32,7 +32,7 @@
 
 <script>
 export default {
-    props: ['footer'],
+    props: ['propsitems'],
     data() {
         return {
             items: [{
