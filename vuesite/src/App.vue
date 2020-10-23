@@ -2,58 +2,39 @@
 <v-app>
     <v-card class="overflow-hidden" height="100%">
         <v-app-bar color="white">
-            <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
-            <v-toolbar-title>Title</v-toolbar-title>
-            <v-spacer />
-            <v-btn icon @click="save">
-                <v-icon>mdi-circle</v-icon>
-            </v-btn>
+            <v-app-bar-nav-icon @click="drawer =!drawer"></v-app-bar-nav-icon>
+            <SiteTitle :propstitle="title"></SiteTitle>
         </v-app-bar>
-        <v-footer absolute class="font-weight-medium">
-            <v-col class="text-center" cols="12">
-                {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-            </v-col>
-        </v-footer>
-
-        <v-navigation-drawer v-model="drawer" absolute temporary>
-            <v-list nav dense>
-                <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
-                    <v-list-item>
-                        <v-list-item-icon>
-                            <v-icon>mdi-home</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Home</v-list-item-title>
-                    </v-list-item>
-
-                    <v-list-item>
-                        <v-list-item-icon>
-                            <v-icon>mdi-account</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Account</v-list-item-title>
-                    </v-list-item>
-                </v-list-item-group>
-            </v-list>
+        <SiteFooter :propsfooter="footer"></SiteFooter>
+        <v-navigation-drawer app v-model="drawer">
+            <SiteMenu></SiteMenu>
         </v-navigation-drawer>
     </v-card>
 </v-app>
 </template>
 
 <script>
+import SiteTitle from '@/site/title.vue'
+import SiteFooter from '@/site/footer.vue'
+import SiteMenu from '@/site/menu.vue'
+
 export default {
     name: 'App',
-    components: {},
+    components: {
+        SiteTitle,
+        SiteFooter,
+        SiteMenu
+    },
     data() {
         return {
-
+            drawer: false,
+            title: 'Vue Site',
+            footer: 'Footer text',
+            items: []
         }
     },
-    methods: {
-        save() {
-            console.log('save')
-            this.$firebase.database().ref().child('abcd')
-        }
-    }
+    methods: {},
+    mounted() {},
 }
 </script>
 
