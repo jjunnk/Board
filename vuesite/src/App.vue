@@ -9,10 +9,11 @@
                 <v-icon>mdi-check</v-icon>
             </v-btn>
         </v-app-bar>
-        <SiteFooter :propsfooter="site.footer"></SiteFooter>
         <v-navigation-drawer app v-model="drawer">
             <SiteMenu :propsitems="site.menu"></SiteMenu>
         </v-navigation-drawer>
+        <SiteFooter :propsfooter="site.footer"></SiteFooter>
+
     </v-card>
 </v-app>
 </template>
@@ -35,7 +36,30 @@ export default {
             site: {
                 title: 'Vue Site',
                 footer: 'Footer text',
-                menu: []
+                menu: [{
+                        title: 'Home',
+                        icon: 'mdi-home',
+                        subItems: [{
+                            title: 'Dashboard',
+                            to: '/'
+                        }]
+                    },
+                    {
+                        title: 'About',
+                        icon: 'mdi-heart',
+                        active: true,
+                        subItems: [{
+                            title: 'Dashboard',
+                            to: '/about'
+                        }]
+                    },
+                    {
+                        title: 'xxx',
+                        icon: 'mdi-circle',
+                        to: '/xxx'
+
+                    }
+                ]
             }
 
         }
@@ -44,13 +68,6 @@ export default {
         this.subscribe()
     },
     methods: {
-        check() {
-            console.log("check")
-            this.$firebase.database().ref().child('abc').child('abc').set({
-                title: 'abcde',
-                text: 'eeeee'
-            })
-        },
         subscribe() {
             this.$firebase.database().ref().child('site').on('value', (sn) => {
                 const v = sn.val()
@@ -62,8 +79,17 @@ export default {
             }, (e) => {
                 console.log(e.message)
             })
+        },
+        check() {
+            console.log("check")
+            this.$firebase.database().ref().child('abc').child('abc').set({
+                title: 'abcde',
+                text: 'eeeee'
+            })
         }
+
     }
+
 }
 </script>
 
