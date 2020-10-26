@@ -1,8 +1,8 @@
 <template>
-<div class="Home">
+  <div class="Home">
     <h1>This is Home</h1>
     <h1>This is Home</h1>
     <h1>This is Home</h1>
     <h1>This is Home</h1>
-</div>
+  </div>
 </template>
