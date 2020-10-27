@@ -59,3 +59,25 @@ npm 설치 후에 src > store 폴더 생성, 폴더 안에 index.js 파일 생�
 
 ## firestore 활성화
 views - board 폴더 생성, index.vue 파일 생성
+
+## axios 설치
+axios라는 모듈을 사용해서 문서 내부에서 쉽게 처리
+
+설치 방법 : npm install axios
+
+## gcloud sdk 설치
+
+## cors.json 파일 생성하고 내용은 아래와 같이 작성
+[
+  {
+    "origin": ["*"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
+
+## gsutil 사용하여 cors.json 적용하기
+1. gcloud sdk shell 열기
+2. cd  \google-cloud-sdk\bin
+3. gsutil cors set [cors.json 파일 경로]  gs://<your-cloud-storage-bucket>
+
