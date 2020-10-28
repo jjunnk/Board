@@ -2,7 +2,9 @@
 <v-data-table :headers="headers" :items="items" :server-items-length="info.count" :options.sync="options" :items-per-page="5" :footer-props="{
       'items-per-page-options':[5, 10, 20, 30],
     }" must-sort item-key="id">
-
+    <template v-slot:[`item.createdAt`]="{item}">
+        <display-time :time="item.createdAt"></display-time>
+    </template>
 </v-data-table>
 </template>
 
@@ -11,9 +13,13 @@ import {
     head,
     last
 } from 'lodash'
+import DisplayTime from '@/components/display-time'
 
 export default {
     props: ['info', 'document'],
+    components: {
+        DisplayTime
+    },
     data() {
         return {
             headers: [{

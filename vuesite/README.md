@@ -84,3 +84,8 @@ axios라는 모듈을 사용해서 문서 내부에서 쉽게 처리
 ## toast ui editor
 1. 설치 : npm install --save @toast-ui/vue-editor
 2. plugins폴더에 editor.js 파일 추가하고 main.js 수정
+
+## moment로 날짜 표시
+1. 설치 : npm i moment
+2. plugins 폴더 - moment.js 파일 추가
+3. https://momentjs.com/
