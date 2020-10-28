@@ -81,3 +81,6 @@ axios라는 모듈을 사용해서 문서 내부에서 쉽게 처리
 2. cd  \google-cloud-sdk\bin
 3. gsutil cors set [cors.json 파일 경로]  gs://<your-cloud-storage-bucket>
 
+## toast ui editor
+1. 설치 : npm install --save @toast-ui/vue-editor
+2. plugins폴더에 editor.js 파일 추가하고 main.js 수정

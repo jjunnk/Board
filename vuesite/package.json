@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@toast-ui/editor": "^2.5.0",
+    "@toast-ui/vue-editor": "^2.5.0",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "firebase": "^7.24.0",

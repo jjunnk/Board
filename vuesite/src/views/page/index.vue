@@ -1,6 +1,6 @@
 <template>
 <v-card>
-    board list</v-card>
+    page list</v-card>
 </template>
 
 <script>

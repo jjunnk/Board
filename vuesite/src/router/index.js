@@ -4,8 +4,7 @@ import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/",
     name: "Home",
     component: Home
@@ -17,7 +16,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import( /* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
     path: "/xxx",
@@ -25,7 +24,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/xxx.vue")
+    component: () => import( /* webpackChunkName: "about" */ "../views/xxx.vue")
   },
   {
     path: "/board",
@@ -33,7 +32,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "board" */ "../views/board/")
+    component: () => import( /* webpackChunkName: "board" */ "../views/board/")
   },
   {
     path: "/storage",
@@ -41,7 +40,30 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "board" */ "../views/storage")
+    component: () => import( /* webpackChunkName: "board" */ "../views/storage")
+  },
+  {
+    path: "/editor",
+    name: "editor",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import( /* webpackChunkName: "board" */ "../views/editor")
+  },
+  {
+    path: '*',
+    name: 'error',
+    component: () => import('../views/error')
+  },
+  {
+    path: '/:collection/:document',
+    name: 'collection-document',
+    component: () => import('../views/renderer')
+  },
+  {
+    path: '/:collection/:document/:action',
+    name: 'collection-document-action',
+    component: () => import('../views/renderer')
   }
 ];
 
