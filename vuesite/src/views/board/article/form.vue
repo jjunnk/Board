@@ -91,7 +91,7 @@ export default {
                 if (!this.articleId) { // 문서가 없으면 새로 생성해야함
                     doc.createdAt = createdAt
                     doc.commentCount = 0
-                    doc.commentCount = 0
+                    doc.readCount = 0
                     doc.uid = this.$store.state.fireUser.uid
 
                     doc.user = {
