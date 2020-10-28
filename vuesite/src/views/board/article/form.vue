@@ -8,7 +8,7 @@
                 <v-btn icon @click="$router.push('/board/' + document)">
                     <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
-                <v-btn icon @click="save">
+                <v-btn icon @click="save" :disabled="!user">
                     <v-icon>mdi-content-save</v-icon>
                 </v-btn>
             </v-toolbar>
@@ -40,7 +40,11 @@ export default {
     computed: {
         articleId() {
             return this.$route.query.articleId
+        },
+        user() {
+            return this.$store.state.user
         }
+
     },
     watch: {
         document() {
@@ -87,6 +91,14 @@ export default {
                 if (!this.articleId) { // 문서가 없으면 새로 생성해야함
                     doc.createdAt = createdAt
                     doc.commentCount = 0
+                    doc.commentCount = 0
+                    doc.uid = this.$store.state.fireUser.uid
+
+                    doc.user = {
+                        email: this.user.email,
+                        photoURL: this.user.photoURL,
+                        displayName: this.user.displayName
+                    }
                     batch.set(this.ref.collection('articles').doc(id), doc)
                     batch.update(this.ref, {
                         count: this.$firebase.firestore.FieldValue.increment(1)
