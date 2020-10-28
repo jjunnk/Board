@@ -11,19 +11,27 @@ const db = admin.database()
 const fdb = admin.firestore()
 
 
-exports.createUser = functions.auth.user().onCreate(async (user)=>{
-    const {uid, email, displayName, photoURL} = user
-    const u = {email, displayName, photoURL, createdAt:new Date().getTime(),
-    level:email === functions.config().admin.email? 0 : 5}
-
-    db.ref('user').child(uid).set(u)
+exports.createUser = functions.auth.user().onCreate(async (user) => {
+  const { uid, email, displayName, photoURL } = user
+  const time = new Date()
+  const u = {
+    email,
+    displayName,
+    photoURL,
+    createdAt: time,
+    level: email === functions.config().admin.email ? 0 : 5
+  }
+  await fdb.collection('users').doc(uid).set(u)
+  u.createdAt = time.getTime()
+  await db.ref('users').child(uid).set(u)
 })
 
-exports.deleteUser = functions.auth.user().onDelete(async (user)=>{
-    const {uid} = user
-
-    db.ref('user').child(uid).remove()
+exports.deleteUser = functions.auth.user().onDelete(async (user) => {
+  const { uid } = user
+  await db.ref('users').child(uid).remove()
+  await fdb.collection('users').doc(uid).delete()
 })
+
 
 exports.incrementBoardCount = functions.firestore.document('boards/{bid}').onCreate(async (snap, context) => {
     try {
