@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-card>
-        <v-toolbar color="accent" dense flat dark>
+        <v-toolbar color="#333" dense flat dark>
             <v-toolbar-title v-text="info.title"></v-toolbar-title>
             <v-spacer />
             <template v-if="user">
@@ -14,7 +14,7 @@
             </template>
         </v-toolbar>
         <v-card-text v-if="info.createdAt">
-            <v-alert color="info" outlined dismissible>
+            <v-alert color="#333" outlined dismissible>
                 <div style="white-space: pre-line">{{info.description}}</div>
                 <div class="text-right font-italic caption">작성일: {{info.createdAt.toDate().toLocaleString()}}</div>
                 <div class="text-right font-italic caption">수정일: {{info.updatedAt.toDate().toLocaleString()}}</div>
