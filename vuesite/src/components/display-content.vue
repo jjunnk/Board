@@ -15,13 +15,9 @@
     </v-toolbar>
     <v-card-actions>
         <v-row>
-            <v-col cols="2">작성일</v-col>
-            <v-col cols="4">
-                <display-time :time="item.createdAt"></display-time>
+            <v-col cols="6" style="border-right:1px solid #999;">작성일 : <display-time :time="item.createdAt"></display-time>
             </v-col>
-            <v-col cols="2">수정일</v-col>
-            <v-col cols="4">
-                <display-time :time="item.updatedAt"></display-time>
+            <v-col cols="6">수정일 : <display-time :time="item.updatedAt"></display-time>
             </v-col>
         </v-row>
     </v-card-actions>
@@ -44,7 +40,9 @@ import axios from 'axios'
 import DisplayTime from '@/components/display-time'
 
 export default {
-    props: ['item'],
+    props: ['document',
+        'item'
+    ],
     components: {
         DisplayTime
     },
@@ -61,6 +59,9 @@ export default {
         async fetch() {
             const r = await axios.get(this.item.url)
             this.content = r.data
+            await this.$firebase.firestore().collection('boards').doc(this.document).collection(this.item.id).update({
+                readCount: this.$firebase.firestore.FieldValue.increment(1)
+            })
         },
         async articleWrite() {
             this.$router.push({
@@ -97,5 +98,11 @@ header {
 
 .v-dialog>.v-card>.v-card__text {
     padding: 24px 0;
+}
+
+/* 작성일 수정일*/
+.v-card__actions {
+    border-bottom: 1px solid #999;
+    padding: 4px
 }
 </style>
