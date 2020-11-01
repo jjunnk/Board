@@ -24,8 +24,12 @@
 </template>
 
 <script>
+import {
+    last
+} from 'lodash'
 import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
+const LIMIT = 5
 
 export default {
     props: ['docRef'],
@@ -38,7 +42,8 @@ export default {
             comment: '',
             items: [],
             unsubscribe: null,
-            limit: 5
+            // limit: 5
+            lastDoc: null
         }
     },
     computed: {
@@ -53,23 +58,40 @@ export default {
         if (this.unsubscribe) this.unsubscribe()
     },
     methods: {
-        subscribe() {
-            if (this.unsubscribe) this.unsubscribe()
-            this.unsubscribe = this.docRef.collection('comments').limit(this.limit).onSnapshot(sn => {
-                console.log(sn)
-                if (sn.empty) {
-                    this.items = []
-                    return
-                }
-                this.items = sn.docs.map(doc => {
+        snapshotToItems(sn) {
+            this.lastDoc = last(sn.docs)
+            sn.docs.forEach(doc => {
+                const exists = this.items.some(item => doc.id === item.id)
+                if (!exists) {
                     const item = doc.data()
                     item.id = doc.id
                     item.createdAt = item.createdAt.toDate()
                     item.updatedAt = item.updatedAt.toDate()
-                    return item
+                    this.items.push(item)
                     // toDate : Convert a Timestamp to a JavaScript Date object. 
-                })
+                }
             })
+            this.items.sort((before, after) => {
+                const beforeId = Number(before.id)
+                const afterId = Number(after.id)
+                return afterId - beforeId
+            })
+        },
+        subscribe() {
+            if (this.unsubscribe) this.unsubscribe()
+            this.unsubscribe = this.docRef.collection('comments').orderBy('createdAt', 'desc').limit(LIMIT).onSnapshot(sn => {
+                // console.log(sn)
+                if (sn.empty) {
+                    this.items = []
+                    return
+                }
+                this.snapshotToItems(sn)
+            })
+        },
+        async more() {
+            if (!this.lastDoc) throw Error('더이상 데이터가 없습니다')
+            const sn = await this.docRef.collection('comments').orderBy('createdAt', 'desc').startAfter(this.lastDoc).limit(LIMIT).get()
+            this.snapshotToItems(sn)
         },
         async save() {
             const doc = {
@@ -92,10 +114,6 @@ export default {
             await batch.commit()
             this.comment = ''
 
-        },
-        more() {
-            this.limit += 5
-            this.subscribe()
         }
     }
 }
