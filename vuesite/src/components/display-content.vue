@@ -32,7 +32,7 @@
             </v-row>
         </v-container>
     </v-card-text>
-    <display-comment :docRef="this.ref.collection('articles').doc(this.item.id)">댓글</display-comment>
+    <display-comment :article="item" :docRef="this.ref.collection('articles').doc(this.item.id)">댓글</display-comment>
 </v-card>
 </template>
 

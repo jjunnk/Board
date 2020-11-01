@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-card-title>
-        <v-text-field v-model="comment" outlined label="댓글 작성" @keypress.enter="save" hide-details></v-text-field>
+        <v-textarea rows="3" append-icon="mdi-send" @click:append="save" v-model="comment" label="댓글 작성" outlined hide-details></v-textarea>
     </v-card-title>
     <template v-for="(item, i) in items">
         <v-list-item :key="item.id">
@@ -9,8 +9,8 @@
                 <display-user :user="item.user"></display-user>
             </v-list-item-action>
             <v-list-item-content>
-                <v-list-item-subtitle v-text="item.comment"></v-list-item-subtitle>
-                <v-list-item-subtitle>
+                <v-list-item-subtitle class="black--text comment" v-text="item.comment"></v-list-item-subtitle>
+                <v-list-item-subtitle class="text-end">
                     <display-time :time="item.createdAt"></display-time>
                 </v-list-item-subtitle>
             </v-list-item-content>
@@ -18,7 +18,7 @@
         <v-divider :key="i"></v-divider>
     </template>
     <v-list-item>
-        <v-btn @click="more" text color="#444" block outlined>더보기</v-btn>
+        <v-btn v-if="lastDoc && items.length < article.commentCount" v-intersect="onIntersect" @click="more" text color="#444" block outlined>더보기</v-btn>
     </v-list-item>
 </v-container>
 </template>
@@ -32,7 +32,7 @@ import DisplayUser from '@/components/display-user'
 const LIMIT = 5
 
 export default {
-    props: ['docRef'],
+    props: ['article', 'docRef'],
     components: {
         DisplayTime,
         DisplayUser
@@ -93,6 +93,10 @@ export default {
             const sn = await this.docRef.collection('comments').orderBy('createdAt', 'desc').startAfter(this.lastDoc).limit(LIMIT).get()
             this.snapshotToItems(sn)
         },
+        onIntersect(entries, observer, isIntersecting) {
+            // console.log(isIntersecting)
+            if (isIntersecting) this.more()
+        },
         async save() {
             const doc = {
                 createdAt: new Date(),
@@ -118,3 +122,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.comment {
+    white-space: pre-wrap;
+}
+</style>
