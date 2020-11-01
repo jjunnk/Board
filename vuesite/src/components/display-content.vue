@@ -80,7 +80,7 @@ export default {
             batch.update(this.ref, {
                 count: this.$firebase.firestore.FieldValue.increment(-1)
             })
-            batch.delete(this.ref.collection('articles').doc(this.item.id).delete())
+            batch.delete(this.ref.collection('articles').doc(this.item.id))
             await batch.commit()
             // 아티클 게시물 삭제하려면 count, 게시물, storage 파일 => 3 개를 삭제해야함
             //await this.ref.update({ count: this.$firebase.firestore.FieldValue.increment(-1)})  // 조회수
