@@ -32,20 +32,25 @@
             </v-row>
         </v-container>
     </v-card-text>
+    <display-comment :docRef="this.ref.collection('articles').doc(this.item.id)">댓글</display-comment>
 </v-card>
 </template>
 
 <!--initialValue는 한번만 작동.렌더링해주려면 content 가 있을때 채워지도록.
-content가 없으면 v - container -->
+content가 없으면 v - container 
+docRef = comment를 사용할 document의 레퍼런스 주소
+-->
 
 <script>
 import axios from 'axios'
 import DisplayTime from '@/components/display-time'
+import DisplayComment from '@/components/display-comment'
 
 export default {
     props: ['document', 'item'],
     components: {
-        DisplayTime
+        DisplayTime,
+        DisplayComment
     },
     data() {
         return {
