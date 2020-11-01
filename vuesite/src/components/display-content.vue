@@ -6,23 +6,72 @@
         <v-divider class="mx-4" vertical color="#999"></v-divider>
         <v-toolbar-title>{{item.title}}</v-toolbar-title>
         <v-spacer />
+        <v-btn icon @click="articleWrite">
+            <v-icon>mdi-pencil</v-icon>
+        </v-btn>
         <v-btn icon @click="$emit('close')">
             <v-icon>mdi-close</v-icon>
         </v-btn>
     </v-toolbar>
+    <v-card-actions>
+        <v-row>
+            <v-col cols="2">작성일</v-col>
+            <v-col cols="4">
+                <display-time :time="item.createdAt"></display-time>
+            </v-col>
+            <v-col cols="2">수정일</v-col>
+            <v-col cols="4">
+                <display-time :time="item.updatedAt"></display-time>
+            </v-col>
+        </v-row>
+    </v-card-actions>
     <v-card-text>
-        {{item.url}}
+        <viewer v-if="content" :initialValue="content"></viewer>
+        <v-container v-else>
+            <v-row justify="center" align="center">
+                <v-progress-circular indeterminate></v-progress-circular>
+            </v-row>
+        </v-container>
     </v-card-text>
 </v-card>
 </template>
 
+<!--initialValue는 한번만 작동.렌더링해주려면 content 가 있을때 채워지도록.
+content가 없으면 v - container -->
+
 <script>
+import axios from 'axios'
+import DisplayTime from '@/components/display-time'
+
 export default {
     props: ['item'],
+    components: {
+        DisplayTime
+    },
+    data() {
+        return {
+            content: ''
+        }
+    },
     mounted() {
         console.log('mounted')
-    }
+        this.fetch()
+    },
+    methods: {
+        async fetch() {
+            const r = await axios.get(this.item.url)
+            this.content = r.data
+        },
+        async articleWrite() {
+            this.$router.push({
+                path: this.$route.path + '/article-write',
+                query: {
+                    articleId: this.item.id
+                }
+            })
+        }
 
+    }
 }
 </script>
 
