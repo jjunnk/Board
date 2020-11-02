@@ -64,20 +64,25 @@ export default {
             })
         },
         async save() {
+            if (!this.$store.state.fireUser) throw Errow('로그인이 필요합니다') // 로그인 X 상태
+
             const form = {
                 category: this.form.category,
                 title: this.form.title,
                 description: this.form.description,
-                updatedAt: new Date()
+                updatedAt: new Date(),
+                uid: this.$store.state.fireUser.uid
             }
             this.loading = true
+
             try {
-                if (!this.exists) {
+                if (!this.exists) { // 생성
                     form.createdAt = new Date()
                     form.count = 0
+                    form.uid = this.$store.state.fireUser.uid
                     await this.ref.set(form)
                 } else {
-                    this.ref.update(form)
+                    await this.ref.update(form)
                 }
                 this.$router.push('/board/' + this.document)
             } finally {

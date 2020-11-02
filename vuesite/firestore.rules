@@ -1,9 +1,34 @@
-rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2020, 11, 21);
+    // match /{document=**} {
+    //   allow read, write;
+    // }
+    function approvedLevel (level) {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.level <= level;
+    }
+    match /boards/{boardId} {
+      allow read: if true; // 아무나 읽기 가능
+      allow create: if approvedLevel(0); // 로그인이 되어있고, 사용자 레벨이 0인 사람만 create 가능
+      allow update, delete: if approvedLevel(0) || resource.data.uid == request.auth.uid || resource.data.count != request.resource.data.count; 
+	    // 사용자 레벨이 0인 사람 or  자기 아이디가 게시물의 uid가 일치하면 update,delete 가능, count 원래 값이 1, 업데이트되는값이 2 로 서로 다를 경우 count 값을 update
+
+      match /articles/{articleId} {  // board > article에 적용
+        allow read: if true; // 아무나 읽기 가능
+        allow create: if approvedLevel(5);  // 사용자 레벨이 5인 사람 create 가능
+        allow update, delete: if approvedLevel(0) || resource.data.uid == request.auth.uid || resource.data.commentCount != request.resource.data.commentCount;
+        // 사용자 레벨이 0인 어드민 or  자기 자신이 게시물의 uid와 일치하면 update,delete 가능 
+        
+        match /comments/{commentId} { // board > article > comment collection에 적용
+          allow read: if true; // 아무나 읽기 가능
+          allow create: if approvedLevel(5); // 사용자 레벨이 5인 사람 create 가능
+          allow update, delete: if approvedLevel(0) || resource.data.uid == request.auth.uid; 
+          // 사용자 레벨이 0인 어드민 or  자기 자신이 게시물의 uid와 일치하면 update,delete 가능
+        }
+      }
+    }
+    match /users/{userId} {
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+      allow create, delete: if false; //  create, delete는 functions 에서 해주고있다
     }
   }
 }
