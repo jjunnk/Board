@@ -89,7 +89,7 @@ export default {
             // 아티클 게시물 삭제하려면 count, 게시물, storage 파일 => 3 개를 삭제해야함
             //await this.ref.update({ count: this.$firebase.firestore.FieldValue.increment(-1)})  -> 조회수
             // await this.ref.collection('articles').doc(this.item.id).delete() -> 게시물 삭제
-            await this.$firebase.storage().ref().child('boards').child(this.document).child(this.item.id + '.md').delete() // storage 파일 삭제
+            await this.$firebase.storage().ref().child('boards').child(this.document).child(this.$store.state.fireUser.uid).child(this.item.id + '.md').delete() // storage 파일 삭제
             this.$emit('close')
         }
 
