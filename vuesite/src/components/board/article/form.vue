@@ -3,7 +3,7 @@
     <v-form>
         <v-card :loading="loading">
             <v-toolbar color="#333" dense flat dark>
-                <v-toolbar-title>게시판 정보 작성</v-toolbar-title>
+                <v-toolbar-title>Article 작성</v-toolbar-title>
                 <v-spacer />
                 <v-btn icon @click="$router.push('/board/' + boardId)">
                     <v-icon>mdi-arrow-left</v-icon>
