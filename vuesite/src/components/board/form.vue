@@ -5,7 +5,7 @@
             <v-toolbar color="#333" dense flat dark>
                 <v-toolbar-title>게시판 정보 작성</v-toolbar-title>
                 <v-spacer />
-                <v-btn icon @click="$router.push('/board/' + document)">
+                <v-btn icon @click="$router.push('/board/' + boardId)">
                     <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
                 <v-btn icon @click="save">
@@ -24,10 +24,9 @@
 
 <script>
 export default {
-    props: ['document', 'action'],
+    props: ['boardId', 'action'],
     data() {
         return {
-            unsubscribe: null,
             form: {
                 category: '',
                 title: '',
@@ -39,32 +38,28 @@ export default {
         }
     },
     watch: {
-        document() {
-            this.subscribe()
+        boardId() {
+            this.fetch()
         }
     },
     created() {
-        this.subscribe()
-    },
-    destroyed() {
-        if (this.unsubscribe) this.unsubscribe()
+        this.fetch()
     },
     methods: {
-        subscribe() {
-            if (this.unsubscribe) this.unsubscribe()
-            this.ref = this.$firebase.firestore().collection('boards').doc(this.document)
-            this.unsubscribe = this.ref.onSnapshot(doc => {
-                this.exists = doc.exists
-                if (this.exists) {
-                    const item = doc.data()
-                    this.form.category = item.category
-                    this.form.title = item.title
-                    this.form.description = item.description
-                }
-            })
+        async fetch() {
+            this.ref = this.$firebase.firestore().collection('boards').doc(this.boardId)
+            const doc = await this.ref.get()
+            this.exists = doc.exists
+            if (this.exists) {
+                const item = doc.data()
+                this.form.category = item.category
+                this.form.title = item.title
+                this.form.description = item.description
+            }
         },
         async save() {
             if (!this.$store.state.fireUser) throw Errow('로그인이 필요합니다') // 로그인 X 상태
+            if (!this.form.categoty || !this.form.title) throw Error('분류,제목은 필수 입력 항목입니다')
 
             const form = {
                 category: this.form.category,
@@ -84,7 +79,7 @@ export default {
                 } else {
                     await this.ref.update(form)
                 }
-                this.$router.push('/board/' + this.document)
+                this.$router.push('/board/' + this.boardId)
             } finally {
                 this.loading = false
             }

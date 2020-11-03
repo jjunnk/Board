@@ -5,7 +5,7 @@
             <v-toolbar color="#333" dense flat dark>
                 <v-toolbar-title>게시판 정보 작성</v-toolbar-title>
                 <v-spacer />
-                <v-btn icon @click="$router.push('/board/' + document)">
+                <v-btn icon @click="$router.push('/board/' + boardId)">
                     <v-icon>mdi-arrow-left</v-icon>
                 </v-btn>
                 <v-btn icon @click="save" :disabled="!user">
@@ -14,7 +14,7 @@
             </v-toolbar>
             <v-card-text>
                 <v-text-field v-model="form.title" outlined label="제목"></v-text-field>
-                <editor v-if="!articleId" :initialValue="form.content" ref="editor" initialEditType="wysiwyg" :options="{ hideModeSwitch: true }"></editor>
+                <editor v-if="articleId === 'new'" :initialValue="form.content" ref="editor" initialEditType="wysiwyg" :options="{ hideModeSwitch: true }"></editor>
                 <template v-else>
                     <editor v-if="form.content" :initialValue="form.content" ref="editor" initialEditType="wysiwyg" :options="{ hideModeSwitch: true }"></editor>
                     <v-container v-else>
@@ -32,7 +32,7 @@
 <script>
 import axios from 'axios'
 export default {
-    props: ['document', 'action'],
+    props: ['boardId', 'articleId', 'action'],
     data() {
         return {
             // unsubscribe: null, 구독하지 않고 일회성으로 가져오도록 수정
@@ -42,14 +42,12 @@ export default {
             },
             exists: false,
             loading: false,
-            ref: null
+            ref: null,
+            article: null
         }
     },
 
     computed: {
-        articleId() {
-            return this.$route.query.articleId
-        },
         user() {
             return this.$store.state.user
         },
@@ -59,7 +57,7 @@ export default {
 
     },
     watch: {
-        document() {
+        boardId() {
             this.fetch()
         }
     },
@@ -71,15 +69,16 @@ export default {
     },
     methods: {
         async fetch() {
-            this.ref = this.$firebase.firestore().collection('boards').doc(this.document)
+            this.ref = this.$firebase.firestore().collection('boards').doc(this.boardId)
             // console.log(this.articleId)
 
-            if (!this.articleId) return
+            if (!this.articleId === 'new') return
             // if (this.unsubscribe) this.unsubscribe()
             const doc = await this.ref.collection('articles').doc(this.articleId).get()
             this.exists = doc.exists
             if (!this.exists) return
             const item = doc.data()
+            this.article = item
             this.form.title = item.title
             const {
                 data
@@ -88,22 +87,23 @@ export default {
         },
         async save() {
             if (!this.fireUser) throw Error('로그인이 필요합니다')
+            if (!this.form.title) throw Error('로그인이 필요합니다')
+            const md = this.$refs.editor.invoke('getMarkdown')
+            if (!md) throw Error('내용은 필수 항목입니다')
             this.loading = true
             try {
                 const createdAt = new Date()
-                const id = createdAt.getTime().toString()
-                const md = this.$refs.editor.invoke('getMarkdown')
-                const sn = await this.$firebase.storage().ref().child('boards').child(this.document).child(this.fireUser.uid).child(id + '.md').putString(md)
-                const url = await sn.ref.getDownloadURL()
                 const doc = {
                     title: this.form.title,
-                    updatedAt: createdAt,
-                    url: url
+                    updatedAt: createdAt
                 }
 
-                const batch = await this.$firebase.firestore().batch()
+                // const batch = await this.$firebase.firestore().batch()
 
-                if (!this.articleId) { // 문서가 없으면 새로 생성해야함
+                if (this.articleId === 'new') { // 문서가 없으면 새로 생성해야함
+                    const id = createdAt.getTime().toString()
+                    const sn = await this.$firebase.storage().ref().child('boards').child(this.boardId).child(id + '.md').putString(md)
+                    doc.url = await sn.ref.getDownloadURL()
                     doc.createdAt = createdAt
                     doc.commentCount = 0
                     doc.readCount = 0
@@ -114,17 +114,20 @@ export default {
                         photoURL: this.user.photoURL,
                         displayName: this.user.displayName
                     }
-                    batch.set(this.ref.collection('articles').doc(id), doc)
-                    batch.update(this.ref, {
-                        count: this.$firebase.firestore.FieldValue.increment(1)
-                    })
+
+                    // batch.set(this.ref.collection('articles').doc(id), doc)
+                    // batch.update(this.ref, {
+                    //     count: this.$firebase.firestore.FieldValue.increment(1)})
+                    await this.ref.collection('articles').doc(id).set(doc)
                 } else {
-                    batch.update(this.ref.collection('articles').doc(this.articleId), doc)
+                    // batch.update(this.ref.collection('articles').doc(this.articleId), doc)
+                    await this.$firebase.storage().ref().child('boards').child(this.boardId).child(this.articleId + '.md').putString(md)
+                    await this.ref.collection('articles').doc(this.articleId).update(doc)
                 }
                 await batch.commit()
             } finally {
                 this.loading = false
-                this.$router.push('/board/' + this.document)
+                this.$router.push('/board/' + this.boardId)
             }
         }
     }
