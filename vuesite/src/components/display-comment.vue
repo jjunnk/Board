@@ -14,6 +14,19 @@
                     <display-time :time="item.createdAt"></display-time>
                 </v-list-item-subtitle>
             </v-list-item-content>
+            <v-list-item-actions>
+                <v-spacer />
+                <v-btn icon @click="like(item)">
+                    <v-icon left :color="liked(item) ? 'success' : ''">mdi-thumb-up</v-icon>
+                    <span>{{ item.likeCount}}</span>
+                </v-btn>
+            </v-list-item-actions>
+            <v-list-item-actions>
+                <v-spacer />
+                <v-btn icon @click="remove(item)">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </v-list-item-actions>
         </v-list-item>
         <v-divider :key="i"></v-divider>
     </template>
@@ -49,6 +62,9 @@ export default {
     computed: {
         user() {
             return this.$store.state.user
+        },
+        fireUser() {
+            return this.$store.state.fireUser
         }
     },
     created() {
@@ -107,7 +123,9 @@ export default {
                     email: this.user.email,
                     photoURL: this.user.photoURL,
                     displayName: this.user.displayName
-                }
+                },
+                likeCount: 0,
+                likeUids: []
             }
             const id = doc.createdAt.getTime().toString()
             // const batch = this.$firebase.firestore().batch()
@@ -119,6 +137,33 @@ export default {
             this.docRef.collection('comments').doc(id).set(doc)
             this.comment = ''
 
+        },
+        liked(item) {
+            if (!this.fireUser) return false
+            return item.likeUids.includes(this.fireUser.uid)
+        },
+        async like(comment) {
+            if (!this.fireUser) throw Error('로그인이 필요합니다')
+            if (this.liked(comment)) {
+                await this.docRef.collection('comments').doc(comment.id).update({
+                    likeCount: this.$firebase.firestore.FieldValue.increment(-1),
+                    likeUids: this.$firebase.firestore.FieldValue.arrayRemove(this.fireUser.uid)
+                })
+            } else {
+                await this.docRef.collection('comments').doc(comment.id).update({
+                    likeCount: this.$firebase.firestore.FieldValue.increment(1),
+                    likeUids: this.$firebase.firestore.FieldValue.arrayUnion(this.fireUser.uid)
+                })
+            }
+            const doc = await this.docRef.collection('comments').doc(comment.id).get()
+            const item = doc.data()
+            comment.likeCount = item.likeCount
+            comment.likeUids = item.likeUids
+        },
+        async remove(comment) {
+            await this.docRef.collection('comments').doc(comment.id).delete()
+            const i = this.items.findIndex(el => el.id === comment.id) // 지우는 댓글 인덱스가 몇번째인지 찾음
+            this.items.splice(i, 1) // i로부터 1개 지운다. 
         }
     }
 }
