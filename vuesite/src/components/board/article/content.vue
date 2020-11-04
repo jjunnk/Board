@@ -44,6 +44,29 @@
             </v-btn>
         </v-card-actions>
         <v-divider />
+        <v-card-actions>
+            <v-row>
+                <v-col cols="4">
+                    <v-btn text block @click="go(-1)">
+                        <v-icon left :color="liked ? 'success' : ''">mdi-arrow-left</v-icon>
+                        이전글
+                    </v-btn>
+                </v-col>
+                <v-col cols="4">
+                    <v-btn text block @click="back">
+                        <v-icon left :color="liked ? 'success' : ''">mdi-format-list-bulleted</v-icon>
+                        목록
+                    </v-btn>
+                </v-col>
+                <v-col cols="4">
+                    <v-btn text block @click="go(+1)">
+                        <v-icon left :color="liked ? 'success' : ''">mdi-arrow-right</v-icon>
+                        다음글
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-card-actions>
+        <v-divider />
         <display-comment :article="article" :docRef="ref"></display-comment>
     </v-card>
     <v-card v-else>
@@ -70,9 +93,10 @@ export default {
     data() {
         return {
             content: '',
-            ref: this.$firebase.firestore().collection('boards').doc(this.boardId).collection('articles').doc(this.articleId),
+            ref: null,
             unsubscribe: null,
-            article: null
+            article: null,
+            doc: null
         }
     },
     computed: {
@@ -85,8 +109,13 @@ export default {
             // includes -> likeUids array 에 속해있으면 true, 안속해있으면 false 
         }
     },
+    watch: {
+        articleId() {
+            this.subscribe()
+        }
+    },
     async created() {
-        await this.readCountUpdate()
+        // await this.readCountUpdate()
         this.subscribe()
     },
     destroyed() {
@@ -100,11 +129,18 @@ export default {
         },
         subscribe() {
             if (this.unsubscribe) this.unsubscribe()
+
+            this.ref = this.$firebase.firestore().collection('boards').doc(this.boardId).collection('articles').doc(this.articleId)
+            this.ref.update({
+                readCount: this.$firebase.firestore.FieldValue.increment(1)
+            })
+
             this.unsubscribe = this.ref.onSnapshot(doc => {
                 if (!doc.exists) {
                     this.back()
                     return
                 }
+                this.doc = doc // document 의 주소 가져오기
                 const item = doc.data()
                 item.createdAt = item.createdAt.toDate()
                 item.updatedAt = item.updatedAt.toDate()
@@ -148,7 +184,24 @@ export default {
                     likeUids: this.$firebase.firestore.FieldValue.arrayUnion(this.fireUser.uid)
                 })
             }
+        },
+        async go(arrow) {
+            if (!this.doc) throw Error('읽지 못하였습니다')
+            const ref = this.$firebase.firestore()
+                .collection('boards').doc(this.boardId)
+                .collection('articles').orderBy('createdAt', 'desc')
+            let sn
+            if (arrow < 0) sn = await ref.endBefore(this.doc).limitToLast(1).get() // 전 도큐먼트
+            else sn = await ref.startAfter(this.doc).limit(1).get() // 다음 도큐먼트
+            if (sn.empty) throw Error('더이상 페이지가 없습니다')
+            const doc = sn.docs[0]
 
+            const us = this.$route.path.split('/')
+            us.pop()
+            us.push(doc.id)
+            this.$router.push({
+                path: us.join('/')
+            })
         }
     }
 }

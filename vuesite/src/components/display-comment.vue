@@ -67,6 +67,11 @@ export default {
             return this.$store.state.fireUser
         }
     },
+    watch: {
+        docRef() { // docRef 바뀔때마다 subscribe한다
+            this.subscribe()
+        }
+    },
     created() {
         this.subscribe()
     },
@@ -95,6 +100,7 @@ export default {
         },
         subscribe() {
             if (this.unsubscribe) this.unsubscribe()
+            this.items = [] // 초기화
             this.unsubscribe = this.docRef.collection('comments').orderBy('createdAt', 'desc').limit(LIMIT).onSnapshot(sn => {
                 // console.log(sn)
                 if (sn.empty) {
