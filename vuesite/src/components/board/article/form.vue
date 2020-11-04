@@ -14,9 +14,9 @@
             </v-toolbar>
             <v-card-text>
                 <v-text-field v-model="form.title" outlined label="제목"></v-text-field>
-                <editor v-if="articleId === 'new'" :initialValue="form.content" ref="editor" initialEditType="wysiwyg" :options="{ hideModeSwitch: true }"></editor>
+                <editor v-if="articleId === 'new'" :initialValue="form.content" ref="editor" initialEditType="wysiwyg" :options="{ hideModeSwitch: true }" height="500px"></editor>
                 <template v-else>
-                    <editor v-if="form.content" :initialValue="form.content" ref="editor" initialEditType="wysiwyg" :options="{ hideModeSwitch: true }"></editor>
+                    <editor v-if="form.content" :initialValue="form.content" ref="editor" initialEditType="wysiwyg" :options="{ hideModeSwitch: true }" height="500px"></editor>
                     <v-container v-else>
                         <v-row justify="center" align="center">
                             <v-progress-circular indeterminate></v-progress-circular>

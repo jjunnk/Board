@@ -1,21 +1,50 @@
 <template>
-<v-container fluid>
+<v-container fluid class="pa-0">
     <v-card v-if="article">
-        <v-toolbar color="#333" dark dense flat>
+        <v-card-text>카테고리</v-card-text>
+        <v-divider />
+        <v-toolbar color="transparent" dense flat>
             <v-toolbar-title>
                 {{article.title}}
             </v-toolbar-title>
             <v-spacer />
-            <v-btn @click="articleWrite" icon>
-                <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn @click="remove" icon>
-                <v-icon>mdi-delete</v-icon>
-            </v-btn>
+            <template v-if="(fireUser && fireUser.uid === article.uid) || (user && user.level === 0)">
+                <v-btn @click="articleWrite" icon>
+                    <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn @click="remove" icon>
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </template>
             <v-btn @click="back" icon>
                 <v-icon>mdi-close</v-icon>
             </v-btn>
         </v-toolbar>
+        <v-divider />
+        <v-row class="date-writer ma-0 pl-2">
+            <v-col cols="3" sm="2" md="2" class="text-left ">
+                작성일 : <display-time :time="article.createdAt" class="ml-2"></display-time>
+            </v-col>
+            <v-col cols="3" sm="2" md="2" class="text-left ">
+                수정일 : <display-time :time="article.updatedAt" class="ml-2"></display-time>
+            </v-col>
+            <v-col cols="3" sm="2" md="2" class="text-left ">
+                <v-icon left>mdi-eye</v-icon>
+                <span>{{article.readCount}}</span>
+            </v-col>
+            <v-col cols="3" sm="2" md="2" class="text-left ">
+                <v-icon left>mdi-comment</v-icon>
+                <span>{{article.commentCount}}</span>
+            </v-col>
+        </v-row>
+        <v-row class="date-writer">
+            <v-col cols="12" class="text-end ">
+                작성자 :
+                <display-user :user="article.user"></display-user>
+            </v-col>
+        </v-row>
+
+        <v-divider />
         <v-card-text>
             <viewer v-if="content" :initialValue="content"></viewer>
             <v-container v-else>
@@ -25,42 +54,29 @@
             </v-container>
         </v-card-text>
         <v-card-actions>
-            <v-spacer />
-            <span class="font-italic caption">
-                작성일: <display-time :time="article.createdAt"></display-time>
-            </span>
-        </v-card-actions>
-        <v-card-actions>
-            <v-spacer />
-            <span class="font-italic caption">
-                수정일: <display-time :time="article.updatedAt"></display-time>
-            </span>
-        </v-card-actions>
-        <v-card-actions>
-            <v-spacer />
-            <v-btn icon @click="like">
+            <v-btn @click="like" class="ma-auto pa-4" outlined>
                 <v-icon left :color="liked ? 'success' : ''">mdi-thumb-up</v-icon>
                 <span>{{ article.likeCount}}</span>
             </v-btn>
         </v-card-actions>
-        <v-divider />
+
         <v-card-actions>
             <v-row>
                 <v-col cols="4">
                     <v-btn text block @click="go(-1)">
-                        <v-icon left :color="liked ? 'success' : ''">mdi-arrow-left</v-icon>
+                        <v-icon left>mdi-arrow-left</v-icon>
                         이전글
                     </v-btn>
                 </v-col>
                 <v-col cols="4">
                     <v-btn text block @click="back">
-                        <v-icon left :color="liked ? 'success' : ''">mdi-format-list-bulleted</v-icon>
+                        <v-icon left>mdi-format-list-bulleted</v-icon>
                         목록
                     </v-btn>
                 </v-col>
                 <v-col cols="4">
                     <v-btn text block @click="go(+1)">
-                        <v-icon left :color="liked ? 'success' : ''">mdi-arrow-right</v-icon>
+                        <v-icon left>mdi-arrow-right</v-icon>
                         다음글
                     </v-btn>
                 </v-col>
@@ -83,13 +99,15 @@
 import axios from 'axios'
 import DisplayTime from '@/components/display-time'
 import DisplayComment from '@/components/display-comment'
+import DisplayUser from '@/components/display-user'
 
 export default {
     components: {
         DisplayTime,
-        DisplayComment
+        DisplayComment,
+        DisplayUser
     },
-    props: ['boardId', 'articleId'],
+    props: ['boardId', 'articleId', 'user'],
     data() {
         return {
             content: '',
@@ -100,6 +118,10 @@ export default {
         }
     },
     computed: {
+        // eslint-disable-next-line vue/no-dupe-keys
+        user() {
+            return this.$store.state.user
+        },
         fireUser() {
             return this.$store.state.fireUser
         },
@@ -206,3 +228,14 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.date-writer {
+    font-size: 0.7em;
+}
+
+.date-writer .col {
+    line-height: 32px;
+    padding: 4px;
+}
+</style>
