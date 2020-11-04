@@ -100,7 +100,8 @@ export default {
 
                 if (this.articleId === 'new') {
                     const id = createdAt.getTime().toString()
-                    const sn = await this.$firebase.storage().ref().child('boards').child(this.boardId).child(id + '.md').putString(md)
+                    const fn = id + '-' + this.fireUser.uid + '.md' // 파일명
+                    const sn = await this.$firebase.storage().ref().child('boards').child(this.boardId).child(fn).putString(md)
                     doc.url = await sn.ref.getDownloadURL()
                     doc.createdAt = createdAt
                     doc.commentCount = 0
@@ -121,13 +122,14 @@ export default {
                     await this.ref.collection('articles').doc(id).set(doc)
                 } else {
                     // batch.update(this.ref.collection('articles').doc(this.articleId), doc)
-                    await this.$firebase.storage().ref().child('boards').child(this.boardId).child(this.articleId + '.md').putString(md)
+                    const fn = this.articleId + '-' + this.article.uid + '.md' // 파일명
+                    await this.$firebase.storage().ref().child('boards').child(this.boardId).child(fn).putString(md)
                     await this.ref.collection('articles').doc(this.articleId).update(doc)
                 }
                 // await batch.commit()
+                this.$router.push('/board/' + this.boardId)
             } finally {
                 this.loading = false
-                this.$router.push('/board/' + this.boardId)
             }
         }
     }
