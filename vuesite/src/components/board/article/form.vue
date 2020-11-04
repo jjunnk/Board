@@ -69,11 +69,9 @@ export default {
     },
     methods: {
         async fetch() {
-            this.ref = this.$firebase.firestore().collection('boards').doc(this.boardId)
-            // console.log(this.articleId)
-
-            if (!this.articleId === 'new') return
             // if (this.unsubscribe) this.unsubscribe()
+            this.ref = this.$firebase.firestore().collection('boards').doc(this.boardId)
+            if (this.articleId === 'new') return
             const doc = await this.ref.collection('articles').doc(this.articleId).get()
             this.exists = doc.exists
             if (!this.exists) return
@@ -87,7 +85,7 @@ export default {
         },
         async save() {
             if (!this.fireUser) throw Error('로그인이 필요합니다')
-            if (!this.form.title) throw Error('로그인이 필요합니다')
+            if (!this.form.title) throw Error('제목은 필수 항목입니다')
             const md = this.$refs.editor.invoke('getMarkdown')
             if (!md) throw Error('내용은 필수 항목입니다')
             this.loading = true
@@ -100,7 +98,7 @@ export default {
 
                 // const batch = await this.$firebase.firestore().batch()
 
-                if (this.articleId === 'new') { // 문서가 없으면 새로 생성해야함
+                if (this.articleId === 'new') {
                     const id = createdAt.getTime().toString()
                     const sn = await this.$firebase.storage().ref().child('boards').child(this.boardId).child(id + '.md').putString(md)
                     doc.url = await sn.ref.getDownloadURL()
@@ -114,6 +112,8 @@ export default {
                         photoURL: this.user.photoURL,
                         displayName: this.user.displayName
                     }
+                    doc.likeCount = 0
+                    doc.likeUids = []
 
                     // batch.set(this.ref.collection('articles').doc(id), doc)
                     // batch.update(this.ref, {
@@ -124,7 +124,7 @@ export default {
                     await this.$firebase.storage().ref().child('boards').child(this.boardId).child(this.articleId + '.md').putString(md)
                     await this.ref.collection('articles').doc(this.articleId).update(doc)
                 }
-                await batch.commit()
+                // await batch.commit()
             } finally {
                 this.loading = false
                 this.$router.push('/board/' + this.boardId)

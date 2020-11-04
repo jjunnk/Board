@@ -1,0 +1,50 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // match /{document=**} {
+    //   allow read, write;
+    // }
+    function approvedLevel (level) {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.level <= level;
+    }
+    match /boards/{boardId} {
+      allow read: if true; // 아무나 읽기 가능
+      allow create: if approvedLevel(0); // 로그인이 되어있고, 사용자 레벨이 0인 사람만 create 가능
+      allow update: if approvedLevel(0) || resource.data.uid == request.auth.uid; 
+	    // 사용자 레벨이 0인 사람 or  자기 아이디가 게시물의 uid가 일치하면 update,delete 가능, count 원래 값이 1, 업데이트되는값이 2 로 서로 다를 경우 count 값을 update
+      allow delete:if approvedLevel(0) || resource.data.uid == request.auth.uid;
+
+      match /articles/{articleId} {  // board > article에 적용
+        function incrementArticleCount (before, after){ // 다른조건은 같고, readCount나 commentCount 에 변동이 생길때만
+          return before.url == after.url &&
+          before.createdAt == after.createdAt &&
+          before.updatedAt == after.updatedAt &&
+          before.title == after.title &&
+          before.uid == after.uid &&
+          before.uid.displayName == after.uid.displayName &&
+          before.uid.email == after.uid.email &&
+          before.uid.photoURL == after.uid.photoURL &&
+          (before.likeCount != after.likeCount || before.likeUids != after.likeUids || before.readCount ~= after.readCount) 
+        }
+        allow read: if true; // 아무나 읽기 가능
+        allow create: if approvedLevel(5);  // 사용자 레벨이 5인 사람 create 가능
+        allow update: if approvedLevel(0) || resource.data.uid == request.auth.uid || incrementArticleCount(resource.data, request.resource.data);
+        // 사용자 레벨이 0인 어드민 or  자기 자신이 게시물의 uid와 일치하면 update,delete 가능 
+        allow delete:if approvedLevel(0) || resource.data.uid == request.auth.uid;
+
+        match /comments/{commentId} { // board > article > comment collection에 적용
+          allow read: if true; // 아무나 읽기 가능
+          allow create: if approvedLevel(5); // 사용자 레벨이 5인 사람 create 가능
+          allow update, delete: if approvedLevel(0) || resource.data.uid == request.auth.uid; 
+          // 사용자 레벨이 0인 어드민 or  자기 자신이 게시물의 uid와 일치하면 update,delete 가능
+        }
+      }
+    }
+    match /users/{userId} {
+      allow read: if (request.auth != null && request.auth.uid == userId) || approvedLevel(0)// 어드민이나 본인것만 읽기 가능
+      allow update: if (request.auth != null && request.auth.uid == userId && resource.data.level == request.resource.data.level)  || approvedLevel(0);
+      allow create, delete: if false; //  create, delete는 functions 에서 해주고있다
+    }
+  }
+}

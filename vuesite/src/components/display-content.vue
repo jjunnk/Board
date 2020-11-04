@@ -65,7 +65,7 @@ export default {
     methods: {
         async fetch() {
             const r = await axios.get(this.item.url)
-            this.content = r.data
+            this.content = typeof r.data === 'string' ? r.data : r.data.toString()
             await this.ref.collection('articles').doc(this.item.id)
                 .update({
                     readCount: this.$firebase.firestore.FieldValue.increment(1)

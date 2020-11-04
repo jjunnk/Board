@@ -6,7 +6,6 @@
             <SiteTitle :propstitle="site.title"></SiteTitle>
             <v-spacer />
             <SiteSign></SiteSign>
-            <v-btn @click="test">test</v-btn>
         </v-app-bar>
         <v-navigation-drawer app v-model="drawer" width="400">
             <SiteMenu :items="site.menu" @close="drawer = false"></SiteMenu>
@@ -92,13 +91,8 @@ export default {
                         console.log(e.message);
                     }
                 );
-        },
-        async test() {
-            await this.$firebase.firestore().collection('users').doc(this.$store.state.fireUser.uid).update({
-                visitedAt: new Date(),
-                visitCount: 0
-            })
         }
+
     }
 };
 </script>

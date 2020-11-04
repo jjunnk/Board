@@ -59,7 +59,7 @@ export default {
         },
         async save() {
             if (!this.$store.state.fireUser) throw Errow('로그인이 필요합니다') // 로그인 X 상태
-            if (!this.form.categoty || !this.form.title) throw Error('분류,제목은 필수 입력 항목입니다')
+            if (!this.form.category || !this.form.title) throw Error('분류,제목은 필수 입력 항목입니다')
 
             const form = {
                 category: this.form.category,
