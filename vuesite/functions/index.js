@@ -28,6 +28,7 @@ exports.createUser = functions.region(region).auth.user().onCreate(async (user) 
   await db.collection('users').doc(uid).set(u)
   u.createdAt = time.getTime()
   await rdb.ref('users').child(uid).set(u)
+
   try{
     await db.collection('meta').doc('users').update({ count: admin.firestore.FieldValue.increment(1) })
   } catch(e){
@@ -66,8 +67,25 @@ exports.onDeleteBoard = functions.region(region).firestore
 exports.onCreateBoardArticle = functions.region(region).firestore
   .document('boards/{bid}/articles/{aid}')
   .onCreate((snap, context) => {
+    const set = {
+      count : admin.firestore.FieldValue.increment(1)
+    }
+    const doc = snap.data()
+    if(doc.category) set.categories = admin.firestore.FieldValue.arrayUnion(doc.category)
+    if(doc.tags.length) set.tags = admin.firestore.FieldValue.arrayUnion(...doc.tags)
     return db.collection('boards').doc(context.params.bid)
-      .update({ count: admin.firestore.FieldValue.increment(1) })
+      .update(set)
+  })
+
+exports.onUpdateBoardArticle = functions.region(region).firestore
+  .document('boards/{bid}/articles/{aid}')
+  .onUpdate((change, context) => {
+    const set = {}
+    const doc = change.after.data()
+    if(doc.category) set.categories = admin.firestore.FieldValue.arrayUnion(doc.category)
+    if(doc.tags.length) set.tags = admin.firestore.FieldValue.arrayUnion(...doc.tags)
+    if(!Object.keys(set))
+    return db.collection('boards').doc(context.params.bid).update(set)
   })
 
 exports.onDeleteBoardArticle = functions.region(region).firestore
@@ -117,3 +135,4 @@ exports.onDeleteBoardComment = functions.region(region).firestore
       .collection('articles').doc(context.params.aid)
       .update({ commentCount: admin.firestore.FieldValue.increment(-1) })
   })
+

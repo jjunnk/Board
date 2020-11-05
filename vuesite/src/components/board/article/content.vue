@@ -36,14 +36,11 @@
                 <v-icon left>mdi-comment</v-icon>
                 <span>{{article.commentCount}}</span>
             </v-col>
-        </v-row>
-        <v-row class="date-writer">
-            <v-col cols="12" class="text-end ">
+            <v-col cols="12" sm="4" md="4" class="text-end ">
                 작성자 :
                 <display-user :user="article.user"></display-user>
             </v-col>
         </v-row>
-
         <v-divider />
         <v-card-text>
             <viewer v-if="content" :initialValue="content"></viewer>
@@ -54,7 +51,7 @@
             </v-container>
         </v-card-text>
         <v-card-actions>
-            <v-btn @click="like" class="ma-auto pa-4" outlined>
+            <v-btn @click="like" class="ma-auto py-8 px-3 rounded-circle" outlined>
                 <v-icon left :color="liked ? 'success' : ''">mdi-thumb-up</v-icon>
                 <span>{{ article.likeCount}}</span>
             </v-btn>

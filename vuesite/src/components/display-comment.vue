@@ -9,9 +9,9 @@
             <v-list-item-action>
                 <display-user :user="item.user"></display-user>
             </v-list-item-action>
-            <v-list-item-content class="d-inline-flex  flex-nowrap flex-row">
+            <v-list-item-content class="flex-nowrap flex-column flex-sm-row flex-md-row flex-lg-row">
                 <v-list-item-subtitle class="black--text comment" auto-grow v-text="item.comment"></v-list-item-subtitle>
-                <v-list-item-subtitle class="text-end" min-width="100px">
+                <v-list-item-subtitle class="text-end time" min-width="100px">
                     <display-time :time="item.createdAt"></display-time>
                 </v-list-item-subtitle>
             </v-list-item-content>
@@ -179,5 +179,10 @@ export default {
 <style scoped>
 .comment {
     white-space: pre-wrap;
+    flex: 0 0 85%
+}
+
+.time {
+    font-size: small
 }
 </style>
