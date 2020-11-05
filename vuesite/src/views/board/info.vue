@@ -1,18 +1,18 @@
 <template>
 <div>
-    <board-info v-if="!action" :boardId="info" />
+    <board-content v-if="!action" :boardId="info" />
     <board-form v-else :boardId="info" :action="action" />
 
 </div>
 </template>
 
 <script>
-import BoardInfo from '@/components/board/info'
+import BoardContent from '@/components/board/content'
 import BoardForm from '@/components/board/form'
 
 export default {
     components: {
-        BoardInfo,
+        BoardContent,
         BoardForm
     },
     computed: {

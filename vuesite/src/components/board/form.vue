@@ -14,7 +14,7 @@
             </v-toolbar>
             <v-card-text>
                 <v-text-field v-model="form.category" outlined label="분류"></v-text-field>
-                <v-text-field v-model="form.title" outlined label="제목"></v-text-field>
+                <v-text-field v-model="form.title" outlined label="게시판 이름"></v-text-field>
                 <v-textarea v-model="form.description" outlined label="내용"></v-textarea>
             </v-card-text>
         </v-card>
