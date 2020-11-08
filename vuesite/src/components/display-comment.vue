@@ -15,19 +15,19 @@
                     <display-time :time="item.createdAt"></display-time>
                 </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-actions>
+            <v-list-item-action>
                 <v-spacer />
                 <v-btn text @click="like(item)">
                     <v-icon left :color="liked(item) ? 'success' : ''">mdi-thumb-up</v-icon>
                     <span>{{ item.likeCount}}</span>
                 </v-btn>
-            </v-list-item-actions>
-            <v-list-item-actions>
+            </v-list-item-action>
+            <v-list-item-action>
                 <v-spacer />
                 <v-btn icon @click="remove(item)">
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
-            </v-list-item-actions>
+            </v-list-item-action>
         </v-list-item>
         <v-divider :key="i" v-if="i < items.length -1"></v-divider>
     </template>
@@ -121,6 +121,15 @@ export default {
             if (isIntersecting) this.more()
         },
         async save() {
+            if (!this.fireUser) alert('로그인이 필요합니다')
+            if (!this.comment) {
+                alert('댓글을 작성해주세요')
+                return
+            }
+            if (this.comment.length > 300) {
+                alert('300자를 초과하였습니다. 300자 이내로 작성해주세요')
+                return
+            }
             const doc = {
                 createdAt: new Date(),
                 updatedAt: new Date(),

@@ -7,18 +7,35 @@ import en from 'vuetify/es5/locale/en'
 
 Vue.use(Vuetify);
 
+const theme={
+  themes :{
+    light:{
+      primary:'#A87B80', // rose
+      secondary:'#383644', // black
+      accent:'#EBB9B8', // pink
+      info:'#FADCDA', // light pink
+      success:'#EBB9B8' // pink
+    },
+    // dark: {
+    //   primary: colors.blue.lighten3,
+    // }
+  }
+}
+
+
 export default new Vuetify({
     lang: {
         locales: { ko,en },
         current: 'ko',
       },
-      breakpoint: {
-        thresholds: {
-          xs: 340,
-          sm: 540,
-          md: 800,
-          lg: 1280,
-        },
-        scrollBarWidth: 24,
+    theme,
+    breakpoint: {
+      thresholds: {
+        xs: 340,
+        sm: 540,
+        md: 800,
+        lg: 1280,
       },
+      scrollBarWidth: 24,
+    },
 });

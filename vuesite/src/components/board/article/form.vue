@@ -107,8 +107,10 @@ export default {
             const md = this.$refs.editor.invoke('getMarkdown')
             if (!md) throw Error('내용은 필수 항목입니다')
             this.loading = true
+
             try {
                 const createdAt = new Date()
+                const hash = '#'
                 const doc = {
                     title: this.form.title,
                     category: this.form.category,
@@ -116,9 +118,7 @@ export default {
                     updatedAt: createdAt,
                     summary: getSummary(md, 300)
                 }
-
                 // const batch = await this.$firebase.firestore().batch()
-
                 if (this.articleId === 'new') {
                     const id = createdAt.getTime().toString()
                     const fn = id + '-' + this.fireUser.uid + '.md' // 파일명

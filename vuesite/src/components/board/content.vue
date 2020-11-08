@@ -1,14 +1,14 @@
 <template>
 <v-container>
     <v-card outlined :item="$vuetify.breakpoint.xs" v-if="board">
-        <v-toolbar color="black" dense flat dark>
+        <v-toolbar color="primary" dense flat>
             <v-toolbar-title v-text="board.title"></v-toolbar-title>
             <v-spacer />
             <v-btn icon @click="dialog=true">
                 <v-icon>mdi-information-outline</v-icon>
             </v-btn>
             <template v-if="user">
-                <v-btn icon @click="articleWrite" :disabled="user.level >= 4">
+                <v-btn icon @click="articleWrite" :disabled="!user">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </template>
@@ -77,9 +77,7 @@
                 <v-col class="d-flex justify-end">
                     <v-btn icon @click="dialog=false">닫기<v-icon small>mdi-close</v-icon>
                     </v-btn>
-
                 </v-col>
-
             </v-card>
         </v-dialog>
     </v-card>
@@ -155,6 +153,11 @@ export default {
 </script>
 
 <style scoped>
+.theme--light.v-btn.v-btn--icon,
+.v-toolbar__title {
+    color: #fff;
+}
+
 .comment {
     white-space: pre-wrap;
 }

@@ -1,10 +1,10 @@
 <template>
 <v-container fluid class="pa-0">
     <v-card v-if="article">
-        <v-card-text>카테고리</v-card-text>
         <v-divider />
         <v-toolbar color="transparent" dense flat>
             <v-toolbar-title>
+                <v-chip outlined small label color="primary" class="rounded mr-4">{{article.category}}</v-chip>
                 {{article.title}}
             </v-toolbar-title>
             <v-spacer />
@@ -51,7 +51,10 @@
             </v-container>
         </v-card-text>
         <v-card-actions>
-            <v-btn @click="like" class="ma-auto py-8 px-3 rounded-circle" outlined>
+            <v-chip small label v-for="tag in article.tags" :key="tag" v-text="tag"></v-chip>
+        </v-card-actions>
+        <v-card-actions>
+            <v-btn @click="like" class="ma-auto py-8 px-3 rounded-circle" outlined :color="liked ? 'success' : ''">
                 <v-icon left :color="liked ? 'success' : ''">mdi-thumb-up</v-icon>
                 <span>{{ article.likeCount}}</span>
             </v-btn>
@@ -129,6 +132,9 @@ export default {
         }
     },
     watch: {
+        boardId() {
+            this.subscribe()
+        },
         articleId() {
             this.subscribe()
         }

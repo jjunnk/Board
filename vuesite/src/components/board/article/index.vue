@@ -2,12 +2,12 @@
 <div>
     <v-data-table :headers="headers" :items="items" :server-items-length="board.count" :options.sync="options" :items-per-page="5" :footer-props="{
       'items-per-page-options':[5, 10, 20, 30],
-    }" must-sort item-key="id">
+    }" must-sort item-key="id" color="info">
         <template v-slot:[`item.createdAt`]="{item}">
             <display-time :time="item.createdAt"></display-time>
         </template>
         <template v-slot:[`item.title`]="{item}">
-            <a @click="read(item)">{{item.title}}</a>
+            <a @click="read(item)" color="#383644">{{item.title}}</a>
         </template>
         <template v-slot:[`item.user.displayName`]="{item}">
             <display-user :user="item.user"></display-user>
@@ -96,7 +96,7 @@ export default {
     methods: {
         subscribe(arrow) {
             if (this.unsubscribe) this.unsubscribe()
-
+            this.items = []
             const order = this.options.sortBy[0]
             const sort = this.options.sortDesc[0] ? 'desc' : 'asc'
             const limit = this.options.itemsPerPage
@@ -140,6 +140,10 @@ export default {
 
 <style scoped>
 a {
-    color: #333;
+    color: #383644;
+}
+
+.theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+    background: #fceaea !important
 }
 </style>
