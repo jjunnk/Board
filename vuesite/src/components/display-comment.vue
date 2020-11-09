@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-card-title>
-        <v-textarea rows="1" append-icon="mdi-send" @click:append="save" v-model="comment" label="댓글 작성" placeholer="Ctrl + Enter로 댓글 작성 가능" outlined hide-details auto-grow @keypress.ctrl.enter="save">
+        <v-textarea rows="1" append-icon="mdi-send" @click:append="save" v-model="comment" label="댓글 작성" placeholer="Ctrl + Enter로 댓글 작성 가능" outlined hide-details auto-grow @keypress.ctrl.enter="save" color="accent">
         </v-textarea>
     </v-card-title>
     <template v-for="(item, i) in items">
@@ -18,7 +18,7 @@
             <v-list-item-action>
                 <v-spacer />
                 <v-btn text @click="like(item)">
-                    <v-icon left :color="liked(item) ? 'success' : ''">mdi-thumb-up</v-icon>
+                    <v-icon left :color="liked(item) ? 'success' : '#444'">mdi-thumb-up</v-icon>
                     <span>{{ item.likeCount}}</span>
                 </v-btn>
             </v-list-item-action>
@@ -32,7 +32,7 @@
         <v-divider :key="i" v-if="i < items.length -1"></v-divider>
     </template>
     <v-list-item>
-        <v-btn :loading="loading" v-if="lastDoc && items.length < article.commentCount" v-intersect="onIntersect" @click="more" text color="#444" block outlined>더보기</v-btn>
+        <v-btn :loading="loading" v-if="lastDoc && items.length < article.commentCount" v-intersect="onIntersect" @click="more" text color="accent" block outlined>더보기</v-btn>
     </v-list-item>
 </v-container>
 </template>

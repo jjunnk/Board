@@ -4,7 +4,7 @@
         <v-divider />
         <v-toolbar color="transparent" dense flat>
             <v-toolbar-title>
-                <v-chip outlined small label color="primary" class="rounded mr-4">{{article.category}}</v-chip>
+                <v-chip outlined small label color="accent" class="rounded mr-4">{{article.category}}</v-chip>
                 {{article.title}}
             </v-toolbar-title>
             <v-spacer />
@@ -51,7 +51,7 @@
             </v-container>
         </v-card-text>
         <v-card-actions>
-            <v-chip small outlined label v-for="tag in article.tags" :key="tag" v-text="tag" class="mr-2" color="primary"></v-chip>
+            <v-chip small label v-for="tag in article.tags" :key="tag" v-text="tag" class="mr-2" color="accent"></v-chip>
         </v-card-actions>
         <v-card-actions>
             <v-btn @click="like" class="ma-auto py-8 px-3 rounded-circle" outlined :color="liked ? 'success' : ''">
@@ -63,19 +63,19 @@
         <v-card-actions>
             <v-row>
                 <v-col cols="4">
-                    <v-btn text block @click="go(-1)">
+                    <v-btn text block @click="go(-1)" color="accent">
                         <v-icon left>mdi-arrow-left</v-icon>
                         이전글
                     </v-btn>
                 </v-col>
                 <v-col cols="4">
-                    <v-btn text block @click="back">
+                    <v-btn text block @click="back" color="accent">
                         <v-icon left>mdi-format-list-bulleted</v-icon>
                         목록
                     </v-btn>
                 </v-col>
                 <v-col cols="4">
-                    <v-btn text block @click="go(+1)">
+                    <v-btn text block @click="go(+1)" color="accent">
                         <v-icon left>mdi-arrow-right</v-icon>
                         다음글
                     </v-btn>
@@ -83,7 +83,7 @@
             </v-row>
         </v-card-actions>
         <v-divider />
-        <display-comment :article="article" :docRef="ref"></display-comment>
+        <display-comment :article="article" :docRef="ref" color="info"></display-comment>
     </v-card>
     <v-card v-else>
         <v-container>

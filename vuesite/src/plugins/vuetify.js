@@ -11,10 +11,10 @@ const theme={
   themes :{
     light:{
       primary:'#0D0D0D', // black
-      secondary:'#404040', // grey
-      accent:'#EBB9B8', // light grey
-      info:'#293724', // green
-      success:'#e44d2a' // orange
+      secondary:'#ebdaca', // beige
+      accent:'#ad9789', // brown
+      info:'#655d5d', // dark brown
+      success:'#69754d' // green
     },
     // dark: {
     //   primary: colors.blue.lighten3,

@@ -1,8 +1,8 @@
 <template>
 <v-container>
     <v-card outlined :item="$vuetify.breakpoint.xs" v-if="board">
-        <v-toolbar color="primary" dense flat>
-            <v-toolbar-title v-text=" board.title">
+        <v-toolbar color="secondary" dense flat>
+            <v-toolbar-title class="font-weight-bold" v-text=" board.title" color="accent">
             </v-toolbar-title>
             <v-spacer />
             <v-sheet>
@@ -171,9 +171,8 @@ export default {
 </script>
 
 <style scoped>
-.v-toolbar.primary .theme--light.v-btn.v-btn--icon,
-.v-toolbar.primary .v-toolbar__title {
-    color: #fff;
+#app>div.v-application--wrap>div>main>div>div>div>div>header>div>div.v-toolbar__title.font-weight-bold {
+    color: #444
 }
 
 .v-dialog__content div {
