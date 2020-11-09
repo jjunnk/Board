@@ -142,6 +142,10 @@ export default {
                 alert('글자수를 초과했습니다. 20자 이내로 작성해주세요')
                 return
             }
+            if (this.category.length === '전체') {
+                alert('전체는 사용 불가능합니다')
+                return
+            }
             const exists = this.form.categories.includes(this.category)
             if (exists) {
                 alert('사용중인 카테고리입니다')

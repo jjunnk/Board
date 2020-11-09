@@ -2,8 +2,12 @@
 <v-container>
     <v-card outlined :item="$vuetify.breakpoint.xs" v-if="board">
         <v-toolbar color="primary" dense flat>
-            <v-toolbar-title v-text="board.title"></v-toolbar-title>
+            <v-toolbar-title v-text=" board.title">
+            </v-toolbar-title>
             <v-spacer />
+            <v-sheet>
+                <v-select :value="getCategory" :items="board.categories" @change="changeCategories" solo dense single-line hide-details />
+            </v-sheet>
             <v-btn icon @click="dialog=true">
                 <v-icon>mdi-information-outline</v-icon>
             </v-btn>
@@ -90,7 +94,7 @@ import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
 
 export default {
-    props: ['boardId'],
+    props: ['boardId', 'category', 'tag'],
     components: {
         BoardArticle,
         DisplayTime,
@@ -110,6 +114,10 @@ export default {
         }
     },
     computed: {
+        getCategory() {
+            if (!this.category) return '전체'
+            return this.category
+        },
         user() {
             return this.$store.state.user
         }
@@ -129,6 +137,7 @@ export default {
                 const item = doc.data()
                 item.createdAt = item.createdAt.toDate()
                 item.updatedAt = item.updatedAt.toDate()
+                item.categories.unshift('전체')
                 this.board = item
             }, console.error)
         },
@@ -145,6 +154,15 @@ export default {
                 path: this.$route.path + '/new',
                 query: {
                     action: 'write'
+                }
+            })
+        },
+        changeCategory(item) {
+            if (item === '전체') this.$router.push(this.$route.path)
+            else this.$router.push({
+                path: this.$route.path,
+                query: {
+                    category: item
                 }
             })
         }

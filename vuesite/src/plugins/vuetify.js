@@ -10,11 +10,11 @@ Vue.use(Vuetify);
 const theme={
   themes :{
     light:{
-      primary:'#A87B80', // rose
-      secondary:'#383644', // black
-      accent:'#EBB9B8', // pink
-      info:'#FADCDA', // light pink
-      success:'#EBB9B8' // pink
+      primary:'#0D0D0D', // black
+      secondary:'#404040', // grey
+      accent:'#EBB9B8', // light grey
+      info:'#293724', // green
+      success:'#e44d2a' // orange
     },
     // dark: {
     //   primary: colors.blue.lighten3,

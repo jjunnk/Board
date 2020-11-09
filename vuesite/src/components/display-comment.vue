@@ -32,7 +32,7 @@
         <v-divider :key="i" v-if="i < items.length -1"></v-divider>
     </template>
     <v-list-item>
-        <v-btn v-if="lastDoc && items.length < article.commentCount" v-intersect="onIntersect" @click="more" text color="#444" block outlined>더보기</v-btn>
+        <v-btn :loading="loading" v-if="lastDoc && items.length < article.commentCount" v-intersect="onIntersect" @click="more" text color="#444" block outlined>더보기</v-btn>
     </v-list-item>
 </v-container>
 </template>
@@ -57,7 +57,8 @@ export default {
             items: [],
             unsubscribe: null,
             // limit: 5
-            lastDoc: null
+            lastDoc: null,
+            loading: false
         }
     },
     computed: {
@@ -112,9 +113,15 @@ export default {
             })
         },
         async more() {
-            if (!this.lastDoc) throw Error('더이상 데이터가 없습니다')
-            const sn = await this.docRef.collection('comments').orderBy('createdAt', 'desc').startAfter(this.lastDoc).limit(LIMIT).get()
-            this.snapshotToItems(sn)
+            if (!this.lastDoc) alert('더이상 데이터가 없습니다')
+            if (this.loading) return
+            this.loading = true
+            try {
+                const sn = await this.docRef.collection('comments').orderBy('createdAt', 'desc').startAfter(this.lastDoc).limit(LIMIT).get()
+                this.snapshotToItems(sn)
+            } finally {
+                this.loading = false
+            }
         },
         onIntersect(entries, observer, isIntersecting) {
             // console.log(isIntersecting)

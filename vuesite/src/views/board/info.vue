@@ -1,6 +1,6 @@
 <template>
 <div>
-    <board-content v-if="!action" :boardId="info" />
+    <board-content v-if="!action" :boardId="info" :category="category" :tag="tag" />
     <board-form v-else :boardId="info" :action="action" />
 
 </div>
@@ -21,6 +21,12 @@ export default {
         },
         action() {
             return this.$route.query.action
+        },
+        category() {
+            return this.$route.params.category
+        },
+        tag() {
+            return this.$route.query.tag
         }
     }
 }
