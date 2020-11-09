@@ -1,5 +1,5 @@
 <template>
-<v-card>
+<v-card fluid>
     <board-index v-if="collection === 'board' && document === 'list'"></board-index>
     <board-content v-else-if="collection === 'board' && !action" :document="document"></board-content>
     <board-form v-else-if="collection === 'board' && action=== 'board-write'" :document="document" :action="action"></board-form>

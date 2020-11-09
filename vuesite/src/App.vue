@@ -10,7 +10,7 @@
         <v-navigation-drawer app v-model="drawer" width="400">
             <SiteMenu :items="site.menu" @close="drawer = false"></SiteMenu>
         </v-navigation-drawer>
-        <v-main>
+        <v-main height="100%">
             <router-view />
         </v-main>
 

@@ -51,7 +51,7 @@
             </v-container>
         </v-card-text>
         <v-card-actions>
-            <v-chip small label v-for="tag in article.tags" :key="tag" v-text="tag"></v-chip>
+            <v-chip small outlined label v-for="tag in article.tags" :key="tag" v-text="tag" class="mr-2" color="primary"></v-chip>
         </v-card-actions>
         <v-card-actions>
             <v-btn @click="like" class="ma-auto py-8 px-3 rounded-circle" outlined :color="liked ? 'success' : ''">
