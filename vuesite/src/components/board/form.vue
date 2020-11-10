@@ -1,5 +1,5 @@
 <template>
-<v-container fluid class="pa-0">
+<v-container fluid class="pa-0" v-if="user && user.level === 0">
     <v-form>
         <v-card :loading="loading" :tile="$vuetify.breakpoint.xs" flat>
             <v-toolbar color="transparent" dense flat>
@@ -53,6 +53,9 @@
             </v-row>
         </v-card>
     </v-form>
+</v-container>
+<v-container v-else>
+    <v-alert type="warning" border="left" class="mb-0">게시판이 없습니다</v-alert>
 </v-container>
 </template>
 
@@ -127,8 +130,8 @@ export default {
                         photoURL: this.$store.state.user.photoURL,
                         displayName: this.$store.state.user.displayName
                     }
-                    form.categories = ['일반']
-                    form.tags = ['vue', 'firebase']
+                    // form.categories = ['일반']
+                    // form.tags = ['vue', 'firebase']
                     await this.ref.set(form)
                 } else {
                     await this.ref.update(form)
