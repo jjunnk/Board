@@ -10,7 +10,10 @@
             <display-time :time="item.createdAt"></display-time>
         </template>
         <template v-slot:[`item.title`]="{item}">
-            <a @click="read(item)" color="#383644" :to="category ? `${boardId}/${item.id}?category=${category}`: `${boardId}/${item.id}`">{{item.title}}</a>
+            <a @click="read(item)" color="#383644" :to="category ? `${boardId}/${item.id}?category=${category}`: `${boardId}/${item.id}`">
+                <v-chip color="success" class="mr-2" small label left v-if="newCheck(item.updatedAt)">new</v-chip>
+                {{item.title}}
+            </a>
         </template>
         <template v-slot:[`item.user.displayName`]="{item}">
             <display-user :user="item.user"></display-user>
@@ -32,6 +35,7 @@ import {
 } from 'lodash'
 import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
+import newCheck from '@/util/newCheck'
 
 const LIMIT = 5
 
@@ -67,6 +71,7 @@ export default {
                     text: '댓글'
                 }
             ],
+            newCheck,
             items: [],
             unsubscribe: null,
             options: {

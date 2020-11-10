@@ -10,7 +10,9 @@
                 <display-user :user="item.user" color="primary"></display-user>
             </v-list-item-action>
             <v-list-item-content class="flex-nowrap flex-column flex-sm-row flex-md-row flex-lg-row">
-                <v-list-item-subtitle v-if="!item.edit" color="primary" class="comment" auto-grow v-text="item.comment">
+                <v-list-item-subtitle v-if="!item.edit" color="primary" class="comment" auto-grow>
+                    <v-chip color="success" class="mr-2" small label outlined v-if="newCheck(item.updatedAt)">new</v-chip>
+                    {{item.comment}}
                 </v-list-item-subtitle>
                 <v-list-item-subtitle v-else class="comment">
                     <v-textarea v-model="item.comment" outlined label="댓글 수정" placeholder="Ctrl + Enter 를 누르면 저장됩니다" append-icon="mdi-comment-edit" @click:append="update(item)" @keypress.ctrl.enter="update(item)" hide-details auto-grow rows="1" class="comment " color="accent" clearable>
@@ -48,6 +50,8 @@ import {
 } from 'lodash'
 import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
+import newCheck from '@/util/newCheck'
+
 const LIMIT = 5
 
 export default {
@@ -63,7 +67,8 @@ export default {
             unsubscribe: null,
             // limit: 5
             lastDoc: null,
-            loading: false
+            loading: false,
+            newCheck
         }
     },
     computed: {

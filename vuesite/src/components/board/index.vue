@@ -27,6 +27,7 @@
                 <v-col cols="12" sm="6" md="4" lg="3" xl="2" v-for="(item) in items" :key="item.id">
                     <v-card height="100%">
                         <v-subheader>
+                            <v-chip color="success" class="mr-2" small label left v-if="newCheck(item.updatedAt)">new</v-chip>
                             {{item.title}}
                             <v-spacer />
                             <template v-if="user && user.level === 0">
@@ -97,6 +98,8 @@
 import {
     last
 } from 'lodash'
+import newCheck from '@/util/newCheck'
+
 const LIMIT = 5
 export default {
     data() {
@@ -108,7 +111,8 @@ export default {
             order: 'createdAt',
             sort: 'desc',
             boardId: '',
-            loading: false
+            loading: false,
+            newCheck
         }
     },
     computed: {

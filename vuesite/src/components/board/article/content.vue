@@ -4,6 +4,7 @@
         <v-divider />
         <v-toolbar color="transparent" dense flat>
             <v-toolbar-title>
+                <v-chip color="success" class="mr-2" small label left v-if="newCheck(article.updatedAt)">new</v-chip>
                 <v-chip outlined small label color="accent" class="rounded mr-4">{{article.category}}</v-chip>
                 {{article.title}}
             </v-toolbar-title>
@@ -100,6 +101,7 @@ import axios from 'axios'
 import DisplayTime from '@/components/display-time'
 import DisplayComment from '@/components/display-comment'
 import DisplayUser from '@/components/display-user'
+import newCheck from '@/util/newCheck'
 
 export default {
     components: {
@@ -114,7 +116,8 @@ export default {
             ref: null,
             unsubscribe: null,
             article: null,
-            doc: null
+            doc: null,
+            newCheck
         }
     },
     computed: {
