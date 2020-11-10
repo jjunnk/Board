@@ -1,6 +1,12 @@
 <template>
-<v-container>
-    <v-card outlined :item="$vuetify.breakpoint.xs" v-if="board">
+<v-container fluid v-if="!loaded">
+    <v-skeleton-loader type="board"></v-skeleton-loader>
+</v-container>
+<v-container fluid v-else-if="loaded && !board">
+    <v-alert type="warning" border="left" class="mb-0">게시판 정보를 불러오지 못했습니다</v-alert>
+</v-container>
+<v-container v-else>
+    <v-card outlined :item="$vuetify.breakpoint.xs">
         <v-toolbar color="secondary" dense flat>
             <v-toolbar-title class="font-weight-bold" v-text=" board.title" color="accent">
             </v-toolbar-title>
@@ -105,7 +111,8 @@ export default {
             unsubscribe: null,
             loading: false,
             dialog: false,
-            board: null
+            board: null,
+            loaded: false
         }
     },
     watch: {
@@ -132,7 +139,10 @@ export default {
         subscribe() {
             if (this.unsubscribe) this.unsubscribe()
             const ref = this.$firebase.firestore().collection('boards').doc(this.boardId)
+            this.loaded = false
             this.unsubscribe = ref.onSnapshot(doc => {
+                this.loaded = true
+
                 if (!doc.exists) return this.write()
                 const item = doc.data()
                 item.createdAt = item.createdAt.toDate()

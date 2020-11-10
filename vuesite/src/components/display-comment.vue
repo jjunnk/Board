@@ -22,7 +22,7 @@
                     <display-time :time="item.createdAt"></display-time>
                 </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-actions>
+            <v-list-item-action>
                 <v-btn text @click="like(item)">
                     <v-icon left :color="liked(item) ? 'success' : '#444'">mdi-thumb-up</v-icon>
                     <span>{{ item.likeCount}}</span>
@@ -34,7 +34,7 @@
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
 
-            </v-list-item-actions>
+            </v-list-item-action>
         </v-list-item>
         <v-divider :key="i" v-if="i < items.length -1"></v-divider>
     </template>

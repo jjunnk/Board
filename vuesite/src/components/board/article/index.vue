@@ -1,5 +1,5 @@
 <template>
-<div>
+<v-container fluid v-if="items">
     <v-data-table :headers="headers" :items="items" :server-items-length="board.count" :options.sync="options" :items-per-page="5" :footer-props="{
       'items-per-page-options':[5, 10, 20, 30],
     }" must-sort item-key="id" color="info">
@@ -19,13 +19,8 @@
             <display-user :user="item.user"></display-user>
         </template>
     </v-data-table>
-    <v-container fluid v-if="!items">
-        <v-alert type="warning" border="left" class="mb-0 pl-3">
-            게시물이 없습니다
-            <v-icon>mdi-plus</v-icon> 버튼을 눌러서 게시물을 작성하세요
-        </v-alert>
-    </v-container>
-</div>
+
+</v-container>
 </template>
 
 <script>
@@ -79,6 +74,7 @@ export default {
                 sortDesc: [true]
             },
             docs: [],
+            loaded: false
         }
     },
     watch: {
@@ -91,12 +87,12 @@ export default {
         options: {
             handler(n, o) {
                 if (!o.page) {
-                    this.subscribe(0)
+                    this.subscribe()
                     return
                 }
                 if (head(o.sortBy) !== head(n.sortBy) || head(o.sortDesc) !== head(n.sortDesc)) {
                     n.page = 1
-                    this.subscribe(0)
+                    this.subscribe()
                     return
                 }
                 const arrow = n.page - o.page
@@ -109,13 +105,14 @@ export default {
         }
     },
     created() {
-        // this.subscribe(0)
+        // this.subscribe()
     },
     destroyed() {
         if (this.unsubscribe) this.unsubscribe()
     },
     methods: {
         subscribe(arrow) {
+
             if (this.unsubscribe) this.unsubscribe()
             this.items = []
             const order = this.options.sortBy[0]
@@ -142,8 +139,11 @@ export default {
                     query = ref.limit(limit)
                     break
             }
+            this.loaded = false
 
             this.unsubscribe = query.onSnapshot(sn => {
+                this.loaded = true
+
                 if (sn.empty) {
                     this.items = []
                     return

@@ -3,13 +3,13 @@
     <v-list-item three-line>
         <v-list-item-content>
             <v-list-item-title class="title">
-                Menu
+                Sujin
             </v-list-item-title>
             <v-list-item-subtitle>
-                0.0.1
+                Front-End Developer
             </v-list-item-subtitle>
         </v-list-item-content>
-        <v-list-item-action>
+        <v-list-item-action v-if="user && user.level === 0">
             <v-btn icon @click="$store.commit('setEdit', !$store.state.editable)">
                 <v-icon v-text="$store.state.editable ? 'mdi-eye' : 'mdi-pencil'"></v-icon>
             </v-btn>
@@ -137,6 +137,14 @@ export default {
             selectedItemIndex: 0,
             selectedSubItemIndex: 0
         };
+    },
+    computed: {
+        user() {
+            return this.$store.state.user
+        },
+        fireUser() {
+            return this.$store.state.fireUser
+        }
     },
     methods: {
         async save() {
