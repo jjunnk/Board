@@ -5,8 +5,8 @@
             <v-toolbar-title class="font-weight-bold" v-text=" board.title" color="accent">
             </v-toolbar-title>
             <v-spacer />
-            <v-sheet>
-                <v-select :value="getCategory" :items="board.categories" @change="changeCategories" solo dense single-line hide-details />
+            <v-sheet width="120" class="rounded">
+                <v-select :value="getCategory" :items="board.categories" @change="changeCategory" solo dense single-line hide-details />
             </v-sheet>
             <v-btn icon @click="dialog=true">
                 <v-icon>mdi-information-outline</v-icon>
@@ -18,7 +18,7 @@
             </template>
         </v-toolbar>
         <v-divider />
-        <board-article :boardId="boardId" :board="board"></board-article>
+        <board-article :boardId="boardId" :board="board" :category="category"></board-article>
         <v-dialog v-model="dialog" max-width="400">
             <v-card class="px-3">
                 <v-toolbar color="transparent" flat>

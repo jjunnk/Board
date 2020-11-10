@@ -5,12 +5,13 @@
             <v-toolbar color="transparent" dense flat>
                 <v-toolbar-title>게시판 정보 작성</v-toolbar-title>
                 <v-spacer />
-                <v-btn icon @click="$router.push('/board/' + boardId)">
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
                 <v-btn icon @click="save" :disabled="user && user.level !==0">
                     <v-icon>mdi-content-save</v-icon>
                 </v-btn>
+                <v-btn icon @click="$router.push('/board/' + boardId)">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+
             </v-toolbar>
             <v-card-text class="pb-0">
                 <v-text-field v-model="form.category" outlined label="분류"></v-text-field>

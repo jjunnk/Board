@@ -107,7 +107,7 @@ export default {
         DisplayComment,
         DisplayUser
     },
-    props: ['boardId', 'articleId', 'user'],
+    props: ['boardId', 'articleId', 'user', 'category', 'tag'],
     data() {
         return {
             content: '',
@@ -192,9 +192,18 @@ export default {
         back() {
             const us = this.$route.path.split('/')
             us.pop()
-            this.$router.push({
-                path: us.join('/')
-            })
+            if (this.category) {
+                this.$router.push({
+                    path: us.join('/'),
+                    query: {
+                        category: this.category
+                    }
+                })
+            } else {
+                this.$router.push({
+                    path: us.join('/')
+                })
+            }
         },
         async like() {
             if (!this.fireUser) throw Error('로그인이 필요합니다')
@@ -214,7 +223,7 @@ export default {
             if (!this.doc) throw Error('읽지 못하였습니다')
             const ref = this.$firebase.firestore()
                 .collection('boards').doc(this.boardId)
-                .collection('articles').orderBy('createdAt', 'desc')
+                .collection('articles').where('category', '==', this.category).orderBy('createdAt', 'desc')
             let sn
             if (arrow < 0) sn = await ref.endBefore(this.doc).limitToLast(1).get() // 전 도큐먼트
             else sn = await ref.startAfter(this.doc).limit(1).get() // 다음 도큐먼트
@@ -224,6 +233,16 @@ export default {
             const us = this.$route.path.split('/')
             us.pop()
             us.push(doc.id)
+            if (this.category) this.$router.push({
+                path: us.join('/'),
+                query: {
+                    category: this.category
+                }
+            })
+            else this.$router.push({
+                path: us.join('/')
+            })
+
             this.$router.push({
                 path: us.join('/')
             })

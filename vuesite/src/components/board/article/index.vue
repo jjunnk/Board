@@ -3,16 +3,25 @@
     <v-data-table :headers="headers" :items="items" :server-items-length="board.count" :options.sync="options" :items-per-page="5" :footer-props="{
       'items-per-page-options':[5, 10, 20, 30],
     }" must-sort item-key="id" color="info">
+        <template v-slot:[`item.category`]="{item}">
+            <v-chip v-if="category != item.category" color="info" label depressed small>{{item.category}}</v-chip>
+        </template>
         <template v-slot:[`item.createdAt`]="{item}">
             <display-time :time="item.createdAt"></display-time>
         </template>
         <template v-slot:[`item.title`]="{item}">
-            <a @click="read(item)" color="#383644">{{item.title}}</a>
+            <a @click="read(item)" color="#383644" :to="category ? `${boardId}/${item.id}?category=${category}`: `${boardId}/${item.id}`">{{item.title}}</a>
         </template>
         <template v-slot:[`item.user.displayName`]="{item}">
             <display-user :user="item.user"></display-user>
         </template>
     </v-data-table>
+    <v-container fluid v-if="!items">
+        <v-alert type="warning" border="left" class="mb-0 pl-3">
+            게시물이 없습니다
+            <v-icon>mdi-plus</v-icon> 버튼을 눌러서 게시물을 작성하세요
+        </v-alert>
+    </v-container>
 </div>
 </template>
 
@@ -21,12 +30,13 @@ import {
     head,
     last
 } from 'lodash'
-
 import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
 
+const LIMIT = 5
+
 export default {
-    props: ['board', 'boardId'],
+    props: ['board', 'boardId', 'category', 'tag'],
     components: {
         DisplayTime,
         DisplayUser
@@ -34,6 +44,9 @@ export default {
     data() {
         return {
             headers: [{
+                    value: 'category',
+                    text: '카테고리'
+                }, {
                     value: 'createdAt',
                     text: '작성일'
                 },
@@ -65,7 +78,10 @@ export default {
     },
     watch: {
         boardId() {
-            this.subscribe(0)
+            this.subscribe()
+        },
+        category() {
+            this.subscribe()
         },
         options: {
             handler(n, o) {
@@ -100,6 +116,14 @@ export default {
             const order = this.options.sortBy[0]
             const sort = this.options.sortDesc[0] ? 'desc' : 'asc'
             const limit = this.options.itemsPerPage
+
+            if (!this.category) {
+                this.ref = this.$firebase.firestore().collection('boards').doc(this.boardId).collection('articles').orderBy(order, sort).limit(LIMIT)
+
+            } else {
+                this.ref = this.$firebase.firestore().collection('boards').doc(this.boardId).collection('articles').where('category', '==', this.category).orderBy(order, sort).limit(LIMIT)
+            }
+
             const ref = this.$firebase.firestore().collection('boards').doc(this.boardId).collection('articles').orderBy(order, sort)
             let query
             switch (arrow) {
@@ -113,6 +137,7 @@ export default {
                     query = ref.limit(limit)
                     break
             }
+
             this.unsubscribe = query.onSnapshot(sn => {
                 if (sn.empty) {
                     this.items = []

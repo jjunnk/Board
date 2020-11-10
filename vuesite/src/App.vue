@@ -7,7 +7,7 @@
             <v-spacer />
             <SiteSign></SiteSign>
         </v-app-bar>
-        <v-navigation-drawer app v-model="drawer" width="400">
+        <v-navigation-drawer app v-model="drawer" :width="$store.state.editable ? 400 : 300">
             <SiteMenu :items="site.menu" @close="drawer = false"></SiteMenu>
         </v-navigation-drawer>
         <v-main height="100%">

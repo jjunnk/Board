@@ -7,27 +7,32 @@
     <template v-for="(item, i) in items">
         <v-list-item :key="item.id">
             <v-list-item-action>
-                <display-user :user="item.user"></display-user>
+                <display-user :user="item.user" color="primary"></display-user>
             </v-list-item-action>
             <v-list-item-content class="flex-nowrap flex-column flex-sm-row flex-md-row flex-lg-row">
-                <v-list-item-subtitle class="black--text comment" auto-grow v-text="item.comment"></v-list-item-subtitle>
-                <v-list-item-subtitle class="text-end time" min-width="100px">
+                <v-list-item-subtitle v-if="!item.edit" color="primary" class="comment" auto-grow v-text="item.comment">
+                </v-list-item-subtitle>
+                <v-list-item-subtitle v-else class="comment">
+                    <v-textarea v-model="item.comment" outlined label="댓글 수정" placeholder="Ctrl + Enter 를 누르면 저장됩니다" append-icon="mdi-comment-edit" @click:append="update(item)" @keypress.ctrl.enter="update(item)" hide-details auto-grow rows="1" class="comment " color="accent" clearable>
+                    </v-textarea>
+                </v-list-item-subtitle>
+                <v-list-item-subtitle class="text-end time" max-width="100px">
                     <display-time :time="item.createdAt"></display-time>
                 </v-list-item-subtitle>
             </v-list-item-content>
-            <v-list-item-action>
-                <v-spacer />
+            <v-list-item-actions>
                 <v-btn text @click="like(item)">
                     <v-icon left :color="liked(item) ? 'success' : '#444'">mdi-thumb-up</v-icon>
                     <span>{{ item.likeCount}}</span>
                 </v-btn>
-            </v-list-item-action>
-            <v-list-item-action>
-                <v-spacer />
-                <v-btn icon @click="remove(item)">
+                <v-btn icon @click="item.edit =! item.edit" v-if="(fireUser && fireUser.uid ===item.uid) " :color="item.edit ? 'accent' : ''">
+                    <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn icon @click="remove(item)" v-if="(fireUser && fireUser.uid ===item.uid) || (user && user.level === 0)">
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
-            </v-list-item-action>
+
+            </v-list-item-actions>
         </v-list-item>
         <v-divider :key="i" v-if="i < items.length -1"></v-divider>
     </template>
@@ -90,6 +95,7 @@ export default {
                     item.id = doc.id
                     item.createdAt = item.createdAt.toDate()
                     item.updatedAt = item.updatedAt.toDate()
+                    item.edit = false
                     this.items.push(item)
                     // toDate : Convert a Timestamp to a JavaScript Date object. 
                 }
@@ -187,6 +193,14 @@ export default {
             await this.docRef.collection('comments').doc(comment.id).delete()
             const i = this.items.findIndex(el => el.id === comment.id) // 지우는 댓글 인덱스가 몇번째인지 찾음
             this.items.splice(i, 1) // i로부터 1개 지운다. 
+        },
+        async update(comment) {
+            comment.updatedAt = new Date()
+            try {
+                await this.docRef.collection('comments').doc(comment.id).update(comment)
+            } finally {
+                comment.edit = false
+            }
         }
     }
 }
@@ -195,7 +209,7 @@ export default {
 <style scoped>
 .comment {
     white-space: pre-wrap;
-    flex: 0 0 85%
+    flex: 0 0 80%
 }
 
 .time {

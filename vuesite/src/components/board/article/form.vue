@@ -142,6 +142,7 @@ export default {
                     //     count: this.$firebase.firestore.FieldValue.increment(1)})
                     await this.ref.collection('articles').doc(id).set(doc)
                     this.$router.push('/board/' + this.boardId)
+
                 } else {
                     // batch.update(this.ref.collection('articles').doc(this.articleId), doc)
                     const fn = this.articleId + '-' + this.article.uid + '.md' // 파일명
