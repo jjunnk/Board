@@ -1,10 +1,10 @@
 <template>
 <section>
     <transition-group name="list" tag="ul">
-        <li v-for="(todoItem, index) in propsdata" :key="todoItem" class="shadow">
+        <li v-for="(todoItem, index) in propsdata" v-bind:key="todoItem" class="shadow">
             <i class="checkBtn fas fa-check" aria-hidden="true"></i>
             {{ todoItem }}
-            <span class="removeBtn" type="button" @click="removeTodo(todoItem, index)">
+            <span class="removeBtn" type="button" v-on:click="removeTodo(todoItem, index)">
                 <i class="far fa-trash-alt" aria-hidden="true"></i>
             </span>
         </li>
@@ -15,32 +15,9 @@
 <script>
 export default {
     props: ["propsdata"],
-    /*
-
-  //불필요하여 삭제
-    data() {
-    return {
-        todoItems: [],
-    };
-},
-
-  //App.vue 파일로 이동
-    created() {
-        if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                this.todoItems.push(localStorage.key(i));
-            }
-        }
-    },*/
     methods: {
         removeTodo(todoItem, index) {
-            this.$emit("removeAll");
-            /*
-                        // App.vue - removeTodo methods 로 이동
-                        localStorage.removeItem(todoItem);
-                        this.todoItems.splice(index, 1);
-                        */
-            //console.log(todoItem, index);
+            this.$emit("removeTodo", todoItem, index);
         },
     },
 };
@@ -67,14 +44,14 @@ li {
 
 .checkBtn {
     line-height: 45px;
-    color: #62acde;
+    color: #ebdaca;
     margin-right: 5px;
     height: 100%;
 }
 
 .removeBtn {
     margin-left: auto;
-    color: #de4343;
+    color: #666;
 }
 
 .list-enter-active,

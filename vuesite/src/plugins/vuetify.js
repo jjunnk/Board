@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import '@fortawesome/fontawesome-free/css/all.css' 
 
 // #Internationalization (i18n)
 import ko from 'vuetify/es5/locale/ko'
@@ -37,5 +38,8 @@ export default new Vuetify({
         lg: 1280,
       },
       scrollBarWidth: 24,
+    },
+    icons: {
+      iconfont: 'fa',
     },
 });

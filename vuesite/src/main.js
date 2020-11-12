@@ -7,6 +7,7 @@ import "./plugins/firebase"
 import "./plugins/editor"
 import "./plugins/moment"
 
+
 Vue.config.productionTip = false;
 
 new Vue({

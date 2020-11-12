@@ -77,7 +77,7 @@
             <v-card-title>
                 메뉴 추가/수정
                 <v-spacer></v-spacer>
-                <v-btn icon @click="saveItem" color="success">
+                <v-btn icon @click="saveItem" color="accent">
                     <v-icon> mdi-content-save</v-icon>
                 </v-btn>
                 <v-btn icon @click="dialogItem = false">
@@ -102,7 +102,7 @@
             <v-card-title>
                 서브 메뉴 추가/수정
                 <v-spacer />
-                <v-btn icon @click="saveSubItem" color="success">
+                <v-btn icon @click="saveSubItem" color="accent">
                     <v-icon> mdi-content-save</v-icon>
                 </v-btn>
                 <v-btn icon @click="dialogSubItem = false">
