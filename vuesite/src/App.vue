@@ -2,7 +2,7 @@
 <v-app>
     <v-card class="overflow-hidden" height="100%">
         <v-app-bar color="white">
-            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="drawer = !drawer" color="primary"></v-app-bar-nav-icon>
             <SiteTitle :propstitle="site.title"></SiteTitle>
             <v-spacer />
             <SiteSign></SiteSign>
@@ -98,5 +98,16 @@ export default {
 </script>
 
 <style>
+/*roboto noto sanse font*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
 
+/*Ubuntu font */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
+html,
+body,
+div,
+h1 {
+    font-family: 'Ubuntu', 'Noto Sans KR', sans-serif;
+}
 </style>

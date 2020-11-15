@@ -1,7 +1,7 @@
 <template>
 <div>
     <v-toolbar-title>
-        <a @click="home">{{ propstitle }}</a>
+        <a @click="home" color="primary" class="font-weight-bold">{{ propstitle }}</a>
         <v-btn icon @click="opendialog" v-if=" user && user.level=== 0">
             <v-icon> mdi-pencil</v-icon>
         </v-btn>
