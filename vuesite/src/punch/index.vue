@@ -1,13 +1,12 @@
 <template>
-<div>
-    <div id="bag" :class="{burst : ended}"></div>
+<div id="main">
+    <img id="bag" :src="require('@/assets/' + imgSrc)" />
     <div id="bag-health">
         <div :style="{width:health + '%'}"></div>
     </div>
     <div id="controls">
-        <div @click="punch" v-show="!ended"></div>
-        <div @click="restart">Restart</div>
-
+        <button id="punch" @click="punch">Punch</button>
+        <button id="restart" @click="restart">Restart</button>
     </div>
 </div>
 </template>
@@ -17,49 +16,72 @@ export default {
     data() {
         return {
             health: 100,
-            ended: false
+            imgSrc: 'bag.png'
         }
     },
     methods: {
         punch() {
             this.health -= 10
-            if (this.health <= 0) this.ended = true
+            if (this.health <= 0) {
+                this.imgSrc = 'burst.png'
+            }
         },
         restart() {
             this.health = 100
-            this.ended = false
+            this.imgSrc = 'bag.png'
+
         }
     }
 }
 </script>
 
 <style scoped>
+#main {
+    max-width: 360px;
+    margin: 1.5em auto auto;
+    text-align: center;
+}
+
 #bag {
-    border: 1px solid red;
-    width: 200px;
-    height: 500px;
+    width: 360px;
+    height: 360px;
     margin: auto;
-    background: url(/assets/punch-bag.png) center no-repeat;
     background-size: 80%;
 }
 
-#bag.burst {
-    background-image: url(/assets/burst.png);
-}
-
 #bag-health {
-    width: 200px;
+    width: 360px;
     border: 2px solid #000;
     margin: 0 auto 20px auto;
 }
 
 #bag-health div {
     height: 20px;
-    background: crimson
+    background: crimson;
+    transition: all .4s ease-in;
 }
 
 #controls {
-    width: 120px;
+    width: 300px;
     margin: 0 auto;
+}
+
+#punch {
+    padding: .5em 2em;
+    background-color: crimson;
+    color: #fff;
+    border: 1px solid crimson;
+    border-radius: 5px;
+    float: left;
+}
+
+#restart {
+    padding: .5em 2em;
+    background-color: black;
+    color: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    float: right;
+
 }
 </style>
