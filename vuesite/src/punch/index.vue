@@ -10,8 +10,11 @@
     </div>
 </div>
 </template>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
 
 <script>
+
 export default {
     data() {
         return {
@@ -25,6 +28,22 @@ export default {
             if (this.health <= 0) {
                 this.imgSrc = 'burst.png'
             }
+
+            const bag = document.getElementById('bag')
+            const h = 570
+            const k = 20
+            const a = -4 * k / Math.pow(h*2, 2)
+            var ypos, start, time
+
+            (function drawPosition(timestamp){
+                if(!start){start = timestamp}
+                time = timestamp - start
+                ypos = a * Math.pow(((time + h) % (h*2) - h),2) + k
+                bag.style.transform = 'translateX(' + -ypos + 'px)'
+                window.requestAnimationFrame(drawPosition)                
+            })(performance.now())
+
+
         },
         restart() {
             this.health = 100
