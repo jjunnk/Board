@@ -40,20 +40,31 @@ export default {
         updateCount() {
             this.numClicks += 1
             const btn = document.getElementById('clickbtn')
+            const color = this.colors[Math.round(Math.random() * (this.colors.length - 1))]
+            btn.style.backgroundColor = color
 
             if (this.active == false) {
                 this.secs = 10
                 this.numClicks = 0
                 this.active = true
             }
-            const color = this.colors[Math.round(Math.random() * (this.colors.length - 1))]
-            btn.style.backgroundColor = color
+
+            if(this.numClicks % 10 == 0){
+                btn.classList.add('decrement')
+            }
         }
     }
 }
 </script>
 
 <style scoped>
+
+@keyframes decrement {
+    from { transform:scale(1)}
+    to{ transform:scale(.9)}
+}
+
+.decrement{animation: decrement .3s normal forwards ease-in-out;}
 .main {
     background-color: #323133;
     color: #fff;
@@ -83,7 +94,7 @@ export default {
     transition: 0.3s;
     border-radius: 50%;
     background-color: #f2ca27;
-    margin-bottom: 1.5em
+    margin-bottom: 1.5em 
 }
 
 #clickbtn:active {
