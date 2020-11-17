@@ -54,6 +54,11 @@ const routes = [{
     component: () => import( /* webpackChunkName: "todo" */ "@/punch/index.vue")
   },
   {
+    path: "/calorie-counter",
+    name: "calorie-counter",
+    component: () => import( /* webpackChunkName: "todo" */ "@/calorie/index.vue")
+  },
+  {
     path: '*',
     name: 'error',
     component: () => import('../views/error')
