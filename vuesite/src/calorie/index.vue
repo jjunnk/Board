@@ -5,6 +5,7 @@
                 칼로리 다이어리
             </v-toolbar>
             <v-divider/>
+        
             <v-card-title class="text--center">
                 <v-icon left>mdi-brightness-5</v-icon> 아침 식사
                 <v-spacer/>
@@ -110,6 +111,9 @@ import 'vue2-timepicker/dist/VueTimepicker.css'
 
             }
         },
+        created(){
+            this.saveItem()
+        },
         methods: {
             addItem() {
                 const name = this.newName.trim()
@@ -136,9 +140,7 @@ import 'vue2-timepicker/dist/VueTimepicker.css'
                     alert('음식 데이터를 추가하세요')
                 }
             },
-            calculateTotals() {
-
-            },
+        
             removeItem(i) {
                 this.items.splice(i, 1)
                 calculateTotals(this)
