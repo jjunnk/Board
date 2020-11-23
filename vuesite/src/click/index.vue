@@ -1,12 +1,12 @@
 <template>
-<v-main class="main">
+<v-card class="main" flat>
     <v-container class="ma-auto">
         <v-btn id="clickbtn" @click="updateCount"></v-btn>
         <h2 id="status">{{status}}</h2>
         <h1>You clicked <b>{{numClicks}}</b> times</h1>
         <h1>You have <b>{{secs}} secs</b> left</h1>
     </v-container>
-</v-main>
+</v-card>
 </template>
 
 <script>
@@ -65,17 +65,14 @@ export default {
 }
 
 .decrement{animation: decrement .3s normal forwards ease-in-out;}
-.main {
-    background-color: #323133;
+.main{
     color: #fff;
     text-align: center;
-    background-image: url('http://imgh.us/bg_12.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    background-attachment: fixed;
-    min-height: 600px;
-    position: relative
+    position: relative;
+    height:100%;
+    margin:0;
+    padding:0;
+    background-color: #323133;
 }
 
 .container {

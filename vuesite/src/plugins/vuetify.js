@@ -10,6 +10,7 @@ Vue.use(Vuetify);
 
 const theme={
   themes :{
+    dark:true,
     light:{
       primary:'#0D0D0D', // black
       secondary:'#ebdaca', // beige

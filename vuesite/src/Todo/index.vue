@@ -1,10 +1,13 @@
 <template>
-<v-flex fluid cols7 sm8 md6 lg5 xl5 class="box mt-4 ma-auto">
+<v-card flat width="100%" height="100%">
+<v-flex fluid cols7 sm8 md7 lg5 xl5 class="box">
     <TodoHeader></TodoHeader>
     <TodoInput v-on:addTodo="addTodo"></TodoInput>
     <TodoList v-bind:propsdata="todoItems" v-on:removeTodo="removeTodo"></TodoList>
     <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
 </v-flex>
+
+</v-card>
 </template>
 
 <script>
@@ -50,13 +53,22 @@ export default {
 </script>
 
 <style scoped>
-.v-main__wrap {
-    background-color: #ebdaca;
+.v-card {
+    background-color: #F2ECEB !important;
 }
 
 .box {
+    background-color:#fff;
     border-radius: 10px;
     border: 1px solid #ad9789;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2)
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+    position:absolute;
+    transform:translate(-50%, -20%);
+    left:50%;
+    top:20%;
 }
+
+ul > li{white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;}
 </style>
