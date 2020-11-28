@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container class="pa-0">
     <v-card-title>
         <v-textarea rows="1" append-icon="mdi-send" @click:append="save" v-model="comment" label="댓글 작성" placeholer="Ctrl + Enter로 댓글 작성 가능" outlined hide-details auto-grow @keypress.ctrl.enter="save" color="accent">
         </v-textarea>

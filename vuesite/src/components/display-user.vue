@@ -1,7 +1,7 @@
 <template>
 <v-tooltip bottom>
     <template v-slot:activator="{on}">
-        <v-chip v-on="on" color="white" class="rounded" :small="size === 'small'">
+        <v-chip v-on="on" color="transparent" class="rounded" :small="size === 'small'">
             <v-avatar left v-if="size !== 'small'">
                 <v-img :src="user.photoURL" />
             </v-avatar>{{user.displayName}}

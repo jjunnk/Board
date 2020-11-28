@@ -1,14 +1,15 @@
-<template>
-<v-container class="pa-0">
-    <v-card outlined :tile="$vuetify.breakpoint.xs" v-if="items.length">
-        <v-toolbar color="transparent" dense flat>
-            <v-toolbar-title>게시판 목록</v-toolbar-title>
+<template >
+<v-sheet>
+<v-container class="px-lg-0 py-md-7 py-sm-4  pa-xs-4" max-width="980px">
+    <v-card outlined :tile="$vuetify.breakpoint.xs" v-if="items.length" :class="listBg()">
+        <v-toolbar color="transparent" flat>
+            <v-toolbar-title class="text-h5 font-weight-bold" color="primary">게시판 목록</v-toolbar-title>
             <v-spacer />
         </v-toolbar>
         <v-card-text>
             <v-row>
-                <v-col cols="12" sm="6" md="4" lg="3" xl="2" v-if="user && user.level === 0">
-                    <v-card height="100%">
+                <v-col cols="12" v-if="user && user.level === 0">
+                    <v-card height="100%" color="base">
                         <v-subheader>
                             새로운 게시판 추가
                         </v-subheader>
@@ -24,8 +25,8 @@
                         </v-card-actions>
                     </v-card>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" lg="3" xl="2" v-for="(item) in items" :key="item.id">
-                    <v-card height="100%">
+                <v-col cols="12" v-for="(item) in items" :key="item.id">
+                    <v-card height="100%" color="base" >
                         <v-subheader>
                             <v-chip color="success" class="mr-2" small label left v-if="newCheck(item.updatedAt)">new</v-chip>
                             {{item.title}}
@@ -41,7 +42,7 @@
                         </v-subheader>
                         <v-divider />
                         <v-card-text>
-                            <v-alert border="left" type="info" outlined class="white-space">{{item.description}}</v-alert>
+                            <v-alert border="left" type="info" outlined class="white-space" :color="$vuetify.theme.dark ? 'primary' : 'success'">{{item.description}}</v-alert>
                         </v-card-text>
                         <v-list-item>
                             <v-list-item-content>
@@ -92,6 +93,8 @@
     </v-card>
     <v-skeleton-loader v-else type="card"></v-skeleton-loader>
 </v-container>
+
+</v-sheet>
 </template>
 
 <script>
@@ -112,7 +115,8 @@ export default {
             sort: 'desc',
             boardId: '',
             loading: false,
-            newCheck
+            newCheck,
+            BgColor:'#FEFCF5 !important'
         }
     },
     computed: {
@@ -182,7 +186,21 @@ export default {
                 .collection('boards').doc(item.id).delete()
             const i = this.items.findIndex(el => el.id === item.id)
             this.items.splice(i, 1)
+        },
+        listBg(){
+            return this.$vuetify.theme.dark ? 'listBgDark' : 'listBgLight'
         }
     }
 }
 </script>
+<style scoped>
+
+.lightTheme{
+    background-color:#FEFCF5 !important;
+    }
+.listBgLight{background-color:#fff !important;border:4px solid #ebdaca;}
+.listBgDark{background-color:#0D0D0D !important;border:none !important;}
+.v-main__wrap > .v-sheet.theme--light{background-color:#FEFCF5  !important;}
+
+.row > .col > .v-card.theme--dark{border: 1px solid #655d5d !important;}
+</style>

@@ -6,19 +6,19 @@
     <v-alert type="warning" border="left" class="mb-0">게시판 정보를 불러오지 못했습니다</v-alert>
 </v-container>
 <v-container v-else>
-    <v-card outlined :item="$vuetify.breakpoint.xs">
-        <v-toolbar color="secondary" dense flat>
-            <v-toolbar-title class="font-weight-bold" v-text=" board.title" color="accent">
+    <v-card outlined :item="$vuetify.breakpoint.xs" class="mx-lg-0 my-md-7 my-sm-4  ma-xs-4">
+        <v-toolbar :color="$vuetify.theme.dark ? 'primary' : 'secondary'" dense flat>
+            <v-toolbar-title class="font-weight-bold" v-text="board.title" >
             </v-toolbar-title>
             <v-spacer />
             <v-sheet width="120" class="rounded">
                 <v-select :value="getCategory" :items="board.categories" @change="changeCategory" solo dense single-line hide-details />
             </v-sheet>
-            <v-btn icon @click="dialog=true">
+            <v-btn icon @click="dialog=true" color="primary">
                 <v-icon>mdi-information-outline</v-icon>
             </v-btn>
             <template v-if="user">
-                <v-btn icon @click="articleWrite" :disabled="!user">
+                <v-btn icon @click="articleWrite" :disabled="!user" color="primary">
                     <v-icon>mdi-plus</v-icon>
                 </v-btn>
             </template>
@@ -28,7 +28,7 @@
         <v-dialog v-model="dialog" max-width="400">
             <v-card class="px-3">
                 <v-toolbar color="transparent" flat>
-                    <v-toolbar-title class="font-weight-bold">게시판 정보</v-toolbar-title>
+                    <v-toolbar-title class="font-weight-bold" color="primary">게시판 정보</v-toolbar-title>
                     <v-spacer />
                     <v-btn icon @click="write" :disabled="user && user.level > 0">
                         <v-icon>mdi-pencil</v-icon>
@@ -37,50 +37,50 @@
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                 </v-toolbar>
-                <v-divider class="mb-4" />
+                <v-divider class="mb-4" background-color="primary" />
                 <v-row class="mx-0">
                     <v-col cols="3">작성자</v-col>
-                    <v-divider vertical color="#edbbba" />
+                    <v-divider vertical background-color="primary" />
                     <v-col cols="7">
                         <display-user :user="board.user"></display-user>
                     </v-col>
                 </v-row>
                 <v-row class="mx-0">
                     <v-col cols="3">작성일</v-col>
-                    <v-divider vertical color="#edbbba" />
+                    <v-divider vertical background-color="primary" />
                     <v-col cols="7">
                         <display-time :time="board.createdAt"></display-time>
                     </v-col>
                 </v-row>
                 <v-row class="mx-0">
                     <v-col cols="3">수정일</v-col>
-                    <v-divider vertical color="#edbbba" />
+                    <v-divider vertical background-color="primary" />
                     <v-col cols="7">
                         <display-time :time="board.updatedAt"></display-time>
                     </v-col>
                 </v-row>
                 <v-row class="mx-0">
                     <v-col cols="3">게시물수</v-col>
-                    <v-divider vertical color="#edbbba" />
+                    <v-divider vertical background-color="primary" />
                     <v-col cols="7">{{board.count}} </v-col>
                 </v-row>
                 <v-row class="mx-0">
                     <v-col cols="3">분류</v-col>
-                    <v-divider vertical color="#edbbba" />
+                    <v-divider vertical background-color="primary" />
                     <v-col cols="7">
                         <v-chip v-for="item in board.categories" :key="item" v-text="item" class="mb-2 mr-2 rounded"></v-chip>
                     </v-col>
                 </v-row>
                 <v-row class="mx-0">
                     <v-col cols="3">태그</v-col>
-                    <v-divider vertical color="#edbbba" />
+                    <v-divider vertical background-color="primary" />
                     <v-col cols="7">
                         <v-chip v-for="item in board.tags" :key="item" v-text="item" class="mb-2 mr-2 rounded" outlined></v-chip>
                     </v-col>
                 </v-row>
                 <v-row class="mx-0">
                     <v-col cols="3">설명</v-col>
-                    <v-divider vertical color="#edbbba" />
+                    <v-divider vertical background-color="primary" />
                     <v-col cols="7" class="comment" v-text="board.description"></v-col>
                 </v-row>
                 <v-spacer />
@@ -181,13 +181,7 @@ export default {
 </script>
 
 <style scoped>
-#app>div.v-application--wrap>div>main>div>div>div>div>header>div>div.v-toolbar__title.font-weight-bold {
-    color: #444
-}
-
-.v-dialog__content div {
-    color: #383644;
-}
+header .theme--dark.v-icon, header.theme--dark{color:#0D0D0D !important;}
 
 .comment {
     white-space: pre-wrap;

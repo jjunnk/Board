@@ -33,8 +33,16 @@ export default {
         };
     },
     methods: {
+        save(){},
+
         addTodo() {
             if (this.newTodoItem !== "") {
+                const todo = {
+                    title : this.newTodoItem,
+                    createdAt : new Date()
+                }
+                this.firebase.firestore().collection('todoItems').add(this.todo)
+
                 var value = this.newTodoItem && this.newTodoItem.trim();
                 this.$emit("addTodo", value);
                 this.clearInput();

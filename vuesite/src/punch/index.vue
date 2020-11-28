@@ -1,12 +1,12 @@
 <template>
-<div id="main">
+<div class="main">
     <img id="bag" :src="require('@/assets/' + imgSrc)" />
     <div id="bag-health">
         <div :style="{width:health + '%'}"></div>
     </div>
     <div id="controls">
-        <button id="punch" @click="punch">Punch</button>
-        <button id="restart" @click="restart">Restart</button>
+        <v-btn id="punch" @click="punch" class="red darken-2" color="white">Punch</v-btn>
+        <v-btn id="restart" @click="restart" color="primary">Restart</v-btn>
     </div>
 </div>
 </template>
@@ -55,9 +55,9 @@ export default {
 </script>
 
 <style scoped>
-#main {
+.main {
     max-width: 360px;
-    margin: 1.5em auto auto;
+    margin: 3em auto auto;
     text-align: center;
 }
 
@@ -87,18 +87,13 @@ export default {
 
 #punch {
     padding: .5em 2em;
-    background-color: crimson;
-    color: #fff;
-    border: 1px solid crimson;
+    color: #fff !important;
     border-radius: 5px;
     float: left;
 }
 
 #restart {
     padding: .5em 2em;
-    background-color: black;
-    color: #fff;
-    border: 1px solid black;
     border-radius: 5px;
     float: right;
 

@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify"
 import "./plugins/firebase"
 import "./plugins/editor"
 import "./plugins/moment"
+import "./plugins/page-transition"
 
 
 Vue.config.productionTip = false;

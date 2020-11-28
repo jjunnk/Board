@@ -1,7 +1,7 @@
 <template>
-    <v-footer padless class="font-weight-medium text-center" :footer="footer" color="secondary">
+    <v-footer padless class="font-weight-medium text-center" :footer="footer" :color="$vuetify.theme.dark ? 'base' : 'secondary'">
         <v-col cols="12">
-            <div>
+            <div :color="$vuetify.theme.dark ? 'base' : ''">
                 {{ new Date().getFullYear() }} — <strong>{{ footer }}</strong>
             
             <v-btn icon @click="openDialog">
@@ -59,3 +59,6 @@
         }
     };
 </script>
+<style >
+.v-footer.theme--dark > .col{border-top:1px solid #1E1E1E; }
+</style>

@@ -3,7 +3,7 @@
     <v-progress-circular indeterminate v-if="loading"></v-progress-circular>
     <v-menu offset-y v-else-if="!$store.state.fireUser">
       <template v-slot:activator="{ on }">
-        <v-btn v-on="on" outlined color="black">로그인</v-btn>
+        <v-btn v-on="on" outlined color="primary">로그인</v-btn>
       </template>
       <v-card width="400" class="pa-3">
         <v-card-title>로그인</v-card-title>
@@ -22,7 +22,7 @@
     <v-menu offset-y v-else>
       <template v-slot:activator="{ on }">
         <v-btn v-on="on" icon>
-          <v-avatar size="32">
+          <v-avatar size="32" color="primary">
             <img :src="$store.state.fireUser.photoURL" />
           </v-avatar>
         </v-btn>
@@ -30,7 +30,7 @@
       <v-card width="400" class="pa-3">
         <v-card-title>내 계정</v-card-title>
         <v-card-actions>
-          <v-btn class="white--text" color="black" @click="signOut" block>
+          <v-btn class="white--text" color="primary" @click="signOut" block>
             로그아웃
           </v-btn>
         </v-card-actions>

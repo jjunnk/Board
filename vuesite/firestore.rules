@@ -4,6 +4,10 @@ service cloud.firestore {
     function approvedLevel (level) {
       return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.level <= level;
     }
+    match /todoItems/{todoItem}/{document=**} {
+      allow read: if true;
+      allow create,update,delete: if approvedLevel(0) || resource.data.uid == request.auth.uid; 
+    }
     match /boards/{boardId}/{document=**} {
       allow read: if true;
       allow create: if approvedLevel(0);

@@ -10,8 +10,19 @@ Vue.use(Vuetify);
 
 const theme={
   themes :{
-    dark:true,
+    dark:{
+      base : '#0D0D0D',
+      base1 : '#1E1E1E',
+      primary:'#ebdaca', // beige
+      secondary:'#655d5d', // dark brown
+      info:'#655d5d', // dark brown
+      accent:'#ad9789', // brown
+      success:'#69754d' // green
+
+    },
     light:{
+      base:'#fff',
+      base1:'#FEFCF5', // white beige
       primary:'#0D0D0D', // black
       secondary:'#ebdaca', // beige
       accent:'#ad9789', // brown

@@ -542,7 +542,7 @@
 </script>
 <style scoped>
     .v-main__wrap>.v-card {
-        background-color: #F2ECEB !important;
+        background-color: #FEFCF5 !important;
     }
 
     .v-toolbar__content {

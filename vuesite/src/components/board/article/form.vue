@@ -1,7 +1,7 @@
 <template>
-<v-container fluid :class="$vuetify.breakpoint.xs ? 'pa-0' : ''">
+<v-container fluid :class="$vuetify.breakpoint.xs ? 'pa-0' : 'px-md-7 py-md-7 px-lg-12'">
     <v-form>
-        <v-card :loading="loading">
+        <v-card :loading="loading" class="">
             <v-toolbar color="transparent" dense flat>
                 <v-toolbar-title>Article 작성</v-toolbar-title>
                 <v-spacer />
@@ -12,7 +12,6 @@
                     <v-icon>mdi-content-save</v-icon>
                 </v-btn>
             </v-toolbar>
-
             <v-card-text>
                 <v-row>
                     <v-col cols="12" sm="4" v-if="board">

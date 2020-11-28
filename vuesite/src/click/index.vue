@@ -1,5 +1,5 @@
 <template>
-<v-card class="main" flat>
+<v-card class="main" flat  height="100vh" :color="$vuetify.theme.dark ? 'base1' : 'info'">
     <v-container class="ma-auto">
         <v-btn id="clickbtn" @click="updateCount"></v-btn>
         <h2 id="status">{{status}}</h2>
@@ -16,7 +16,7 @@ export default {
             active: false,
             numClicks: 0,
             secs: 10,
-            colors: ['#9bcd77', '#d777b0', '#fed401', '#ff2c3c', '#66c652'],
+            colors: ['#F7A381', '#EBC0C0', '#C0EBCC', '#CCCFEB', '#C0EBCC'],
             status: ''
 
         }
@@ -72,13 +72,12 @@ export default {
     height:100%;
     margin:0;
     padding:0;
-    background-color: #323133;
 }
 
 .container {
     position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
+    transform: translate(-50%, -40%);
+    top: 40%;
     left: 50%;
 }
 
@@ -90,7 +89,7 @@ export default {
     height: 200px;
     transition: 0.3s;
     border-radius: 50%;
-    background-color: #f2ca27;
+    background-color: #F7A381;
     margin-bottom: 1.5em 
 }
 

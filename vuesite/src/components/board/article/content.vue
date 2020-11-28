@@ -6,7 +6,7 @@
     <v-alert type="warning" border="left" class="mb-0">게시물이 존재하지 않습니다</v-alert>
 </v-container>
 <v-container fluid class="pa-0" v-else>
-    <v-card>
+    <v-card class="mx-md-7 my-md-7 mx-lg-12">
         <v-divider />
         <v-toolbar color="transparent" dense flat>
             <v-toolbar-title>
@@ -50,7 +50,7 @@
         </v-row>
         <v-divider />
         <v-card-text>
-            <viewer v-if="content" :initialValue="content"></viewer>
+            <viewer v-if="content" :initialValue="content" max-height="100%"></viewer>
             <v-container v-else>
                 <v-row justify="center" align="center">
                     <v-progress-circular indeterminate></v-progress-circular>
@@ -69,20 +69,20 @@
 
         <v-card-actions>
             <v-row>
-                <v-col cols="4">
-                    <v-btn text block @click="go(-1)" color="accent">
+                <v-col cols="4" >
+                    <v-btn text  @click="go(-1)" color="accent" >
                         <v-icon left>mdi-arrow-left</v-icon>
                         이전글
                     </v-btn>
                 </v-col>
-                <v-col cols="4">
-                    <v-btn text block @click="back" color="accent">
+                <v-col cols="4" class="text-center">
+                    <v-btn text  @click="back" color="accent" center>
                         <v-icon left>mdi-format-list-bulleted</v-icon>
                         목록
                     </v-btn>
                 </v-col>
-                <v-col cols="4">
-                    <v-btn text block @click="go(+1)" color="accent">
+                <v-col cols="4" class="text-right">
+                    <v-btn text  @click="go(+1)" color="accent" right>
                         <v-icon left>mdi-arrow-right</v-icon>
                         다음글
                     </v-btn>
@@ -267,5 +267,10 @@ export default {
 .date-writer .col {
     line-height: 32px;
     padding: 4px;
+}
+
+@media screen and (max-width:960px){
+    .v-main__wrap .theme--dark.v-card{border:none !important}
+
 }
 </style>

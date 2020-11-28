@@ -10,7 +10,7 @@
             <display-time :time="item.createdAt"></display-time>
         </template>
         <template v-slot:[`item.title`]="{item}">
-            <a @click="read(item)" color="#383644" :to="category ? `${boardId}/${item.id}?category=${category}`: `${boardId}/${item.id}`">
+            <a @click="read(item)" color="primary" :to="category ? `${boardId}/${item.id}?category=${category}`: `${boardId}/${item.id}`">
                 <v-chip color="success" class="mr-2" small label left v-if="newCheck(item.updatedAt)">new</v-chip>
                 {{item.title}}
             </a>
@@ -169,9 +169,6 @@ export default {
 </script>
 
 <style scoped>
-a {
-    color: #383644;
-}
 
 .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
     background: #fceaea !important

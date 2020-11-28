@@ -8,7 +8,7 @@
         </v-btn>
         <v-dialog v-model="dialog">
             <v-card>
-                <v-card-title>
+                <v-card-title color="primary">
                     사이트 이름 수정
                     <v-spacer></v-spacer>
                     <v-btn icon @click="save">

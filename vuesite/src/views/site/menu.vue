@@ -2,10 +2,10 @@
 <div>
     <v-list-item three-line>
         <v-list-item-content>
-            <v-list-item-title class="title">
+            <v-list-item-title class="text-h4 font-weight-bold mb-2">
                 Sujin
             </v-list-item-title>
-            <v-list-item-subtitle>
+            <v-list-item-subtitle  class="text-subtitle-1">
                 Front-End Developer
             </v-list-item-subtitle>
         </v-list-item-content>
