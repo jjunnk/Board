@@ -12,8 +12,7 @@
                 <v-col cols="12" sm="12" md="6" class="home-contents">
                     <vue-scratchable v-slot="{ init }" :brushOptions="brush" :hideOptions="hide" getPercentageCleared>
                         <div class="wrapper">
-                            <img :src="require('./assets/scratch.jpg')"
-                                @load="init()">
+                            <img :src="require('@/assets/scratch2.jpg')" @load="init()">
                         </div>
                     </vue-scratchable>
                 </v-col>
@@ -23,19 +22,18 @@
     </v-sheet>
 </template>
 <script>
-import VueScratchable from 'vue-scratchable';
-Vue.component('vue-scratchable', VueScratchable);
+import VueScratchable from '@/plugins/scratchable';
 
 export default {
     data() {
         return {
             hide: {
-            type: 'pattern',
-            src: paperPattern,
-            repeat: 'repeat',
+                type: 'pattern',
+                src: '@/assets/scratch1.jpg',
+                repeat: 'repeat',
             },
             brush: {
-            size: 60,
+            size: 80,
             shape: 'round',
             },
         }
