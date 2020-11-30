@@ -1,6 +1,5 @@
-
 <template>
-<div class="drawCanvas" :style="{ backgroundImage: `url(${myImage})` }">
+<div class="drawCanvas" :style="{ backgroundImage:`url(${myImage})`}">
   <img class="illustrationImage" :src="illustrationImage" :alt="illustrationDescription">
 </div>
 </template>
@@ -146,9 +145,7 @@ export default {
 };
 </script>
 
-    <!-- Add "scoped" attribute to limit CSS to this component only -->
-    <style  lang="scss">
-@import '@/styles/_variables.scss';
+  <style  lang="scss" scoped>
 .drawCanvas {
   background-size: cover;
   background-repeat: no-repeat;
@@ -159,17 +156,7 @@ export default {
   box-sizing: border-box;
   animation: mobileText 0.5s ease;
   animation-fill-mode: forwards;
-
-
-  @include tablet{
-    padding-bottom: 72%;
-  }
-
-  @include mobile{
-    padding-bottom: 77%;
-  }
-
-
+  overflow:hidden;
 
   .illustrationImage {
     display: none;

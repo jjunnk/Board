@@ -7,7 +7,10 @@ export default new Vuex.Store({
   state: {
     editable: false,
     fireUser: null,
-    user: null
+    user: null,
+    myImage:require("@/assets/scratch1.jpg"),
+    illustrationImage: require("@/assets/scratch2.jpg"),
+    illustrationDescription: "Illustration of me",
   },
   getters: {},
   mutations: {
