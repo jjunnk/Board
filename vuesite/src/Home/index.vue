@@ -30,7 +30,7 @@ export default {
             hide: {
                 type: 'pattern',
                 src: '@/assets/scratch1.jpg',
-                repeat: 'repeat',
+                repeat: 'no-repeat',
             },
             brush: {
             size: 80,
