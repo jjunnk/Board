@@ -1,118 +1,156 @@
 <template>
-    <v-app>
-        <v-card class="overflow-hidden" height="100%">
-            <site-header color="base"></site-header>
-            <vue-page-transition name="overlay-up-full" class="app-body-wrap" height="100vh">
-                <router-view class="auto-size" style="position:static" height="100vh" />
-            </vue-page-transition>
-            <SiteFooter :footer="site.footer"></SiteFooter>
-        </v-card>
+    <v-app id="app">
+        <transition name="page" mode="in-out">
+            <TransitionRouter v-if="transition" />
+        </transition>
+        <transition name="intro" mode="in-out">
+            <SiteHeader v-if="(isIntroVisible && rangeSliderValue > maxValue - 1)
+                    || !isIntroVisible " />
+        </transition>
+        <div class="wrapper">
+            <router-view :class="{ 'perspective' : changePerspective }" />
+        </div>
+        <SiteFooter :footer="site.footer"></SiteFooter>
     </v-app>
 </template>
 
 <script>
-    import SiteFooter from "@/views/site/footer.vue";
-    import SiteHeader from "@/views/site/header.vue";
+/* eslint-disable */
+/*eslint no-shadow: [2, { "hoist": "all" }]*/
+import TransitionRouter from '@/views/Home/TransitionRouter.vue'
+import SiteFooter from "@/views/site/footer.vue";
+import SiteHeader from "@/views/site/header.vue";
 
-    export default {
-        name: "App",
-        components: {
-            SiteHeader,
-            SiteFooter,
-        },
-        data() {
-            return {
-                drawer: false,
-                site: {
-                    footer: "",
-                }
-            };
-        },
-        created() {
-            this.subscribe();
-        },
-        methods: {
-            subscribe() {
-                this.$firebase
-                    .database()
-                    .ref()
-                    .child("site")
-                    .on(
-                        "value",
-                        sn => {
-                            const v = sn.val();
-                            if (!v) {
-                                this.$firebase
-                                    .database()
-                                    .ref()
-                                    .child("site")
-                                    .set(this.site);
-                            }
-                            this.site = v;
-                        },
-                        e => {
-                            console.log(e.message);
-                        }
-                    );
+import router from '@/router/index.js'
+import store from '@/store/index.js'
+
+router.beforeEach((to, from, next) => {
+    store.commit("updateChangePerspective", false);
+    store.commit("updateTransition", true);
+    setTimeout(function () {
+        next();
+    }, 1000);
+
+    to.name == "home" ?
+        store.commit("isIntroVisible", true) :
+        store.commit("isIntroVisible", false);
+});
+router.afterEach((to, from) => {
+    document.querySelector("#app").style.overflow = "auto";
+
+    store.commit("isMobile", false);
+    setTimeout(function () {
+        store.commit("updateTransition", false);
+        window.scrollTo(0, 0);
+    }, 800);
+});
+
+
+export default {
+    name: "App",
+    components: {
+        TransitionRouter,
+        SiteHeader,
+        SiteFooter,
+    },
+    data() {
+        return {
+            drawer: false,
+            site: {
+                footer: "",
             },
+            text: "3D Mode",
+            maxValue: this.$store.state.maxRangeSliderValue,
+        };
+    },
+    created() {
+        this.subscribe();
+        this.$store.commit("updateTransition", false)
+
+    },
+    mounted() {
+        let height = Math.min(
+            document.documentElement.clientHeight,
+            window.screen.height,
+            window.innerHeight
+        )
+        document.querySelector('#app').style.height = height + 'px'
+    },
+    computed: {
+        makeModalVisible() {
+            return this.$store.getters.showModal;
         },
-    };
+        transition() {
+            return this.$store.getters.routeTransition;
+        },
+        changePerspective() {
+            return this.$store.getters.changePerspective;
+        },
+        rangeSliderValue() {
+            return this.$store.getters.getRangeSliderValue;
+        },
+        isIntroVisible() {
+            return this.$store.getters.isIntroVisible;
+        },
+        isHome() {
+            return window.location.pathname != "/";
+        }
+    },
+    methods: {
+        subscribe() {
+            this.$firebase
+                .database()
+                .ref()
+                .child("site")
+                .on(
+                    "value",
+                    sn => {
+                        const v = sn.val();
+                        if (!v) {
+                            this.$firebase
+                                .database()
+                                .ref()
+                                .child("site")
+                                .set(this.site);
+                        }
+                        this.site = v;
+                    },
+                    e => {
+                        console.log(e.message);
+                    }
+                );
+        },
+    },
+};
 </script>
 
-<style>
-    /*roboto noto sanse font*/
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
+<style lang="scss">
+@import '@/assets/scss/_reset.scss'; //typography
+@import '@/assets/scss/_typography.scss'; //typography
+@import '@/assets/scss/_variables.scss'; //variables
 
-    /*Ubuntu font */
-    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+*{box-sizing: border-box;}
 
-    html,
-    body,
-    div,
-    h1,
-    h2,
-    h3 {
-        font-family: 'Ubuntu', 'Noto Sans KR', sans-serif;
-    }
+#app {  
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+text-align: center;
+overflow: auto;
+font-family: $fontfamily;
+}
 
-    html,
-    body {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+.wrapper {
+    margin: 0 auto;
+    max-width: 1440px;
+    width: 90%;
+    padding: 0 5%;
+    position: relative;
+    display: block;
+}
 
-    .v-main {
-        min-height: 100vh;
-        box-sizing: border-box;
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
-    div[data-v-4c22b934].app-body-wrap{height:100vh !important}
-    /* header background */
-    div.theme--dark > div[data-v-33faa3ab]{background-color: #0D0D0D;}
+.page-enter-active {
+    animation: transiton 1.8s ease;
+}
 
-    /* Dark theme color*/
-    .theme--dark.v-sheet,
-    .theme--dark.v-data-table,
-    .theme--dark.v-icon {
-        color: #ebdaca !important;
-    }
 
-    .v-main__wrap .theme--dark.v-card {
-        border: 1px solid #655d5d
-    }
-
-    ::-webkit-scrollbar {
-        width: 8px
-    }
-
-    ::-webkit-scrollbar-track {
-        background: #ebdaca
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #ad9789
-    }
 </style>

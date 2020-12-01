@@ -146,10 +146,12 @@ export default {
 </script>
 
   <style  lang="scss" scoped>
+  @import '@/assets/scss/_variables.scss';
+
 .drawCanvas {
   background-size: cover;
   background-repeat: no-repeat;
-  max-height: 785px;
+  max-height: 585px;
   padding-bottom: 73%;
   position: relative;
   width: 100%;
@@ -157,6 +159,14 @@ export default {
   animation: mobileText 0.5s ease;
   animation-fill-mode: forwards;
   overflow:hidden;
+  
+  @include tablet{
+    padding-bottom: 72%;
+  }
+
+  @include mobile{
+    padding-bottom: 77%;
+  }
 
   .illustrationImage {
     display: none;

@@ -1,0 +1,106 @@
+<!-- eslint-disable -->
+<template>
+  <div class="input__container">
+    <p>{{scrollingText}}</p>
+  </div>
+</template>
+
+<script>
+/*eslint-disable*/
+export default {
+  name: "rangeSlider",
+  data() {
+    return {
+      counter: 0,
+      isScrolling: null,
+      scrollingText: ""
+    };
+  },
+  created() {
+    var touchDevice =
+      navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
+    this.$store.commit("updateRangeSliderValue", this.counter++);
+
+    if (this.getRangeValue == 0) this.scrollingText = "Scroll To Build Website";
+    if (touchDevice && this.getRangeValue == 0)
+      this.scrollingText = "Tap To Build Website";
+  },
+  mounted() {
+    var touchDevice =
+      navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
+    document.body.addEventListener("wheel", this.mouseScroll);
+    if (touchDevice) {
+      scrollingText: "Tap to Build Website";
+      document.querySelector("#app").style.cursor = "pointer";
+      document.querySelector("body").style.cursor = "pointer";
+      document.querySelector("#app").style.userSelect = "none";
+      document.body.addEventListener("click", this.mouseScroll);
+    }
+  },
+  beforeDestroy() {
+    var touchDevice =
+      navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
+    document.body.removeEventListener("wheel", this.mouseScroll);
+    if (touchDevice) {
+      document.body.removeEventListener("click", this.mouseScroll);
+      document.querySelector("#app").style.cursor = "auto";
+      document.querySelector("body").style.cursor = "auto";
+    }
+  },
+  methods: {
+    mouseScroll(e) {
+      this.throttle(e, this.handleScroll, 500);
+    },
+    handleScroll(event) {
+      var touchDevice =
+        navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
+      this.$store.commit("updateRangeSliderValue", this.counter++);
+
+      var getRangeValue = this.$store.getters.getRangeSliderValue;
+
+      if (this.getRangeValue == 1) this.scrollingText = "Keep Scrolling";
+
+      if (touchDevice) {
+        if (this.getRangeValue == 1) this.scrollingText = "Keep tapping";
+      }
+    },
+    throttle(event, func, limit) {
+      if (!this.isScrolling) {
+        func(event);
+        this.isScrolling = true;
+        setTimeout(() => (this.isScrolling = false), limit);
+      }
+    }
+  },
+  computed: {
+    getRangeValue() {
+      return this.$store.getters.getRangeSliderValue;
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style  lang="scss">
+@import '@/assets/scss/_variables.scss';
+
+.input__container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 1280px;
+  bottom: 100px;
+  width: 50%;
+  animation: text 3s ease;
+ 
+  p {
+     
+    /* font-size: $font-size5; */
+    color:  $beige;
+  }
+
+  @include tablet {
+    width: 90%;
+  }
+}
+</style>
