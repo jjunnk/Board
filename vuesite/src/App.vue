@@ -7,10 +7,13 @@
             <SiteHeader v-if="(isIntroVisible && rangeSliderValue > maxValue - 1)
                     || !isIntroVisible " />
         </transition>
-        <div class="wrapper">
-            <router-view :class="{ 'perspective' : changePerspective }" />
+        <div class="wrapper" :class="introBg" color="">
+            <router-view :class="{ 'perspective' : changePerspective }" />        
         </div>
-        <SiteFooter :footer="site.footer"></SiteFooter>
+        <transition name="intro" mode="in-out">
+            <SiteFooter :footer="site.footer"  v-if="(isIntroVisible && rangeSliderValue > maxValue - 1)
+                    || !isIntroVisible "/>
+        </transition>
     </v-app>
 </template>
 
@@ -120,24 +123,28 @@ export default {
                     }
                 );
         },
+        introBg(){
+            if(this.isIntroVisible){
+                document.getElementsByClassName('wrapper').style.backgroundColor="#655d5d"
+                }
+        }
+    
     },
-};
+}
 </script>
 
 <style lang="scss">
-@import '@/assets/scss/_reset.scss'; //typography
-@import '@/assets/scss/_typography.scss'; //typography
-@import '@/assets/scss/_variables.scss'; //variables
+@import '@/assets/scss/_base.scss'; //perspective
+@import '@/assets/scss/perspective.scss'; //perspective
+@import '@/assets/scss/animations.scss'; //animations
 
-*{box-sizing: border-box;}
 
 #app {  
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
-text-align: center;
 overflow: auto;
-font-family: $fontfamily;
 }
+
 
 .wrapper {
     margin: 0 auto;
@@ -146,6 +153,7 @@ font-family: $fontfamily;
     padding: 0 5%;
     position: relative;
     display: block;
+    height:100%;
 }
 
 .page-enter-active {

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-app-bar color="base" flat fluid >
+    <v-app-bar color="base" flat fluid height="80px">
         <v-app-bar-nav-icon @click="drawer = !drawer" color="primary"></v-app-bar-nav-icon>
         <SiteTitle :propstitle="site.title"></SiteTitle>
         <v-spacer />
@@ -80,25 +80,14 @@ export default {
 }
 </script>
 
-<style scoped>
-.v-app-bar {
-    margin: auto !important;padding:4px 12px !important;
+<style scoped >
+header{
+    margin: 0 auto;
+    max-width: 1440px;
+    width: 90%;
+    padding: 0 5%;
 }
-/deep/ .v-toolbar__content {
-  padding: 0px !important;
-}
-@media only screen and (min-width:1264px) {
-    .v-app-bar {
-        max-width: 1185px !important;
-    }
-}
-
-@media only screen and (min-width:960px) {
-    .v-app-bar {
-        max-width: 900px
-    }
-}
-
+header >>> .v-toolbar__content {padding: 0px !important;}
 
 #app.theme--dark>.v-tooltip__content {
     background-color: #FEFCF5 !important;
@@ -107,7 +96,7 @@ export default {
 }
 
 #app.theme--light>.v-tooltip__content {
-    background-color: #0D0D0D !important;
+    background-color: #121212 !important;
     color: #FEFCF5 !important;
 }
 </style>

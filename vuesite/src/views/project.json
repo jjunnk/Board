@@ -1,0 +1,18 @@
+[
+    {
+        "imgSrc": "require('@/assets/board.jpg')",
+        "name": "Board With Firebase"
+      },
+      {
+        "imgSrc": "require('@/assets/calorie.jpg')",
+        "name": "Calorie Diary"
+      },
+      {
+        "imgSrc": "require('@/assets/punch.jpg')",
+        "name": "Punch Game"
+      },
+      {
+        "imgSrc": "require('@/assets/click.jpg')",
+        "name": "Fastest Click Game"
+      }
+]

@@ -3,7 +3,7 @@
   <div class="intro__container">
     <transition name="fade">
       <div class="intro__titleContainer" v-if="rangeSliderValue < 1">
-        <h1 class="base__title" data-id="1">{{ msg }}</h1>
+        <h1 class="base__title" data-id="1" :color="primary">{{ msg }}</h1>
         <span></span>
       </div>
     </transition>
@@ -59,7 +59,7 @@ export default {
 };
 </script>
 <style lang="scss">
-    @import '@/assets/scss/_variables.scss';
+@import '@/assets/scss/_variables.scss';
 
 .intro {
     position: absolute;
@@ -76,20 +76,22 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
         min-width: 75%;
-        /*
+        
         @include mobile {
             min-width: 100%;
         }
-*/
+
     }
 
     .intro__titleContainer {
         position: relative;
         transition: all 0.5s ease;
+        
+
     }
 
     .base__title {
-        /* @include typography(20, 48, $minVw, $maxVW);*/
+        @include typography(20, 48, $minVw, $maxVW);
         position: relative;
         letter-spacing: 5px;
         text-align: center;
@@ -97,7 +99,7 @@ export default {
         width: 100%;
 
         &[data-id="1"] {
-             /*@include typography(14, 48, $minVw, $maxVW);*/
+             @include typography(14, 48, $minVw, $maxVW);
 
             opacity: 0;
             animation: text 1.5s 1.1s ease;
@@ -112,7 +114,7 @@ export default {
         left: 50%;
         transform: translateX(-50%);
         z-index: 2;
-        background: $beige;
+        background-color: $beige;
         animation: introAnimation 1.8s 0.8s ease;
         animation-iteration-count: 2;
     }

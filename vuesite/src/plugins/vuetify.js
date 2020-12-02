@@ -11,8 +11,8 @@ Vue.use(Vuetify);
 const theme={
   themes :{
     dark:{
-      base : '#0D0D0D',
-      base1 : '#1E1E1E',
+      base : '#121212',
+      base1 : '#0D0D0D',
       primary:'#ebdaca', // beige
       secondary:'#655d5d', // dark brown
       info:'#655d5d', // dark brown

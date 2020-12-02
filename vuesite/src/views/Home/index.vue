@@ -1,11 +1,14 @@
 <template>
-    <section class="home" color="base">
+    <section class="home">
+        <transition name="intro" mode="in-out">
+            <Intro v-if="rangeSliderValue < maxValue" />
+        </transition>
         <div class="home__titleContainer">
             <transition name="intro" mode="in-out">
-                <h1 class="base__title" v-if="rangeSliderValue > maxValue - 1"> {{ name }}</h1>
+                <h1 class="base__title text-h4 font-weight-bold" v-if="rangeSliderValue > maxValue - 1" color="primary">{{ name1 }}<br/>{{ name2 }}</h1>
             </transition>
             <transition name="intro" mode="in-out">
-                <h2 class="home__subTitle" v-if="rangeSliderValue > maxValue - 1">{{ jobTitle }}</h2>
+                <h2 class="home__subTitle text-h6 mt-12" v-if="rangeSliderValue > maxValue - 1" color="primary">{{ jobTitle }}</h2>
             </transition>
         </div>
         <transition name="intro" mode="in-out">
@@ -28,7 +31,8 @@
         },
         data() {
             return {
-                name: 'Lee sujin',
+                name1: '이수진',
+                name2: 'Lee sujin',
                 jobTitle: 'Front-End Developer',
                 maxValue: this.$store.state.maxRangeSliderValue,
                 intro:false
@@ -53,7 +57,7 @@
     flex-wrap: wrap;
     flex-direction: unset;
     overflow: hidden;
-
+    height:100%;
     @include tablet {
         overflow: unset;
     }
@@ -71,8 +75,8 @@
         border-radius: 50%;
         width: 50px;
         height: 50px;
-        /* margin-top: $s-9;
-margin-right: $s-6;*/
+        margin-top: $s-9;
+        margin-right: $s-6;
         padding: 0;
 
         &:after {
@@ -133,23 +137,28 @@ margin-right: $s-6;*/
 
     &__titleContainer {
         display: inline-flex;
-        flex: 0 1 5%;
+        flex: 0 28%;
         flex-direction: column;
 
+         @include tablet {
+             flex: 0 100%;
+         }
+
         .base__title {
+            font-family: $fontfamily !important;
             max-width: 400px;
-            line-height: 80px;
+            line-height: 1.8em;
             animation: mobileText 0.5s ease;
             animation-fill-mode: forwards;
 
             @include tablet {
-                /*line-height: $s-10;*/
+                line-height: $s-9;
             }
         }
     }
 
     &__subTitle {
-        /*font-size: $font-size5; */
+        font-family: $fontfamily !important;
         text-align: left;
         animation: mobileText 0.5s ease;
         animation-fill-mode: forwards;

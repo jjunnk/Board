@@ -1,7 +1,7 @@
 <!-- eslint-disable -->
 <template>
   <div class="input__container">
-    <p>{{scrollingText}}</p>
+    <p :color="primary">{{scrollingText}}</p>
   </div>
 </template>
 
@@ -87,16 +87,15 @@ export default {
 .input__container {
   position: fixed;
   left: 50%;
-  transform: translateX(-50%);
+  bottom: 35%;
+  transform: translate(-50%, -35%);
   max-width: 1280px;
-  bottom: 100px;
   width: 50%;
   animation: text 3s ease;
  
   p {
-     
-    /* font-size: $font-size5; */
-    color:  $beige;
+    font-size: $font-size5;
+    text-align:center;
   }
 
   @include tablet {

@@ -41,23 +41,36 @@ const routes = [{
   {
     path: "/todolist",
     name: "todo-project",
-    component: () => import( /* webpackChunkName: "todo" */ "@/todo/index.vue")
+    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/TodoList.vue")
   },
   {
     path: "/click",
     name: "click",
-    component: () => import( /* webpackChunkName: "todo" */ "@/click/index.vue")
+    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/FastestClick.vue")
   },
   {
     path: "/punch",
     name: "punch",
-    component: () => import( /* webpackChunkName: "todo" */ "@/punch/index.vue")
+    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/PunchGame.vue")
   },
   {
     path: "/calorie-counter",
     name: "calorie-counter",
-    component: () => import( /* webpackChunkName: "todo" */ "@/calorie/index.vue")
+    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/CalorieDiary.vue")
   },
+  {
+    path: "/project",
+    name: "Project",
+    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project.vue")
+  },/*
+  {
+    path: "/project/:projectId",
+    name: "ProjectItem",
+    component: () => import( "@/views/ProjectItem.vue"),
+    props:route=>({
+      id : Number(route.params.id)
+    })
+  },*/
   {
     path: '*',
     name: 'error',

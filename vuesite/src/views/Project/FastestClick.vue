@@ -1,8 +1,8 @@
 <template>
-<v-card class="main" flat  height="100vh" :color="$vuetify.theme.dark ? 'base1' : 'info'">
+<v-card class="main" flat  height="100%" :color="$vuetify.theme.dark ? 'base1' : 'info'">
     <v-container class="ma-auto">
         <v-btn id="clickbtn" @click="updateCount"></v-btn>
-        <h2 id="status">{{status}}</h2>
+        <h1 id="status">{{status}}</h1>
         <h1>You clicked <b>{{numClicks}}</b> times</h1>
         <h1>You have <b>{{secs}} secs</b> left</h1>
     </v-container>
@@ -57,7 +57,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import '@/assets/scss/_variables.scss';
+
 
 @keyframes decrement {
     from { transform:scale(1)}
@@ -90,7 +92,7 @@ export default {
     transition: 0.3s;
     border-radius: 50%;
     background-color: #F7A381;
-    margin-bottom: 1.5em 
+    margin-bottom: 1.7em 
 }
 
 #clickbtn:active {
@@ -107,6 +109,7 @@ export default {
     position: relative;
     font-size: 60px;
     text-transform: uppercase;
+    font-weight:bold;
 }
 
 #timer {
@@ -116,7 +119,9 @@ export default {
 
 h1 {
     color: #fff;
-    font-weight: 300;
+    font-weight: 400;
+    font-family: $fontfamily;
+    font-size:1.8em;
 }
 
 .over {
