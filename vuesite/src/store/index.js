@@ -18,14 +18,47 @@ export default new Vuex.Store({
     rangeSliderValue: null,
     maxRangeSliderValue: 2,
     isIntroVisible: false,
-    projectImageSlider: 0
+    projectImageSlider: 0,
+
+    projects:[
+      {
+        id:'calorie-Diary',
+        imgSrc: require('@/assets/calorie.jpg'),
+        name: "Calorie Diary",
+        labels:['Vue.js', 'Vuetify', 'javascript']
+      },
+      {
+        id:'punch-game',
+        imgSrc: require('@/assets/punch.jpg'),
+        name: "Punch Game",
+        labels:['Vue.js', 'Vuetify','sass', 'javascript']
+
+      },
+      {
+        id:'Fastest-click-Game',
+        imgSrc: require('@/assets/click.jpg'),
+        name: "Fastest Click Game",
+        labels:['Vue.js', 'Vuetify','sass', 'javascript']
+
+      },
+      {
+        id:'todolist',
+        imgSrc: require('@/assets/todolist.jpg'),
+        name: "Todo List",
+        labels:['Vue.js', 'Vuetify','firebase','sass','javascript']
+
+      }
+    ]
   },
   getters: {
     routeTransition:state => state.transition,
     changePerspective : state => state.changePerspective,
-    getRangeSliderValue : state => state.rangeSliderValue,
+    getRangeSliderValue : state => state.rangeSliderValue,   
     isMobile : state => state.isMobile,
     isIntroVisible : state => state.isIntroVisible,
+    getProject : state => id => state.projects.find(project => project.id === id)
+
+    
   },
   mutations: {
     setEdit(state, edit) {
@@ -50,7 +83,7 @@ export default new Vuex.Store({
     },
     updateRangeSliderValue : (state, payload) => {
       state.rangeSliderValue = payload
-    },
+    }, 
     isMobile: (state, payload) => {
       state.isMobile = payload;
     },

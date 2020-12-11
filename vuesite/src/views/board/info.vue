@@ -2,7 +2,6 @@
 <div>
     <board-content v-if="!action" :boardId="info" :category="category" :tag="tag" />
     <board-form v-else :boardId="info" :action="action" />
-
 </div>
 </template>
 

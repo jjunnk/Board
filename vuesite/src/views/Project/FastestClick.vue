@@ -1,5 +1,5 @@
 <template>
-<v-card class="main" flat  height="100%" :color="$vuetify.theme.dark ? 'base1' : 'info'">
+<v-card id="FastestGameWrapper" flat height="100%" :color="$vuetify.theme.dark ? 'base1' : 'info'">
     <v-container class="ma-auto">
         <v-btn id="clickbtn" @click="updateCount"></v-btn>
         <h1 id="status">{{status}}</h1>
@@ -22,6 +22,7 @@ export default {
         }
     },
     created() {
+
         setInterval(() => {
             if (this.active) {
                 this.secs-- // 1 감소
@@ -34,6 +35,7 @@ export default {
             }
 
         }, 1000)
+
 
     },
     methods: {
@@ -67,14 +69,6 @@ export default {
 }
 
 .decrement{animation: decrement .3s normal forwards ease-in-out;}
-.main{
-    color: #fff;
-    text-align: center;
-    position: relative;
-    height:100%;
-    margin:0;
-    padding:0;
-}
 
 .container {
     position: absolute;

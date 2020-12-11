@@ -143,6 +143,8 @@ export default {
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 overflow: auto;
+height:100% !important;
+
 }
 
 
@@ -160,5 +162,5 @@ overflow: auto;
     animation: transiton 1.8s ease;
 }
 
-
 </style>
+

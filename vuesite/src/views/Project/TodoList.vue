@@ -15,72 +15,77 @@
     </v-container>
 </template>
 <script>
-    import moment from '@/plugins/moment'
-    import {
-        last
-    } from 'lodash'
+// @ is an alias to /src
+import ProjectItem from '@/views/ProjectItem.vue';
 
+import moment from '@/plugins/moment'
+import {
+    last
+} from 'lodash'
 
-    export default {
-        data() {
-            return {
-                unsubscribe: null,
-                todos: [],
-                todo: {
-                    title: '',
-                },
+export default {
+    /* eslint-disable */
+    components:{ProjectItem},
+    data() {
+        return {
+            unsubscribe: null,
+            todos: [],
+            todo: {
+                title: '',
+            },
 
-            }
-        },
-        created() {
-            this.subscribe()
-        },
-        computed: {
-            Totals() {
-                return this.todos.length
-            },
-        },
-        methods: {
-            async subscribe() {
-                var todosRef = await this.$firebase
-                    .firestore()
-                    .collection("todoItems")
-
-                todosRef.onSnapshot(snap => {
-                    this.todos = []
-                    snap.forEach(doc => {
-                        var todo = doc.data();
-                        todo.id = doc.id;
-                        this.todos.push(todo);
-                    });
-                });
-            },
-            addTodo() {
-                this.$firebase.firestore().collection('todoItems').add({
-                    title: this.todo.title,
-                    createdAt: new Date().toLocaleString(),
-                    isCompleted: false,
-                })
-            },
-            updateTodoItem(docId, e) {
-                var isChecked = e.target.checked;
-                this.$firebase
-                    .firestore()
-                    .collection("todoItems")
-                    .doc(docId)
-                    .update({
-                        isCompleted: isChecked
-                    });
-            },
-            deleteTodo(docId) {
-                this.$firebase.firestore().collection('todoItems').doc(docId).delete()
-            },
-        ThemeColor(){
-            return this.$vuetify.theme.dark ? 'BgDark' : 'BgLight'
         }
-
+    },
+    created() {
+        this.subscribe()
+    },
+    computed: {
+        Totals() {
+            return this.todos.length
         },
+    },
+    methods: {
+        async subscribe() {
+
+            var todosRef = await this.$firebase
+                .firestore()
+                .collection("todoItems")
+
+            todosRef.onSnapshot(snap => {
+                this.todos = []
+                snap.forEach(doc => {
+                    var todo = doc.data();
+                    todo.id = doc.id;
+                    this.todos.push(todo);
+                });
+            });
+        },
+        addTodo() {
+            this.$firebase.firestore().collection('todoItems').add({
+                title: this.todo.title,
+                createdAt: new Date().toLocaleString(),
+                isCompleted: false,
+            })
+        },
+        updateTodoItem(docId, e) {
+            var isChecked = e.target.checked;
+            this.$firebase
+                .firestore()
+                .collection("todoItems")
+                .doc(docId)
+                .update({
+                    isCompleted: isChecked
+                });
+        },
+        deleteTodo(docId) {
+            this.$firebase.firestore().collection('todoItems').doc(docId).delete()
+        },
+    ThemeColor(){
+        return this.$vuetify.theme.dark ? 'BgDark' : 'BgLight'
     }
+
+    },
+}
 </script>
 
 <style scoped>
@@ -93,9 +98,9 @@
     border: 4px solid #ad9789;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
     position: absolute;
-    transform: translate(-50%, -20%);
+    transform: translateX(-50%);
     left: 50%;
-    top: 20%;
+    top: 0;
 }
 
 ul>li {

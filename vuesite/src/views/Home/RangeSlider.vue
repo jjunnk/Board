@@ -1,7 +1,7 @@
 <!-- eslint-disable -->
 <template>
   <div class="input__container">
-    <p :color="primary">{{scrollingText}}</p>
+    <p color="primary">{{scrollingText}}</p>
   </div>
 </template>
 

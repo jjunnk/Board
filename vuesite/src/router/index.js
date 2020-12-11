@@ -1,13 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "@/views/Home/index.vue";
+import Home from "@/views/Home/Home.vue";
+import Project from "@/views/Project.vue";
 
 Vue.use(VueRouter);
 
 const routes = [{
     path: "/",
     name: "home",
-    component: () => import( /* webpackChunkName: "board" */ "@/views/Home/index")
+    component: Home
   },
   {
     path: "/board",
@@ -28,9 +29,6 @@ const routes = [{
   {
     path: "/storage",
     name: "storage",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "board" */ "@/views/storage")
   },
   {
@@ -39,38 +37,20 @@ const routes = [{
     component: () => import( /* webpackChunkName: "board" */ "@/views/editor")
   },
   {
-    path: "/todolist",
-    name: "todo-project",
-    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/TodoList.vue")
-  },
-  {
-    path: "/click",
-    name: "click",
-    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/FastestClick.vue")
-  },
-  {
-    path: "/punch",
-    name: "punch",
-    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/PunchGame.vue")
-  },
-  {
-    path: "/calorie-counter",
-    name: "calorie-counter",
-    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project/CalorieDiary.vue")
-  },
-  {
     path: "/project",
     name: "Project",
-    component: () => import( /* webpackChunkName: "todo" */ "@/views/Project.vue")
-  },/*
+    component: Project,
+    props:true
+  },
   {
-    path: "/project/:projectId",
-    name: "ProjectItem",
-    component: () => import( "@/views/ProjectItem.vue"),
-    props:route=>({
-      id : Number(route.params.id)
-    })
-  },*/
+    path: "/project/:id",
+    name: "ProjectPage",
+    component: () => import( "@/views/Project/ProjectPage.vue"),
+    props:true,
+    children:[
+    ]
+
+  },
   {
     path: '*',
     name: 'error',

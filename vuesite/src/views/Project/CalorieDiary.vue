@@ -1,6 +1,6 @@
 <template>
     <v-card flat width="100%" height="100%">
-        <v-container id="calorieCounter">
+        <v-sheet id="calorieCounter" color="">
             <v-card>
                 <v-toolbar class="text--center" flat>
                     <v-spacer />
@@ -284,7 +284,7 @@
                     <v-col cols="3">단백질 {{ totalProtein }} g</v-col>
                 </v-footer>
             </v-card>
-        </v-container>
+        </v-sheet>
     </v-card>
 </template>
 <script>
@@ -553,8 +553,15 @@
         background-color: #655d5d;
         color: #fff;
     }
+    footer.theme--dark.total {
+        color: #fff  !important;
+    }
 
     footer.new {
         background-color: #ebdaca;
     }
+    footer.new >  .theme--dark.v-input input, .theme--dark.v-input textarea{
+        color:#0D0D0D  !important;
+    }
+
 </style>

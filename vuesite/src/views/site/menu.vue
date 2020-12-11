@@ -20,7 +20,7 @@
         <v-list-group v-for="(item, i) in items" :key="i" v-model="item.active" :prepend-icon="item.icon" :no-action="!$store.state.editable">
             <template v-slot:activator>
                 <v-list-item-content>
-                    <v-list-item-title>
+                    <v-list-item-title class="text-h6">
                         {{ item.title }}
                         <span v-if="$store.state.editable">
                             <v-btn icon @click="openDialog(i)">

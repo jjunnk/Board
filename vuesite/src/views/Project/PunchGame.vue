@@ -1,14 +1,14 @@
 <template>
-<div class="main">
+<v-card id="punchGameWrapper" flat max-width="360px" class="text-center ma-auto mt-6" color="base">
     <img id="bag" :src="require('@/assets/' + imgSrc)" />
     <div id="bag-health">
         <div :style="{width:health + '%'}"></div>
     </div>
-    <div id="controls">
-        <v-btn id="punch" @click="punch" class="red darken-2" color="white">Punch</v-btn>
+    <div>
+        <v-btn id="punch" @click="punch" class="red darken-2 mr-12 ml-2" dark>Punch</v-btn>
         <v-btn id="restart" @click="restart" color="primary">Restart</v-btn>
     </div>
-</div>
+</v-card>
 </template>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
@@ -21,6 +21,8 @@ export default {
             health: 100,
             imgSrc: 'bag.png'
         }
+    },
+    created(){
     },
     methods: {
         punch() {
@@ -55,11 +57,6 @@ export default {
 </script>
 
 <style scoped>
-.main {
-    max-width: 360px;
-    margin: 3em auto auto;
-    text-align: center;
-}
 
 #bag {
     width: 360px;
@@ -69,7 +66,7 @@ export default {
 }
 
 #bag-health {
-    width: 360px;
+    width: 100%;
     border: 2px solid #000;
     margin: 0 auto 20px auto;
 }
@@ -80,22 +77,4 @@ export default {
     transition: all .4s ease-in;
 }
 
-#controls {
-    width: 300px;
-    margin: 0 auto;
-}
-
-#punch {
-    padding: .5em 2em;
-    color: #fff !important;
-    border-radius: 5px;
-    float: left;
-}
-
-#restart {
-    padding: .5em 2em;
-    border-radius: 5px;
-    float: right;
-
-}
 </style>

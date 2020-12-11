@@ -59,6 +59,6 @@
         }
     };
 </script>
-<style >
+<style scoped>
 .v-footer.theme--dark > .col{border-top:1px solid #1E1E1E; }
 </style>

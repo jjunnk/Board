@@ -70,7 +70,7 @@ a {
 
 .base__title {
   font-family: $fontfamily;
-  @include typography(32, 60, 320, 1440);
+  @include typography(32, 54, 320, 1440);
   letter-spacing: 10px;
   text-align: left;
   margin-bottom: $m-5;
