@@ -1,9 +1,9 @@
 <template>
-<div id="mobileNav" class="text-center">
+<div id="mobileNav" class="text-center" > 
     <v-toolbar flat :color="$vuetify.theme.dark? 'base1' :'info'" height="80px">
-        <SiteTitle :propstitle="site.title"></SiteTitle>
+        <SiteTitle :propstitle="site.title" ></SiteTitle>
         <v-spacer/>
-        <v-btn icon @close="drawer = false"><v-icon large>mdi-close</v-icon></v-btn>
+        <v-btn icon @click="closeDrawer"><v-icon large>mdi-close</v-icon></v-btn>
     </v-toolbar>
     <nav>
         <router-link to="/">HOME</router-link>
@@ -18,7 +18,6 @@
             </v-btn>
         </template>
     </v-tooltip>
-
 </div>
 </template>
 <script>
@@ -29,6 +28,7 @@ export default {
     data() {
         return {
             drawer: false,
+            dialog: false,
             site: {
                 title: "",
                 menu: []
@@ -65,11 +65,21 @@ export default {
         darkMode() {
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark
         },
+        closeDrawer(){
+            this.$emit('close-Drawer')
+        }
 
     }
 }
 
 </script>
+
+<style scoped>
+/* stylelint-disable */
+   header >>> .v-toolbar__content a,header >>> .v-toolbar__content button {
+      color:#ebdaca !important;
+}
+</style>
 
 <style scoped lang="scss">
 @import '@/assets/scss/animations.scss'; //animations
@@ -111,14 +121,14 @@ nav{
     }
 }
 
-.theme--dark #mobileNav > nav > a.router-link-active{
+.theme--dark #mobileNav > nav > a.router-link-exact-active{
     color:#ebdaca;
     background:none;
     border:1px solid #ebdaca;
     border-radius:4px;
 
 }        
-.theme--light #mobileNav > nav > a.router-link-active{
+.theme--light #mobileNav > nav > a.router-link-exact-active{
             background-color: #ebdaca;
             color: #655d5d;
 }

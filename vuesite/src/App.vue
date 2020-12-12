@@ -1,5 +1,5 @@
 <template>
-    <v-app id="app">
+    <v-app id="app" v-resize="onResize">
         <transition name="page" mode="in-out">
             <TransitionRouter v-if="transition" />
         </transition>
@@ -64,6 +64,7 @@ export default {
             },
             text: "3D Mode",
             maxValue: this.$store.state.maxRangeSliderValue,
+            windowSize:0
         };
     },
     created() {
@@ -78,6 +79,7 @@ export default {
             window.innerHeight
         )
         document.querySelector('#app').style.height = height + 'px'
+        this.onResize()
     },
     computed: {
         makeModalVisible() {
@@ -127,6 +129,9 @@ export default {
             if(this.isIntroVisible){
                 document.getElementsByClassName('wrapper').style.backgroundColor="#655d5d"
                 }
+        },
+        onResize(){
+            this.windowSize = window.innerWidth
         }
     
     },

@@ -1,18 +1,37 @@
 <template>
-<div>
+<div v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs">
     <v-app-bar color="base" flat fluid height="80px">
         <v-app-bar-nav-icon @click="drawer = !drawer" color="primary"></v-app-bar-nav-icon>
         <SiteTitle :propstitle="site.title"></SiteTitle>
         <v-spacer />
-        <nav class="mr-2 d-none d-sm-flex">
+        <v-tooltip bottom class="darkMode-btn">
+            <template v-slot:activator="{ on, attrs }" >
+                <v-btn icon @click="darkMode" color="primary" v-bind="attrs" v-on="on" >
+                    <v-icon large>{{ ($vuetify.theme.dark) ? 'mdi-brightness-5' : 'mdi-weather-night'  }}</v-icon>
+                </v-btn>
+            </template>
+            <span color="primary">{{ ($vuetify.theme.dark) ? 'Light Mode' : 'Dark Mode'  }}</span>
+        </v-tooltip>
+        <SiteSign></SiteSign>
+    </v-app-bar>
+    <v-navigation-drawer id="mobile" v-model="drawer" :color="$vuetify.theme.dark? 'base1' :'info'" app hide-overlay width="100%" >
+        <MobileMenu @close-Drawer="closeDrawer" />
+    </v-navigation-drawer>
+</div>
+<div v-else >
+    <v-app-bar color="base" flat fluid height="80px">
+        <v-app-bar-nav-icon @click="drawer = !drawer" color="primary"></v-app-bar-nav-icon>
+        <SiteTitle :propstitle="site.title"></SiteTitle>
+        <v-spacer />
+        <nav class="mr-2">
             <ul class="list">
                 <li class="item">
                     <router-link to="/project">PROJECTS</router-link></li>
             </ul>
         </nav>
-        <v-tooltip bottom class="darkMode-btn d-none d-sm-flex">
+        <v-tooltip bottom class="darkMode-btn">
             <template v-slot:activator="{ on, attrs }" >
-                <v-btn icon @click="darkMode" color="primary" v-bind="attrs" v-on="on" class=" d-none d-sm-flex">
+                <v-btn icon @click="darkMode" color="primary" v-bind="attrs" v-on="on">
                     <v-icon large>{{ ($vuetify.theme.dark) ? 'mdi-brightness-5' : 'mdi-weather-night'  }}</v-icon>
                 </v-btn>
             </template>
@@ -21,11 +40,8 @@
         <SiteSign></SiteSign>
     </v-app-bar>
 
-    <v-navigation-drawer class="d-none d-sm-flex" app temporary v-model="drawer" :width="$store.state.editable ? 400 : 350" >
+    <v-navigation-drawer app temporary v-model="drawer" :width="$store.state.editable ? 400 : 350" >
         <SiteMenu :items="site.menu" @close="drawer = false"></SiteMenu>
-    </v-navigation-drawer>
-    <v-navigation-drawer id="mobile" class="d-flex d-sm-none" :color="$vuetify.theme.dark? 'base1' :'info'" dark app temporary v-model="drawer" width="100%" >
-        <MobileMenu  />
     </v-navigation-drawer>
 </div>
 </template>
@@ -86,7 +102,11 @@ export default {
         darkMode() {
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark
         },
-
+        closeDrawer(){
+            this.drawer = false
+            document.getElementById("mobile").classList.remove('v-navigation-drawer--open')
+            document.getElementById("mobile").classList.add('v-navigation-drawer--close')
+        }
     }
 }
 
@@ -236,6 +256,12 @@ header{
     background-color: #121212 !important;
     color: #FEFCF5 !important;
 }
+.theme--dark #mobileNav > nav > a.router-link-exact-active.router-link-active
+{
+    color:#0D0D0D !important;
+    background:none !important;
+    border:1px solid #ebdaca !important;
 
+}
 
 </style>

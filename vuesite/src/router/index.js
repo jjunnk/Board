@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home/Home.vue";
 import Project from "@/views/Project.vue";
-
+import ProjectPage from "@/views/Project/ProjectPage.vue"
+import AboutMe from "@/views/AboutMe/AboutMe.vue";
 Vue.use(VueRouter);
 
 const routes = [{
@@ -13,28 +14,25 @@ const routes = [{
   {
     path: "/board",
     name: "board",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "board" */ "@/views/board")
+    component: () => import("@/views/board")
   },
   {
     path: "/board/:info",
-    component: () => import( /* webpackChunkName: "info" */ "@/views/board/info")
+    component: () => import("@/views/board/info")
   },
   {
     path: "/board/:info/:article",
-    component: () => import( /* webpackChunkName: "article" */ "@/views/board/article")
+    component: () => import("@/views/board/article")
   },
   {
     path: "/storage",
     name: "storage",
-    component: () => import( /* webpackChunkName: "board" */ "@/views/storage")
+    component: () => import("@/views/storage")
   },
   {
     path: "/editor",
     name: "editor",
-    component: () => import( /* webpackChunkName: "board" */ "@/views/editor")
+    component: () => import("@/views/editor")
   },
   {
     path: "/project",
@@ -45,11 +43,13 @@ const routes = [{
   {
     path: "/project/:id",
     name: "ProjectPage",
-    component: () => import( "@/views/Project/ProjectPage.vue"),
+    component: ProjectPage,
     props:true,
-    children:[
-    ]
-
+  },
+  {
+    path: '/AboutMe',
+    name: 'AboutMe',
+    component: AboutMe,
   },
   {
     path: '*',
