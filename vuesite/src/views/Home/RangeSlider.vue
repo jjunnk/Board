@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/javascript">
 /*eslint-disable*/
 export default {
   name: "rangeSlider",
@@ -18,7 +18,7 @@ export default {
   },
   created() {
     var touchDevice =
-      navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
+navigator.maxTouchPoints || "ontouchstart" in document.documentElement;
     this.$store.commit("updateRangeSliderValue", this.counter++);
 
     if (this.getRangeValue == 0) this.scrollingText = "Scroll To Build Website";

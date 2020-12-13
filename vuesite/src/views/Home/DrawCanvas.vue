@@ -151,7 +151,7 @@ export default {
 .drawCanvas {
   background-size: cover;
   background-repeat: no-repeat;
-  max-height: 585px;
+  max-height: 700px;
   padding-bottom: 73%;
   position: relative;
   width: 100%;
@@ -162,6 +162,7 @@ export default {
   
   @include tablet{
     padding-bottom: 72%;
+    max-height: 580px;
   }
 
   @include mobile{

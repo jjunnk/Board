@@ -8,7 +8,7 @@
                 <h1 class="base__title font-weight-bold" v-if="rangeSliderValue > maxValue - 1" color="primary">{{ name1 }}<br/>{{ name2 }}</h1>
             </transition>
             <transition name="intro" mode="in-out">
-                <h2 class="home__subTitle text-h6 mt-12" v-if="rangeSliderValue > maxValue - 1" color="primary">{{ jobTitle }}</h2>
+                <h2 class="home__subTitle text-h6" v-if="rangeSliderValue > maxValue - 1" color="primary">{{ jobTitle }}</h2>
             </transition>
         </div>
         <transition name="intro" mode="in-out">
@@ -119,7 +119,7 @@
         display: flex;
         justify-content: center;
         align-items: flex-end;
-        flex: 0 65%;
+        flex: 0 60%;
         margin: 0 auto;
         animation: mobileText 0.5s ease;
         animation-fill-mode: forwards;
@@ -137,7 +137,7 @@
 
     &__titleContainer {
         display: inline-flex;
-        flex: 0 35%;
+        flex: 0 40%;
         flex-direction: column;
 
          @include tablet {
@@ -147,7 +147,7 @@
         .base__title {
             font-family: $fontfamily !important;
             max-width: 400px;
-            line-height: 1.8em;
+            line-height: 1.5em;
             animation: mobileText 0.5s ease;
             animation-fill-mode: forwards;
 
@@ -162,6 +162,13 @@
         text-align: left;
         animation: mobileText 0.5s ease;
         animation-fill-mode: forwards;
+        margin-top:2rem;
+
+        @include tablet {
+            margin-top:0;
+            margin-bottom:2rem;
+        }
+
     }
 }
 </style>

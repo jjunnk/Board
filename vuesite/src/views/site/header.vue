@@ -26,7 +26,11 @@
         <nav class="mr-2">
             <ul class="list">
                 <li class="item">
-                    <router-link to="/project">PROJECTS</router-link></li>
+                    <router-link to="/aboutme">ABOUT ME</router-link>
+                </li>
+                <li class="item">
+                    <router-link to="/project">PROJECTS</router-link>
+                </li>
             </ul>
         </nav>
         <v-tooltip bottom class="darkMode-btn">
@@ -135,14 +139,20 @@ header{
         height: 36px;
         line-height: 36px;
         letter-spacing: 1px;
+        padding:0;
+        display:inline-flex;
+
+        @media screen and (max-width:660px) {
+            display:none;
+        }
     }
     .item{
         $item : &;
         position:relative;
         border:none;
-        width:100%;
         height:100%;
         line-height: 36px;
+        margin-left:20px;
         &::after, &::before{
             width:0;
             height:1px;
@@ -220,7 +230,7 @@ header{
             }
             &.router-link-active{
                 letter-spacing: 3px;
-                border-bottom:2px solid;
+                border-bottom:3px solid;
             }
             
 

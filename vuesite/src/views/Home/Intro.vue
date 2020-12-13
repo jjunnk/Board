@@ -52,7 +52,6 @@ export default {
       this.msg = 'Welcome to my Portfolio';
       this.timeToScroll = true;
     }, 3300);
-
   }
 
 

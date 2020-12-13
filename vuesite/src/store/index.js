@@ -8,8 +8,8 @@ export default new Vuex.Store({
     editable: false,
     fireUser: null,
     user: null,
-    myImage:require("@/assets/scratch2.jpg"),
-    illustrationImage: require("@/assets/scratch1.jpg"),
+    myImage:require("@/assets/about-origin.jpg"),
+    illustrationImage: require("@/assets/about-black.jpg"),
     illustrationDescription: "Illustration of me",
     transition: false,
     changePerspective: false,
@@ -48,6 +48,43 @@ export default new Vuex.Store({
         labels:['Vue.js', 'Vuetify','firebase','sass','javascript']
 
       }
+    ],
+    skills:[
+      {
+        id:0,
+        name:'HTML',
+        percent:'88'
+      },
+      {
+        id:1,
+        name:'CSS',
+        percent:'75'
+      },
+      {
+        id:2,
+        name:'SASS',
+        percent:'60'
+      },
+      {
+        id:3,
+        name:'Vue.js',
+        percent:'70'
+      },
+      {
+        id:4,
+        name:'Vuex',
+        percent:'40'
+      },
+      {
+        id:5,
+        name:'Javascript',
+        percent:'60'
+      },
+      {
+        id:6,
+        name:'Firebase',
+        percent:'40'
+      },
     ]
   },
   getters: {
