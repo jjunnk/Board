@@ -17,7 +17,7 @@ importScripts(
   "/sujin/precache-manifest.7f3983050032c9b6a3c57a0a3d771d90.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "vuesite"});
+workbox.core.setCacheNameDetails({prefix: "sujin"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
