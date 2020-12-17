@@ -7,6 +7,7 @@ import "./plugins/firebase"
 import "./plugins/editor"
 import "./plugins/moment"
 import "./plugins/page-transition"
+import './registerServiceWorker'
 
 
 Vue.config.productionTip = false;
