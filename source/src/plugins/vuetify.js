@@ -1,12 +1,89 @@
-import Vue from "vue";
-import Vuetify from "vuetify/lib";
 import '@fortawesome/fontawesome-free/css/all.css'
-
-// #Internationalization (i18n)
 import ko from 'vuetify/es5/locale/ko'
 import en from 'vuetify/es5/locale/en'
+import Vue from "vue";
 
-Vue.use(Vuetify);
+import Vuetify, {
+  VApp,
+  VAppBar,
+  VAppBarNavIcon,
+  VToolbar,
+  VToolbarTitle,
+  VCard,
+  VCardActions,
+  VCardTitle,
+  VCardText,
+  VCardSubtitle,
+  VContainer,
+  VSheet,
+  VDialog,
+  VMenu,
+  VBtn,
+  VIcon,
+  VProgressCircular,
+  VRow,
+  VCol,
+  VList,
+  VAvatar,
+  VListGroup,
+  VListItem,
+  VListItemTitle,
+  VListItemSubtitle,
+  VListItemContent,
+  VDataTable,
+  VDataTableHeader,
+  VListItemAction,
+  VSpacer,
+  VDivider,
+  VSkeletonLoader,
+  VFooter,
+  VSubheader,
+} from 'vuetify/lib';
+import {
+  Ripple
+} from 'vuetify/lib/directives';
+
+Vue.use(Vuetify, {
+  components: {
+    VApp,
+    VAppBar,
+    VAppBarNavIcon,
+    VToolbar,
+    VToolbarTitle,
+    VCard,
+    VCardActions,
+    VCardTitle,
+    VCardText,
+    VCardSubtitle,
+    VContainer,
+    VSheet,
+    VDialog,
+    VMenu,
+    VBtn,
+    VIcon,
+    VProgressCircular,
+    VRow,
+    VCol,
+    VList,
+    VAvatar,
+    VListGroup,
+    VListItem,
+    VListItemTitle,
+    VListItemSubtitle,
+    VListItemContent,
+    VDataTable,
+    VDataTableHeader,
+    VListItemAction,
+    VSpacer,
+    VDivider,
+    VSkeletonLoader,
+    VFooter,
+    VSubheader,
+  },
+  directives: {
+    Ripple,
+  },
+})
 
 const theme = {
   themes: {
