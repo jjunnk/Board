@@ -2,9 +2,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     transpileDependencies: ["vuetify"],
-    publicPath: process.env.NODE_ENV === 'production'
-    ? '/sujin/'
-    : '/',
+    publicPath: '/',
     configureWebpack: {
       plugins:[
         new MiniCssExtractPlugin({
