@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/sujin/precache-manifest.86a96d3f1bf5e8a82c1ebb88dcc45f5d.js"
+  "/precache-manifest.8f0d030f3cc23b0a737036846b02bba2.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "sujin-portfolio"});
