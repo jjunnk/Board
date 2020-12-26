@@ -3,7 +3,7 @@
         <v-card-title class="base__title pa-0">About Me</v-card-title>
         <v-row>
             <v-col cols="12" md="5">
-                <v-img :src="require('@/assets/about-origin.jpg')" aspect-ratio="1" />
+                <v-img :src="require('@/assets/about2.jpg')" aspect-ratio="1" />
             </v-col>
             <v-col cols="12" md="7" class="pl-md-14">
                 <h1 color="primary">Skills</h1>
