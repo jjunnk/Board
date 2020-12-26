@@ -4,6 +4,10 @@ module.exports = {
     transpileDependencies: ["vuetify"],
     publicPath: '/',
     pwa: {
+      name:'sujin portfolio',
+      workboxOptions: {
+        exclude: [/_redirects/]
+      },
       iconPaths: {
         favicon32: "./public/favicon.png",
         favicon16: "./public/favicon.png",
