@@ -300,7 +300,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/todolist.980319d1.jpg"
   },
   {
-    "revision": "c81c58d1667692e59f7f1e5ead7f1f77",
+    "revision": "f08af699c181ab91037ed73647727bce",
     "url": "/index.html"
   },
   {
