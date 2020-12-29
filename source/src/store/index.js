@@ -12,7 +12,6 @@ export default new Vuex.Store({
     illustrationImage: require("@/assets/about-bw.jpg"),
     illustrationDescription: "Illustration of me",
     transition: false,
-    changePerspective: false,
     perspectiveText: "3D Mode",
     isMobile: false,
     rangeSliderValue: null,
@@ -89,13 +88,10 @@ export default new Vuex.Store({
   },
   getters: {
     routeTransition:state => state.transition,
-    changePerspective : state => state.changePerspective,
     getRangeSliderValue : state => state.rangeSliderValue,   
     isMobile : state => state.isMobile,
     isIntroVisible : state => state.isIntroVisible,
     getProject : state => id => state.projects.find(project => project.id === id)
-
-    
   },
   mutations: {
     setEdit(state, edit) {
@@ -106,14 +102,6 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.user = user;
-    },
-    updateChangePerspective(state, payload){
-      state.changePerspective = payload
-      if( state.changePerspective){
-        state.perspectiveText = "Normal Mode"
-      } else {
-        state.perspectiveText = "3D Mode"
-      }
     },
     updateTransition(state,payload){
       state.transition = payload
